@@ -5,13 +5,14 @@ extends KinematicBody2D
 export var MAX_SPEED = 150
 export var ACCELERATION = 1000
 export var FRICTION = 750
-export var HEAVY_ATTACK_DELAY = 1.0
-export var ATTACK_COOLDOWN_TIME = 1.0
+export var HEAVY_ATTACK_DELAY = 0.2
+export var ATTACK_COOLDOWN_TIME = 0.25
 var attack_cooldown = 0.0
 var attack_delay = 0.0
 var velocity = Vector2.ZERO
 var mouse_angle = 0.0
 onready var center = $center
+onready var animation = $center/AnimationPlayer
 #onready var sprite = $center/sprite
 #onready var hitbox = $center/hitbox
 #onready var hitbox_collision_shape = $center/hitbox/CollisionShape2D
@@ -27,20 +28,25 @@ func _ready():
 func _process(delta):
 
 	# COMBAT CODE
-	print(attack_cooldown)
+	#print(attack_cooldown)
 #	attack_cooldown -= delta
 	if attack_cooldown < 0:  # not in cooldown
 		if Input.is_action_pressed("attack"):
 			attack_delay += delta
+			if attack_delay > HEAVY_ATTACK_DELAY:
+				animation.play("Windup")
 		elif Input.is_action_just_released("attack"):
-			print(attack_delay)
+			#print(attack_delay)
 			if attack_delay > HEAVY_ATTACK_DELAY:
 				$Label.text = 'HEAVY ATTACK'
+				animation.play("Heavy")
 			else:
 				$Label.text = 'LIGHT ATTACK'
+				animation.play("Light")
 			attack_cooldown = ATTACK_COOLDOWN_TIME
 		else:
 			$Label.text = 'READY'
+			animation.play("Idle")
 			attack_delay = 0
 	else:  # in cooldown
 		
