@@ -6,11 +6,14 @@ export var MAX_SPEED = 150
 export var ACCELERATION = 1000
 export var FRICTION = 750
 export var HEAVY_ATTACK_DELAY = 0.3
-export var ATTACK_COOLDOWN_TIME = 0.6
+export var LIGHT_ATTACK_COOLDOWN_TIME = 0.4
+export var HEAVY_ATTACK_COOLDOWN_TIME = 0.8
 var attack_cooldown = 0.0
 var attack_delay = 0.0
 var velocity = Vector2.ZERO
 var mouse_angle = 0.0
+var walking = false
+var oriented = false
 onready var center = $center
 onready var animation = $center/AnimationPlayer
 #onready var sprite = $center/sprite
@@ -32,24 +35,30 @@ func _process(delta):
 #	attack_cooldown -= delta
 	if attack_cooldown < 0:  # not in cooldown
 		if Input.is_action_pressed("attack"):
+			walking = true
 			attack_delay += delta
 			if attack_delay > HEAVY_ATTACK_DELAY:
 				animation.play("Windup")
+			else:
+				animation.play("Prep")
 		elif Input.is_action_just_released("attack"):
 			#print(attack_delay)
+			oriented = true
 			if attack_delay > HEAVY_ATTACK_DELAY:
 				$Label.text = 'HEAVY ATTACK'
 				animation.play("Heavy")
+				attack_cooldown = HEAVY_ATTACK_COOLDOWN_TIME
 			else:
 				$Label.text = 'LIGHT ATTACK'
 				animation.play("Light")
-			attack_cooldown = ATTACK_COOLDOWN_TIME
+				attack_cooldown = LIGHT_ATTACK_COOLDOWN_TIME
 		else:
+			walking = false
+			oriented = false
 			$Label.text = 'READY'
 			animation.play("Idle")
 			attack_delay = 0
 	else:  # in cooldown
-		
 		attack_cooldown -= delta
 	
 	
@@ -60,11 +69,14 @@ func _process(delta):
 	input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	input_vector = input_vector.normalized()
 	if input_vector != Vector2.ZERO:
+		if walking: 
+			input_vector = input_vector/2
 		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 	move()
-	orient()
+	if not oriented: 
+		orient()
 
 
 
