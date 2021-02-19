@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/knight_1.png-6442f427efcc2bf5493700a23b2feb19.stex"
+path="res://.import/knight.png-4f1603bf09ab2709fb269482f2d9c42f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/knight_1.png"
-dest_files=[ "res://.import/knight_1.png-6442f427efcc2bf5493700a23b2feb19.stex" ]
+source_file="res://art/knight.png"
+dest_files=[ "res://.import/knight.png-4f1603bf09ab2709fb269482f2d9c42f.stex" ]
 
 [params]
 

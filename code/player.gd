@@ -5,8 +5,8 @@ extends KinematicBody2D
 export var MAX_SPEED = 150
 export var ACCELERATION = 1000
 export var FRICTION = 750
-export var HEAVY_ATTACK_DELAY = 0.2
-export var ATTACK_COOLDOWN_TIME = 0.25
+export var HEAVY_ATTACK_DELAY = 0.3
+export var ATTACK_COOLDOWN_TIME = 0.6
 var attack_cooldown = 0.0
 var attack_delay = 0.0
 var velocity = Vector2.ZERO

@@ -33,19 +33,12 @@ position = Vector2( 48, 48 )
 [node name="Camera2D" type="Camera2D" parent="player"]
 current = true
 
-[node name="GUI" type="MarginContainer" parent="player/Camera2D"]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = -120.25
-margin_top = -69.5
-margin_right = 42.75
-margin_bottom = -23.5
-rect_scale = Vector2( 0.556556, 0.559209 )
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="TextureRect" type="TextureRect" parent="player/Camera2D/GUI"]
-margin_right = 163.0
-margin_bottom = 46.0
-texture = ExtResource( 5 )
