@@ -6,45 +6,46 @@ export var MAX_SPEED = 150
 export var ACCELERATION = 1000
 export var FRICTION = 750
 export var HEAVY_ATTACK_DELAY = 1.0
-export var ATTACK_COOLDOWN_TIME = 1.0
+export var LIGHT_ATTACK_COOLDOWN_TIME = .5
+export var HEAVY_ATTACK_COOLDOWN_TIME = 1.0
+export var HEAVY_ATTACK_CHARGE_TIME = .5
+
+var attack_available = true
+var heavy_attack = false
 var attack_cooldown = 0.0
 var attack_delay = 0.0
 var velocity = Vector2.ZERO
 var mouse_angle = 0.0
+
 onready var center = $center
-#onready var sprite = $center/sprite
-#onready var hitbox = $center/hitbox
-#onready var hitbox_collision_shape = $center/hitbox/CollisionShape2D
-#onready var blockbox = $center/blockbox
-#onready var hurtbox = $hurtbox
+onready var attack_cooldown_timer = $attack_cooldown_timer
+onready var heavy_attack_charge_timer = $heavy_attack_charge_timer
 
 export var light_attack_dmg = 1
 export var heavy_attack_dmg = 2
 
 func _ready():
-	pass
+	$"/root/Global".register_player(self)
 
 func _process(delta):
 
 	# COMBAT CODE
-	print(attack_cooldown)
-#	attack_cooldown -= delta
-	if attack_cooldown < 0:  # not in cooldown
-		if Input.is_action_pressed("attack"):
-			attack_delay += delta
-		elif Input.is_action_just_released("attack"):
-			print(attack_delay)
-			if attack_delay > HEAVY_ATTACK_DELAY:
-				$Label.text = 'HEAVY ATTACK'
-			else:
-				$Label.text = 'LIGHT ATTACK'
-			attack_cooldown = ATTACK_COOLDOWN_TIME
-		else:
-			$Label.text = 'READY'
-			attack_delay = 0
-	else:  # in cooldown
+	if attack_available:
+		if Input.is_action_just_pressed("attack"):
+			heavy_attack = false
+			heavy_attack_charge_timer.start(HEAVY_ATTACK_CHARGE_TIME)
 		
-		attack_cooldown -= delta
+		elif heavy_attack:  # heavy attack charged up fully, auto release
+			$Label.text = 'HEAVY ATTACK'
+			begin_attack_cooldown(HEAVY_ATTACK_COOLDOWN_TIME)
+			heavy_attack = false
+		
+		elif Input.is_action_just_released("attack") and attack_available:  # light attack
+			$Label.text = 'LIGHT ATTACK'
+			
+			attack_available = false
+			heavy_attack_charge_timer.stop()
+			begin_attack_cooldown(LIGHT_ATTACK_COOLDOWN_TIME)
 	
 	
 	# MOVEMENT CODE
@@ -61,25 +62,19 @@ func _process(delta):
 	orient()
 
 
+func begin_attack_cooldown(time):
+	attack_available = false
+	attack_cooldown_timer.start(time)
+	print("ATTACK_COOLDOWN: ", time)
 
-#func combat():
-	#shity attack anim logic
-#	if Input.is_action_pressed("attack"):
-#		$center/hitbox/CollisionShape2D.disabled = false
-#
-#		$center/sprite.frame = 1
-#	else:  # not attacking
-#		$center/hitbox/CollisionShape2D.disabled = true
-#
-#		$center/sprite.frame = 0
-	
-#	if Input.is_action_pressed("block"):
-#		blockbox.visible = true
-#		blockbox.monitorable = true
-#	else:
-#		blockbox.visible = false
-#		blockbox.monitorable = false
-	
+
+func _on_heavy_attack_charge_timer_timeout():
+	heavy_attack = true
+
+
+func _on_attack_cooldown_timer_timeout():
+	$Label.text = 'attack ready'
+	attack_available = true
 
 
 func move():
@@ -91,3 +86,4 @@ func orient():
 
 func _on_hitbox_area_entered(area):
 	area.take_damage(20)
+

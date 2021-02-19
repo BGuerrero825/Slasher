@@ -5,10 +5,6 @@
 [ext_resource path="res://art/character_plate.png" type="Texture" id=3]
 [ext_resource path="res://code/player.gd" type="Script" id=5]
 
-
-
-
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 20 )
 
@@ -70,4 +66,12 @@ text = "default"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="attack_cooldown_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="heavy_attack_charge_timer" type="Timer" parent="."]
+one_shot = true
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="attack_cooldown_timer" to="." method="_on_attack_cooldown_timer_timeout"]
+[connection signal="timeout" from="heavy_attack_charge_timer" to="." method="_on_heavy_attack_charge_timer_timeout"]

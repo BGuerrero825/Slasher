@@ -5,10 +5,6 @@
 [ext_resource path="res://code/npc.gd" type="Script" id=3]
 [ext_resource path="res://code/hurtbox.gd" type="Script" id=4]
 
-
-
-
-
 [sub_resource type="CircleShape2D" id=1]
 
 [sub_resource type="CircleShape2D" id=2]
@@ -35,4 +31,13 @@ script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 shape = SubResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -24.0
+margin_top = -32.0
+margin_right = 16.0
+margin_bottom = -18.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="damage_taken" from="hurtbox" to="." method="_on_hurtbox_damage_taken"]
