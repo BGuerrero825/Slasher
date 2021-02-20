@@ -55,13 +55,13 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.15, 0.3, 0.4 ),
+"times": PoolRealArray( 0.05, 0.15, 0.3, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 3, 4, 5, 0 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=6]
 resource_name = "Prep"
 tracks/0/type = "value"
 tracks/0/path = NodePath("character:frame")
@@ -76,8 +76,7 @@ tracks/0/keys = {
 "values": [ 2 ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "Windup"
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath("character:frame")
 tracks/0/interp = 1
@@ -91,7 +90,7 @@ tracks/0/keys = {
 "values": [ 6 ]
 }
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=8]
 
 [node name="player" type="KinematicBody2D"]
 script = ExtResource( 5 )
@@ -136,12 +135,12 @@ disabled = true
 anims/Heavy = SubResource( 3 )
 anims/Idle = SubResource( 4 )
 anims/Light = SubResource( 5 )
-anims/Prep = SubResource( 8 )
-anims/Windup = SubResource( 6 )
+anims/Prep = SubResource( 6 )
+anims/Windup = SubResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 
 [node name="hurtbox" type="Area2D" parent="."]
 visible = false
@@ -149,7 +148,7 @@ collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 
 [node name="Label" type="Label" parent="."]
 visible = false

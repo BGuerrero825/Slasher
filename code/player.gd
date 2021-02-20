@@ -10,6 +10,7 @@ export var LIGHT_ATTACK_COOLDOWN_TIME = .5
 export var HEAVY_ATTACK_COOLDOWN_TIME = 1.0
 export var HEAVY_ATTACK_CHARGE_TIME = .5
 
+var walking = false
 var attack_available = true
 var heavy_attack = false
 var attack_cooldown = 0.0
@@ -20,6 +21,7 @@ var mouse_angle = 0.0
 onready var center = $center
 onready var attack_cooldown_timer = $attack_cooldown_timer
 onready var heavy_attack_charge_timer = $heavy_attack_charge_timer
+onready var animation = $center/AnimationPlayer
 
 export var light_attack_dmg = 1
 export var heavy_attack_dmg = 2
@@ -32,16 +34,19 @@ func _process(delta):
 	# COMBAT CODE
 	if attack_available:
 		if Input.is_action_just_pressed("attack"):
+			animation.play("Prep")
 			heavy_attack = false
 			heavy_attack_charge_timer.start(HEAVY_ATTACK_CHARGE_TIME)
 
 		elif heavy_attack:  # heavy attack charged up fully, auto release
 			$Label.text = 'HEAVY ATTACK'
+			animation.play("Heavy")
 			begin_attack_cooldown(HEAVY_ATTACK_COOLDOWN_TIME)
 			heavy_attack = false
 
 		elif Input.is_action_just_released("attack") and attack_available:  # light attack
 			$Label.text = 'LIGHT ATTACK'
+			animation.play("Light")
 
 			attack_available = false
 			heavy_attack_charge_timer.stop()
@@ -61,8 +66,7 @@ func _process(delta):
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 	move()
-	if not oriented:
-		orient()
+	orient()
 
 
 func begin_attack_cooldown(time):
