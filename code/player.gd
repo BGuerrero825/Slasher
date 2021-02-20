@@ -5,22 +5,21 @@ extends KinematicBody2D
 export var MAX_SPEED = 150
 export var ACCELERATION = 1000
 export var FRICTION = 750
-export var HEAVY_ATTACK_DELAY = 1.0
+export var heavy_attack_available_DELAY = 1.0
 export var LIGHT_ATTACK_COOLDOWN_TIME = .5
 export var HEAVY_ATTACK_COOLDOWN_TIME = 1.0
 export var HEAVY_ATTACK_CHARGE_TIME = .5
 
 var walking = false
 var attack_available = true
-var heavy_attack = false
+var heavy_attack_available = false
+var heavy_attack_now = false
 var attack_cooldown = 0.0
 var attack_delay = 0.0
 var velocity = Vector2.ZERO
 var mouse_angle = 0.0
 
 onready var center = $center
-onready var attack_cooldown_timer = $attack_cooldown_timer
-onready var heavy_attack_charge_timer = $heavy_attack_charge_timer
 onready var animation = $center/AnimationPlayer
 
 export var light_attack_dmg = 1
@@ -35,21 +34,21 @@ func _process(delta):
 	if attack_available:
 		if Input.is_action_just_pressed("attack"):
 			animation.play("Prep")
-			heavy_attack = false
-			heavy_attack_charge_timer.start(HEAVY_ATTACK_CHARGE_TIME)
+			heavy_attack_available = false
+			$heavy_attack_charge_timer.start(HEAVY_ATTACK_CHARGE_TIME)
 
-		elif heavy_attack:  # heavy attack charged up fully, auto release
+		elif heavy_attack_available and Input.is_action_just_released("attack"):  # heavy attack charged up fully
 			$Label.text = 'HEAVY ATTACK'
 			animation.play("Heavy")
+			
 			begin_attack_cooldown(HEAVY_ATTACK_COOLDOWN_TIME)
-			heavy_attack = false
+			heavy_attack_available = false
 
-		elif Input.is_action_just_released("attack") and attack_available:  # light attack
+		elif Input.is_action_just_released("attack"):  # light attack
 			$Label.text = 'LIGHT ATTACK'
 			animation.play("Light")
-
-			attack_available = false
-			heavy_attack_charge_timer.stop()
+			
+			$heavy_attack_charge_timer.stop()
 			begin_attack_cooldown(LIGHT_ATTACK_COOLDOWN_TIME)
 
 
@@ -65,18 +64,24 @@ func _process(delta):
 		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-	move()
-	orient()
+	velocity = move_and_slide(velocity)
+	mouse_angle = rad2deg(self.get_global_transform().get_origin().angle_to_point(get_global_mouse_position()))
+	center.rotation_degrees = mouse_angle - 180
 
 
 func begin_attack_cooldown(time):
 	attack_available = false
-	attack_cooldown_timer.start(time)
+	$attack_cooldown_timer.start(time)
 	print("ATTACK_COOLDOWN: ", time)
 
 
 func _on_heavy_attack_charge_timer_timeout():
-	heavy_attack = true
+	heavy_attack_available = true
+	animation.play("Windup")
+
+
+func _on_heavy_attack_release_timer_timeout():
+	heavy_attack_now = true
 
 
 func _on_attack_cooldown_timer_timeout():
@@ -84,12 +89,6 @@ func _on_attack_cooldown_timer_timeout():
 	attack_available = true
 
 
-func move():
-	velocity = move_and_slide(velocity)
-
-func orient():
-	mouse_angle = rad2deg(self.get_global_transform().get_origin().angle_to_point(get_global_mouse_position()))
-	center.rotation_degrees = mouse_angle - 180
-
 func _on_hitbox_area_entered(area):
 	area.take_damage(20)
+

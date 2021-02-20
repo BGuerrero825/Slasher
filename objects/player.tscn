@@ -165,6 +165,10 @@ one_shot = true
 
 [node name="heavy_attack_charge_timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="heavy_attack_release_timer" type="Timer" parent="."]
+one_shot = true
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="attack_cooldown_timer" to="." method="_on_attack_cooldown_timer_timeout"]
 [connection signal="timeout" from="heavy_attack_charge_timer" to="." method="_on_heavy_attack_charge_timer_timeout"]
+[connection signal="timeout" from="heavy_attack_release_timer" to="." method="_on_heavy_attack_release_timer_timeout"]
