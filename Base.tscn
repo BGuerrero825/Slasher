@@ -8,6 +8,7 @@
 [node name="Base" type="Node2D"]
 
 [node name="background" type="Sprite" parent="."]
+position = Vector2( 0, -8 )
 texture = ExtResource( 4 )
 centered = false
 

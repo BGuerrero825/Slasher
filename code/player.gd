@@ -29,27 +29,37 @@ func _ready():
 	$"/root/Global".register_player(self)
 
 func _process(delta):
-
+	if Input.is_action_pressed("block"):
+		animation.play("Block")
+		walking = true
+	elif Input.is_action_just_released("block"):
+		walking = false
+		
 	# COMBAT CODE
-	if attack_available:
-		if Input.is_action_just_pressed("attack"):
-			animation.play("Prep")
-			heavy_attack_available = false
-			$heavy_attack_charge_timer.start(HEAVY_ATTACK_CHARGE_TIME)
+	elif attack_available:
+		if Input.is_action_pressed("attack"):
+			if Input.is_action_just_pressed("attack"):
+				animation.play("Prep")
+				heavy_attack_available = false
+				$heavy_attack_charge_timer.start(HEAVY_ATTACK_CHARGE_TIME)
+				
+			elif heavy_attack_available: 
+				animation.play("Windup")
 
 		elif heavy_attack_available and Input.is_action_just_released("attack"):  # heavy attack charged up fully
 			$Label.text = 'HEAVY ATTACK'
 			animation.play("Heavy")
-			
 			begin_attack_cooldown(HEAVY_ATTACK_COOLDOWN_TIME)
 			heavy_attack_available = false
 
 		elif Input.is_action_just_released("attack"):  # light attack
 			$Label.text = 'LIGHT ATTACK'
 			animation.play("Light")
-			
 			$heavy_attack_charge_timer.stop()
 			begin_attack_cooldown(LIGHT_ATTACK_COOLDOWN_TIME)
+				
+		else:
+			animation.play("Idle")
 
 
 	# MOVEMENT CODE
