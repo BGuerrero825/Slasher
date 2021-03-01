@@ -27,6 +27,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 7, 8, 9, 10, 0 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "Idle"
@@ -59,6 +71,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 3, 4, 5, 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -111,9 +135,9 @@ texture = ExtResource( 1 )
 offset = Vector2( 3, -5 )
 vframes = 2
 hframes = 6
+frame = 3
 
 [node name="hitbox" type="Area2D" parent="center"]
-visible = false
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/hitbox"]
@@ -139,11 +163,9 @@ anims/Prep = SubResource( 6 )
 anims/Windup = SubResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource( 8 )
 
 [node name="hurtbox" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 0
 
@@ -151,7 +173,6 @@ collision_mask = 0
 shape = SubResource( 8 )
 
 [node name="Label" type="Label" parent="."]
-visible = false
 margin_left = -40.0
 margin_top = -36.0
 margin_bottom = -22.0
@@ -163,12 +184,12 @@ __meta__ = {
 [node name="attack_cooldown_timer" type="Timer" parent="."]
 one_shot = true
 
-[node name="heavy_attack_charge_timer" type="Timer" parent="."]
+[node name="light_windup_timer" type="Timer" parent="."]
 one_shot = true
 
-[node name="heavy_attack_release_timer" type="Timer" parent="."]
+[node name="heavy_windup_timer" type="Timer" parent="."]
 one_shot = true
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="attack_cooldown_timer" to="." method="_on_attack_cooldown_timer_timeout"]
-[connection signal="timeout" from="heavy_attack_charge_timer" to="." method="_on_heavy_attack_charge_timer_timeout"]
-[connection signal="timeout" from="heavy_attack_release_timer" to="." method="_on_heavy_attack_release_timer_timeout"]
+[connection signal="timeout" from="light_windup_timer" to="." method="_on_light_windup_timer_timeout"]
+[connection signal="timeout" from="heavy_windup_timer" to="." method="_on_heavy_windup_timer_timeout"]
