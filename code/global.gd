@@ -9,4 +9,3 @@ func _ready():
 
 func register_player(in_player):
 	player = in_player
-	print('REGISTERED')
