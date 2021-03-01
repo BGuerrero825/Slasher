@@ -33,9 +33,10 @@ func _ready():
 func _process(delta):
 	if Input.is_action_pressed("block"):
 		animation.play("Block")
-		walking = true
+		# walking = true
 	elif Input.is_action_just_released("block"):
-		walking = false
+		animation.play("Idle")
+		# walking = false
 
 	# COMBAT CODE
 	match attack_state:
