@@ -7,6 +7,10 @@ export var speed = 10
 var STANDOFF_DISTANCE = 40  # distance the AI wants to sit from the player
 var RUNAWAY_DISTANCE = 25  # distance the AI wants to run from the player
 
+enum {ATTACKING, STANDOFF, RETREATING, BACKING_AWAY, MOVING_TO_PLAYER, SLEEP}
+
+var current_state = SLEEP
+
 var velocity = Vector2()
 
 #onready var player_pos = $"/root/Global".player.get_position()
@@ -23,6 +27,26 @@ func _process(delta):
 	$center.rotation = PI + position.angle_to_point(player_pos)
 	
 	$Label.text = str(position.distance_to(player_pos))
+	
+	# Stateful Code
+	match current_state:
+		ATTACKING:
+			pass
+		
+		STANDOFF:
+			pass
+		
+		RETREATING:
+			pass
+		
+		BACKING_AWAY:
+			pass
+		
+		MOVING_TO_PLAYER:
+			pass
+		
+		SLEEP:
+			pass
 	
 	# move towards the player if far away
 	var distance_to_player = position.distance_to(player_pos)
