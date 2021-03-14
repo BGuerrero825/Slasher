@@ -33,39 +33,42 @@ func _process(delta):
 		ATTACKING:
 			pass
 		
-		STANDOFF:
-			pass
+		STANDOFF:  # attacking range
+			velocity = Vector2.ZERO
+			velocity.x = cos($center.rotation)+PI/2
+			velocity.y = sin($center.rotation)+PI/2
+			velocity = speed * velocity.normalized()
+			
+			
 		
 		RETREATING:
 			pass
 		
 		BACKING_AWAY:
-			pass
+			velocity.x = cos($center.rotation)
+			velocity.y = sin($center.rotation)
+			velocity = -speed * velocity.normalized()
 		
 		MOVING_TO_PLAYER:
-			pass
+			velocity.x = cos($center.rotation)
+			velocity.y = sin($center.rotation)
+			velocity = speed * velocity.normalized()
 		
 		SLEEP:
 			pass
+	
 	
 	# move towards the player if far away
 	var distance_to_player = position.distance_to(player_pos)
 	
 	if distance_to_player > STANDOFF_DISTANCE:
-		velocity.x = cos($center.rotation)
-		velocity.y = sin($center.rotation)
-		velocity = speed * velocity.normalized()
+		current_state = MOVING_TO_PLAYER
 	
 	elif distance_to_player < RUNAWAY_DISTANCE:
-		velocity.x = cos($center.rotation)
-		velocity.y = sin($center.rotation)
-		velocity = -speed * velocity.normalized()
+		current_state = BACKING_AWAY
 	
 	else:  # fighting distance
-		velocity = Vector2.ZERO
-		velocity.x = cos($center.rotation)+PI/2
-		velocity.y = sin($center.rotation)+PI/2
-		velocity = speed * velocity.normalized()
+		current_state = STANDOFF
 	
 	velocity = move_and_slide(velocity)
 
