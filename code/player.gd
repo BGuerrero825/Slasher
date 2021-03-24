@@ -106,6 +106,4 @@ func _on_heavy_windup_timer_timeout():
 
 
 func _on_hitbox_area_entered(area):
-	print("TEST")
-	
 	area.take_damage(current_damage)

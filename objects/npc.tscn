@@ -159,4 +159,12 @@ anims/Idle = SubResource( 4 )
 anims/Light = SubResource( 5 )
 anims/Prep = SubResource( 6 )
 anims/Windup = SubResource( 7 )
+
+[node name="attack_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="cooldown_timer" type="Timer" parent="."]
+one_shot = true
 [connection signal="damage_taken" from="hurtbox" to="." method="_on_hurtbox_damage_taken"]
+[connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="cooldown_timer" to="." method="_on_cooldown_timer_timeout"]
