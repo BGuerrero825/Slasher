@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
 
+export var player_health = 40
+
 #movement constants
 export var MAX_SPEED = 150
 export var ACCELERATION = 1000
@@ -29,14 +31,9 @@ onready var animation = $center/AnimationPlayer
 
 func _ready():
 	$"/root/Global".register_player(self)
+#	animation.play("Idle")
 
 func _process(delta):
-	if Input.is_action_pressed("block"):
-		animation.play("Block")
-		# walking = true
-	elif Input.is_action_just_released("block"):
-		animation.play("Idle")
-		# walking = false
 
 	# COMBAT CODE
 	match attack_state:
@@ -46,38 +43,38 @@ func _process(delta):
 				attack_state = LIGHT_WINDUP
 				# start light to heavy attack transition timer
 				$light_windup_timer.start(LIGHT_ATTACK_WINDOW)
-
+		
 		LIGHT_WINDUP:
 			$Label.text = 'LIGHT_WINDUP'
 			animation.play("Prep")
 			if Input.is_action_just_released("attack"):
 				attack_state = LIGHT_ATTACKING
-
+		
 		LIGHT_ATTACKING:
 			$Label.text = 'LIGHT_ATTACKING'
 			animation.play("Light")
 			attack_state = ATTACK_COOLDOWN
 			current_damage = LIGHT_ATTACK_DMG
 			$attack_cooldown_timer.start(LIGHT_ATTACK_COOLDOWN_TIME)
-
+		
 		HEAVY_WINDUP:
 			# heavy_windup_timer started in _on_light_windup_timer_timeout
 			$Label.text = 'HEAVY_WINDUP'
 			animation.play("Windup")
 			if Input.is_action_just_released("attack"):
 				attack_state = HEAVY_ATTACKING
-
+		
 		HEAVY_ATTACKING:
 			$Label.text = 'HEAVY_ATTACKING'
 			animation.play("Heavy")
 			attack_state = ATTACK_COOLDOWN
 			current_damage = HEAVY_ATTACK_DMG
 			$attack_cooldown_timer.start(HEAVY_ATTACK_COOLDOWN_TIME)
-
+		
 		ATTACK_COOLDOWN:
 			$light_windup_timer.stop()
 			$heavy_windup_timer.stop()
-
+	
 	# MOVEMENT CODE
 	#set input vector based on input strength from x axis (a/d) and y axis (w/s)
 	var input_vector = Vector2.ZERO
@@ -112,6 +109,11 @@ func _on_heavy_windup_timer_timeout():
 
 
 func _on_hitbox_area_entered(area):
-	print("TEST")
-
 	area.take_damage(current_damage)
+
+
+func _on_hurtbox_damage_taken(amount):
+	player_health -= amount
+	print("Player_Health: ", player_health)
+	if player_health <= 0:
+		print("PLAYER IS FUCKING DEAD")
