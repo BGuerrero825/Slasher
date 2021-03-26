@@ -79,6 +79,7 @@ script = ExtResource( 4 )
 shape = SubResource( 3 )
 
 [node name="Label" type="Label" parent="."]
+visible = false
 margin_left = -24.0
 margin_top = -32.0
 margin_right = 16.0

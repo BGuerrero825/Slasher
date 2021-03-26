@@ -4,7 +4,7 @@ extends KinematicBody2D
 export var health = 25
 export var speed = 10
 
-export var ATTACK_DELAY_TIME = 0.5  # delay before initiating an attack while in range
+export var ATTACK_DELAY_TIME = 0.01  # delay before initiating an attack while in range
 export var ATTACK_COOLDOWN_TIME = 1.5  # delay between attacks
 export var MOVE_DELAY_TIME = 0.5  # delay before moving after attacking
 
