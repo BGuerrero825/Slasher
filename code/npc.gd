@@ -4,15 +4,18 @@ extends KinematicBody2D
 export var health = 25
 export var speed = 10
 
+export var ATTACK_DELAY_TIME = 0.5  # delay before initiating an attack while in range
+export var ATTACK_COOLDOWN_TIME = 1.5  # delay between attacks
+export var MOVE_DELAY_TIME = 0.5  # delay before moving after attacking
+
+export var DAMAGE = 10
+
 var STANDOFF_DISTANCE = 40  # distance the AI wants to sit from the player
 var RUNAWAY_DISTANCE = 25  # distance the AI wants to run from the player
 
 enum {ATTACKING, STANDOFF, RETREATING, BACKING_AWAY, MOVING_TO_PLAYER, SLEEP}
 
 var current_state = SLEEP
-
-var ATTACK_DELAY_TIME = 0.5
-var ATTACK_COOLDOWN_TIME = 1.5
 
 var attack_available = true
 
@@ -39,8 +42,12 @@ func _process(delta):
 		ATTACKING:
 			$Label.text = "ATTACKING"
 			########################################################################################
-			$AnimationPlayer.play("Light")  #TODO 
-			$cooldown_timer.start(ATTACK_COOLDOWN_TIME)
+			$AnimationPlayer.play("Heavy")  #TODO
+			
+			if not $cooldown_timer.time_left > 0:
+				$cooldown_timer.start(ATTACK_COOLDOWN_TIME)
+			if not $move_delay_timer.time_left > 0:
+				$move_delay_timer.start(MOVE_DELAY_TIME)
 			attack_available = false
 		
 		STANDOFF:  # attacking range
@@ -91,7 +98,7 @@ func _process(delta):
 
 func _on_hurtbox_damage_taken(amount):
 	health = health - amount
-	print("health: ", health)
+	print("NPC_Health: ", health)
 	if health <= 0:
 		queue_free()
 
@@ -103,3 +110,11 @@ func _on_attack_timer_timeout():
 
 func _on_cooldown_timer_timeout():
 	attack_available = true
+
+
+func _on_move_delay_timer_timeout():
+	current_state = STANDOFF
+
+
+func _on_hitbox_area_entered(area):
+	area.take_damage(DAMAGE)

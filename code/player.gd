@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
 
+export var player_health = 40
+
 #movement constants
 export var MAX_SPEED = 150
 export var ACCELERATION = 1000
@@ -29,6 +31,7 @@ onready var animation = $center/AnimationPlayer
 
 func _ready():
 	$"/root/Global".register_player(self)
+#	animation.play("Idle")
 
 func _process(delta):
 
@@ -107,3 +110,10 @@ func _on_heavy_windup_timer_timeout():
 
 func _on_hitbox_area_entered(area):
 	area.take_damage(current_damage)
+
+
+func _on_hurtbox_damage_taken(amount):
+	player_health -= amount
+	print("Player_Health: ", player_health)
+	if player_health <= 0:
+		print("PLAYER IS FUCKING DEAD")

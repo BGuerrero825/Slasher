@@ -94,7 +94,5 @@ block={
 
 [layer_names]
 
-2d_physics/layer_1="player_hitbox"
-2d_physics/layer_2="player_hurtbox"
-2d_physics/layer_3="enemy_hitbox"
-2d_physics/layer_4="enemy_hurtbox"
+2d_physics/layer_1="player"
+2d_physics/layer_2="enemy"

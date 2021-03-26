@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://art/character_plate.png" type="Texture" id=1]
 [ext_resource path="res://art/direction_indicator.png" type="Texture" id=2]
@@ -8,109 +8,37 @@
 
 [sub_resource type="CircleShape2D" id=1]
 
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 16, 24 )
+
 [sub_resource type="CircleShape2D" id=2]
 
 [sub_resource type="Animation" id=3]
 resource_name = "Heavy"
 length = 0.8
-step = 0.05
 tracks/0/type = "value"
-tracks/0/path = NodePath("character:frame")
+tracks/0/path = NodePath("center/character:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 7, 8, 9, 10, 0 ]
+"values": [ 0, 2, 6, 7, 2, 3, 4, 5, 6 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("hitbox/CollisionShape2D:disabled")
+tracks/1/path = NodePath("center/hitbox/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.6 ),
+"times": PoolRealArray( 0, 0.5, 0.7 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true ]
-}
-
-[sub_resource type="Animation" id=4]
-resource_name = "Idle"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 0, 1 ]
-}
-
-[sub_resource type="Animation" id=5]
-resource_name = "Light"
-length = 0.4
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0.05, 0.15, 0.3, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 3, 4, 5, 0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("hitbox/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.05, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ true, false, true ]
-}
-
-[sub_resource type="Animation" id=6]
-resource_name = "Prep"
-tracks/0/type = "value"
-tracks/0/path = NodePath("character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 2 ]
-}
-
-[sub_resource type="Animation" id=7]
-tracks/0/type = "value"
-tracks/0/path = NodePath("character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 6 ]
 }
 
 [node name="npc" type="KinematicBody2D"]
@@ -134,11 +62,19 @@ rotation = 1.5708
 texture = ExtResource( 5 )
 offset = Vector2( 3, -5 )
 vframes = 2
-hframes = 5
+hframes = 6
+
+[node name="hitbox" type="Area2D" parent="center"]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="center/hitbox"]
+position = Vector2( 24, 0 )
+shape = SubResource( 4 )
+disabled = true
 
 [node name="hurtbox" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 2147483649
+collision_mask = 2147483650
 script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
@@ -155,16 +91,17 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Heavy = SubResource( 3 )
-anims/Idle = SubResource( 4 )
-anims/Light = SubResource( 5 )
-anims/Prep = SubResource( 6 )
-anims/Windup = SubResource( 7 )
 
 [node name="attack_timer" type="Timer" parent="."]
 one_shot = true
 
 [node name="cooldown_timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="move_delay_timer" type="Timer" parent="."]
+one_shot = true
+[connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="damage_taken" from="hurtbox" to="." method="_on_hurtbox_damage_taken"]
 [connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="cooldown_timer" to="." method="_on_cooldown_timer_timeout"]
+[connection signal="timeout" from="move_delay_timer" to="." method="_on_move_delay_timer_timeout"]
