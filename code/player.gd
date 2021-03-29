@@ -4,22 +4,28 @@ extends KinematicBody2D
 export var player_health = 40
 
 #movement constants
-export var MAX_SPEED = 150
-export var ACCELERATION = 1000
-export var FRICTION = 750
+export var MAX_SPEED := 150.0
+export var ACCELERATION := 1000.0
+export var FRICTION := 750.0
 
-export var LIGHT_ATTACK_COOLDOWN_TIME = .5
-export var HEAVY_ATTACK_COOLDOWN_TIME = 1.0
+export var LIGHT_ATTACK_COOLDOWN_TIME := .5
+export var HEAVY_ATTACK_COOLDOWN_TIME := 1.0
+export var PARRY_COOLDOWN_TIME := .4
 
-export var LIGHT_ATTACK_WINDOW = .8
-export var HEAVY_ATTACK_WINDOW = .5
+export var PARRY_INVINCIBILITY_TIME := .8
 
-export var LIGHT_ATTACK_DMG = 1
-export var HEAVY_ATTACK_DMG = 2
+export var LIGHT_ATTACK_WINDOW := .8
+export var HEAVY_ATTACK_WINDOW := .5
 
-enum {ATTACK_READY, LIGHT_WINDUP, HEAVY_WINDUP, LIGHT_ATTACKING, HEAVY_ATTACKING, ATTACK_COOLDOWN}
+export var LIGHT_ATTACK_DMG := 1
+export var HEAVY_ATTACK_DMG := 2
+
+enum {ATTACK_READY, LIGHT_WINDUP, HEAVY_WINDUP, LIGHT_ATTACKING, HEAVY_ATTACKING, ATTACK_COOLDOWN, PARRY}
 
 var attack_state = ATTACK_READY
+
+var parry_available = true
+var invincible = false
 
 var current_damage = 0
 
@@ -71,9 +77,19 @@ func _process(delta):
 			current_damage = HEAVY_ATTACK_DMG
 			$attack_cooldown_timer.start(HEAVY_ATTACK_COOLDOWN_TIME)
 		
+		PARRY:
+			$Label.text = 'PARRY'
+			animation.play("Parry")
+			attack_state = ATTACK_COOLDOWN
+			$attack_cooldown_timer.start(PARRY_COOLDOWN_TIME)
+		
 		ATTACK_COOLDOWN:
 			$light_windup_timer.stop()
 			$heavy_windup_timer.stop()
+	
+	# Parry allowed in following states
+	if Input.is_action_just_pressed("block") and parry_available:# and attack_state in []:
+		attack_state = PARRY
 	
 	# MOVEMENT CODE
 	#set input vector based on input strength from x axis (a/d) and y axis (w/s)
@@ -113,7 +129,21 @@ func _on_hitbox_area_entered(area):
 
 
 func _on_hurtbox_damage_taken(amount):
-	player_health -= amount
-	print("Player_Health: ", player_health)
+	
+	if not invincible:
+		player_health -= amount
+		print("Player_Health: ", player_health)
+	else:
+		print("BLOCKED ATTACK WITH I FRAME")
+	
 	if player_health <= 0:
 		print("PLAYER IS FUCKING DEAD")
+
+
+func _on_blockbox_blocked_attack():
+	$parry_invincible_timer.start(PARRY_INVINCIBILITY_TIME)
+	invincible = true
+
+
+func _on_parry_invincible_timer_timeout():
+	invincible = false
