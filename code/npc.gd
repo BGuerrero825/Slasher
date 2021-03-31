@@ -1,25 +1,27 @@
 extends KinematicBody2D
 
 
-export var health = 25
-export var speed = 10
+export var health := 25.0
+export var speed := 20.0
 
-export var ATTACK_DELAY_TIME = 0.01  # delay before initiating an attack while in range
-export var ATTACK_COOLDOWN_TIME = 1.5  # delay between attacks
-export var MOVE_DELAY_TIME = 0.5  # delay before moving after attacking
+export var ATTACK_DELAY_TIME := 0.01  # delay before initiating an attack while in range
+export var ATTACK_COOLDOWN_TIME := 1.5  # delay between attacks
+export var MOVE_DELAY_TIME := 0.5  # delay before moving after attacking
+export var KNOCKBACK_TIME := 0.1  # total time spent in knockback
+export var KNOCKBACK_STRENGTH := 40.0  # knockback strength
 
-export var DAMAGE = 10
+export var DAMAGE := 10.0
 
-var STANDOFF_DISTANCE = 40  # distance the AI wants to sit from the player
-var RUNAWAY_DISTANCE = 25  # distance the AI wants to run from the player
+var STANDOFF_DISTANCE := 40.0  # distance the AI wants to sit from the player
+var RUNAWAY_DISTANCE := 25.0  # distance the AI wants to run from the player
 
-enum {ATTACKING, STANDOFF, RETREATING, BACKING_AWAY, MOVING_TO_PLAYER, SLEEP}
+enum {ATTACKING, STANDOFF, RETREATING, BACKING_AWAY, MOVING_TO_PLAYER, SLEEP, KNOCK_BACK}
 
-var current_state = SLEEP
+var current_state := SLEEP
 
-var attack_available = true
+var attack_available := true
 
-var velocity = Vector2()
+var velocity := Vector2()
 
 #onready var player_pos = $"/root/Global".player.get_position()
 
@@ -32,7 +34,7 @@ func _process(delta):
 	var player_pos = $"/root/Global".player.get_position()
 	var distance_to_player = position.distance_to(player_pos)
 	
-#	# orient towards player
+	# orient towards player
 	$center.rotation = PI + position.angle_to_point(player_pos)
 	
 	#$Label.text = str(position.distance_to(player_pos))
@@ -41,8 +43,7 @@ func _process(delta):
 	match current_state:
 		ATTACKING:
 			$Label.text = "ATTACKING"
-			########################################################################################
-			$AnimationPlayer.play("Heavy")  #TODO
+			$AnimationPlayer.play("Heavy")
 			
 			if not $cooldown_timer.time_left > 0:
 				$cooldown_timer.start(ATTACK_COOLDOWN_TIME)
@@ -88,6 +89,15 @@ func _process(delta):
 			if distance_to_player < STANDOFF_DISTANCE:
 				current_state = STANDOFF
 		
+		KNOCK_BACK:
+			if not $knockback_timer.time_left > 0:
+				$knockback_timer.start(KNOCKBACK_TIME)
+			
+			$Label.text = "KNOCK_BACK"
+			velocity.x = -cos($center.rotation)
+			velocity.y = -sin($center.rotation)
+			velocity = KNOCKBACK_STRENGTH * velocity.normalized()
+		
 		SLEEP:
 			$Label.text = "SLEEP"
 			if distance_to_player > STANDOFF_DISTANCE:
@@ -97,6 +107,8 @@ func _process(delta):
 
 
 func _on_hurtbox_damage_taken(amount):
+	current_state = KNOCK_BACK
+	
 	health = health - amount
 	print("NPC_Health: ", health)
 	if health <= 0:
@@ -117,4 +129,8 @@ func _on_move_delay_timer_timeout():
 
 
 func _on_hitbox_area_entered(area):
-	area.take_damage(DAMAGE)
+	area.take_damage(DAMAGE, self)
+
+
+func _on_knockback_timer_timeout():
+	current_state = STANDOFF

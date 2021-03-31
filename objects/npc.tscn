@@ -99,8 +99,12 @@ one_shot = true
 
 [node name="move_delay_timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="knockback_timer" type="Timer" parent="."]
+one_shot = true
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="damage_taken" from="hurtbox" to="." method="_on_hurtbox_damage_taken"]
 [connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="cooldown_timer" to="." method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="move_delay_timer" to="." method="_on_move_delay_timer_timeout"]
+[connection signal="timeout" from="knockback_timer" to="." method="_on_knockback_timer_timeout"]
