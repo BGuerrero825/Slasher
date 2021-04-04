@@ -23,9 +23,13 @@ export var HEAVY_ATTACK_DMG := 2
 export var KNOCKBACK_TIME := 0.1  # total time spent in knockback
 export var KNOCKBACK_STRENGTH := 40.0  # knockback strength
 
-enum {ATTACK_READY, LIGHT_WINDUP, HEAVY_WINDUP, LIGHT_ATTACKING, HEAVY_ATTACKING, ATTACK_COOLDOWN, PARRY, KNOCKBACK}
+export var DODGE_TIMER = 0.15
+export var DODGE_COOLDOWN_TIME := 1.0
 
-var attack_state := ATTACK_READY
+enum {ATTACK_READY, LIGHT_WINDUP, HEAVY_WINDUP, LIGHT_ATTACKING, 
+		HEAVY_ATTACKING, ATTACK_COOLDOWN, PARRY, KNOCKBACK, DODGE}
+
+var current_state := ATTACK_READY
 
 var parry_available := true
 var invincible := false
@@ -36,6 +40,9 @@ var last_dmg_source = self
 var velocity := Vector2.ZERO
 var mouse_angle := 0.0
 var movement_allowed := true
+var dodge_allowed := true
+
+var dodge_vel := Vector2(0.0, 0.0)
 
 onready var center = $center
 onready var animation = $center/AnimationPlayer
@@ -47,64 +54,83 @@ func _ready():
 func _process(delta):
 
 	# COMBAT CODE
-	match attack_state:
+	match current_state:
 		ATTACK_READY:
-			$Label.text = 'ATTACK_READY'
+			$debug_state.text = 'ATTACK_READY'
 			if Input.is_action_pressed("attack"):
-				attack_state = LIGHT_WINDUP
+				current_state = LIGHT_WINDUP
 				# start light to heavy attack transition timer
 				$light_windup_timer.start(LIGHT_ATTACK_WINDOW)
 		
 		LIGHT_WINDUP:
-			$Label.text = 'LIGHT_WINDUP'
+			$debug_state.text = 'LIGHT_WINDUP'
 			animation.play("Prep")
 			if Input.is_action_just_released("attack"):
-				attack_state = LIGHT_ATTACKING
+				current_state = LIGHT_ATTACKING
 		
 		LIGHT_ATTACKING:
-			$Label.text = 'LIGHT_ATTACKING'
+			$debug_state.text = 'LIGHT_ATTACKING'
 			animation.play("Light")
-			attack_state = ATTACK_COOLDOWN
+			current_state = ATTACK_COOLDOWN
 			current_damage = LIGHT_ATTACK_DMG
 			$attack_cooldown_timer.start(LIGHT_ATTACK_COOLDOWN_TIME)
 		
 		HEAVY_WINDUP:
 			# heavy_windup_timer started in _on_light_windup_timer_timeout
-			$Label.text = 'HEAVY_WINDUP'
+			$debug_state.text = 'HEAVY_WINDUP'
 			animation.play("Windup")
 			if Input.is_action_just_released("attack"):
-				attack_state = HEAVY_ATTACKING
+				current_state = HEAVY_ATTACKING
 		
 		HEAVY_ATTACKING:
-			$Label.text = 'HEAVY_ATTACKING'
+			$debug_state.text = 'HEAVY_ATTACKING'
 			animation.play("Heavy")
-			attack_state = ATTACK_COOLDOWN
+			current_state = ATTACK_COOLDOWN
 			current_damage = HEAVY_ATTACK_DMG
 			$attack_cooldown_timer.start(HEAVY_ATTACK_COOLDOWN_TIME)
 		
 		PARRY:
-			$Label.text = 'PARRY'
+			$debug_state.text = 'PARRY'
 			animation.play("Parry")
-			attack_state = ATTACK_COOLDOWN
+			current_state = ATTACK_COOLDOWN
 			$attack_cooldown_timer.start(PARRY_COOLDOWN_TIME)
 		
 		ATTACK_COOLDOWN:
+			$debug_state.text = 'ATTACK_COOLDOWN'
 			$light_windup_timer.stop()
 			$heavy_windup_timer.stop()
 		
 		KNOCKBACK:
+			$debug_state.text = 'KNOCKBACK'
+			
 			movement_allowed = false
 			if not $knockback_timer.time_left > 0:
 				$knockback_timer.start(KNOCKBACK_TIME)
 			
-			$Label.text = "KNOCK_BACK"
+			$debug_state.text = "KNOCK_BACK"
 			velocity.x = -cos($center.rotation)
 			velocity.y = -sin($center.rotation)
 			velocity = KNOCKBACK_STRENGTH * velocity.normalized()
+		
+		DODGE:
+			$debug_state.text = 'DODGE'
+			
+			if dodge_allowed:
+				velocity = velocity.normalized() * 80_000 * delta
+			
+			movement_allowed = false
+			dodge_allowed = false
+			invincible = true
+			if not $dodge_timer.time_left > 0:
+				$dodge_timer.start(DODGE_TIMER)
+			if not $dodge_cooldown_timer.time_left > 0:
+				$dodge_cooldown_timer.start(DODGE_COOLDOWN_TIME)
+			
+			
 	
 	# Parry allowed in following states
-	if Input.is_action_just_pressed("block") and parry_available:# and attack_state in []:
-		attack_state = PARRY
+	if Input.is_action_just_pressed("block") and parry_available:# and current_state in []:
+		current_state = PARRY
 	
 	# MOVEMENT CODE
 	#set input vector based on input strength from x axis (a/d) and y axis (w/s)
@@ -119,25 +145,29 @@ func _process(delta):
 			velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
 		else:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+		
+		if dodge_allowed and input_vector != Vector2.ZERO and Input.is_action_just_pressed("dodge"):
+			current_state = DODGE
+	
 	velocity = move_and_slide(velocity)
 	mouse_angle = rad2deg(self.get_global_transform().get_origin().angle_to_point(get_global_mouse_position()))
 	center.rotation_degrees = mouse_angle - 180
 
 
 func _on_attack_cooldown_timer_timeout():
-	attack_state = ATTACK_READY
+	current_state = ATTACK_READY
 
 
 func _on_light_windup_timer_timeout():
-	if attack_state == LIGHT_WINDUP:
+	if current_state == LIGHT_WINDUP:
 		$heavy_windup_timer.start(HEAVY_ATTACK_WINDOW)
-		attack_state = HEAVY_WINDUP
+		current_state = HEAVY_WINDUP
 
 
 func _on_heavy_windup_timer_timeout():
 	print("HEAVY_TIMEOUT")
-	if attack_state == HEAVY_WINDUP:
-		attack_state = HEAVY_ATTACKING
+	if current_state == HEAVY_WINDUP:
+		current_state = HEAVY_ATTACKING
 
 
 func _on_hitbox_area_entered(area):
@@ -151,7 +181,7 @@ func _on_hurtbox_damage_taken(amount, dmg_source):
 		player_health -= amount
 		print("Player_Health: ", player_health)
 		last_dmg_source = dmg_source
-		attack_state = KNOCKBACK
+		current_state = KNOCKBACK
 	else:
 		print("BLOCKED ATTACK WITH I FRAME")
 	
@@ -169,5 +199,16 @@ func _on_parry_invincible_timer_timeout():
 
 
 func _on_knockback_timer_timeout():
-	attack_state = ATTACK_READY
+	current_state = ATTACK_READY
 	movement_allowed = true
+
+
+func _on_dodge_timer_timeout():
+	current_state = ATTACK_READY
+	movement_allowed = true
+	invincible = false
+	velocity = Vector2(0.0, 0.0)
+
+
+func _on_dodge_cooldown_timer_timeout():
+	dodge_allowed = true

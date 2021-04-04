@@ -202,12 +202,11 @@ script = ExtResource( 4 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 shape = SubResource( 9 )
 
-[node name="Label" type="Label" parent="."]
-visible = false
+[node name="debug_state" type="Label" parent="."]
 margin_left = -40.0
 margin_top = -36.0
 margin_bottom = -22.0
-text = "default"
+text = "DEBUG_STATE"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -226,6 +225,12 @@ one_shot = true
 
 [node name="knockback_timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="dodge_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="dodge_cooldown_timer" type="Timer" parent="."]
+one_shot = true
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="blocked_attack" from="center/blockbox" to="." method="_on_blockbox_blocked_attack"]
 [connection signal="damage_taken" from="hurtbox" to="." method="_on_hurtbox_damage_taken"]
@@ -234,3 +239,5 @@ one_shot = true
 [connection signal="timeout" from="heavy_windup_timer" to="." method="_on_heavy_windup_timer_timeout"]
 [connection signal="timeout" from="parry_invincible_timer" to="." method="_on_parry_invincible_timer_timeout"]
 [connection signal="timeout" from="knockback_timer" to="." method="_on_knockback_timer_timeout"]
+[connection signal="timeout" from="dodge_timer" to="." method="_on_dodge_timer_timeout"]
+[connection signal="timeout" from="dodge_cooldown_timer" to="." method="_on_dodge_cooldown_timer_timeout"]
