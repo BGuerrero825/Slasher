@@ -25,6 +25,7 @@ export var KNOCKBACK_STRENGTH := 40.0  # knockback strength
 
 export var DODGE_TIMER = 0.15
 export var DODGE_COOLDOWN_TIME := 1.0
+export var DODGE_IMPULSE := 80_000
 
 enum {ATTACK_READY, LIGHT_WINDUP, HEAVY_WINDUP, LIGHT_ATTACKING, 
 		HEAVY_ATTACKING, ATTACK_COOLDOWN, PARRY, KNOCKBACK, DODGE}
@@ -116,7 +117,7 @@ func _process(delta):
 			$debug_state.text = 'DODGE'
 			
 			if dodge_allowed:
-				velocity = velocity.normalized() * 80_000 * delta
+				velocity = velocity.normalized() * DODGE_IMPULSE * delta
 			
 			movement_allowed = false
 			dodge_allowed = false
