@@ -1,21 +1,22 @@
 [gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://art/temp_background.png" type="Texture" id=1]
+[ext_resource path="res://objects/npc.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://art/temp_background.png" type="Texture" id=4]
-[ext_resource path="res://art/temp_gui.png" type="Texture" id=5]
-[ext_resource path="res://objects/npc.tscn" type="PackedScene" id=6]
+[ext_resource path="res://art/helmet1_icon.png" type="Texture" id=4]
 
 [node name="Base" type="Node2D"]
 
 [node name="background" type="Sprite" parent="."]
-position = Vector2( 0, -8 )
-texture = ExtResource( 4 )
+position = Vector2( -18.0793, -7.57955 )
+texture = ExtResource( 1 )
 centered = false
 
-[node name="npc" parent="." instance=ExtResource( 6 )]
+[node name="npc" parent="." instance=ExtResource( 2 )]
 position = Vector2( 213.482, 35.2271 )
 health = 75
 
+<<<<<<< Updated upstream
 [node name="npc2" parent="." instance=ExtResource( 6 )]
 position = Vector2( 248, 64 )
 health = 75
@@ -31,6 +32,10 @@ health = 75
 [node name="npc5" parent="." instance=ExtResource( 6 )]
 position = Vector2( 296, 40 )
 health = 75
+=======
+[node name="npc2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 248, 96 )
+>>>>>>> Stashed changes
 
 [node name="player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 128, 96 )
@@ -47,7 +52,7 @@ margin_left = 8.0
 margin_top = 8.0
 margin_right = 48.0
 margin_bottom = 51.0
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
