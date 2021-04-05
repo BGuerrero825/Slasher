@@ -1,9 +1,11 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://art/knight_old.png" type="Texture" id=1]
 [ext_resource path="res://art/direction_indicator.png" type="Texture" id=2]
 [ext_resource path="res://art/character_plate.png" type="Texture" id=3]
+[ext_resource path="res://objects/hurtbox.gd" type="Script" id=4]
 [ext_resource path="res://code/player.gd" type="Script" id=5]
+[ext_resource path="res://objects/blockbox.gd" type="Script" id=6]
 
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -13,22 +15,7 @@ extents = Vector2( 16, 20 )
 extents = Vector2( 16, 24 )
 
 [sub_resource type="Animation" id=3]
-resource_name = "Block"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 12, 13 ]
-}
-
-[sub_resource type="Animation" id=4]
+resource_name = "Heavy"
 length = 0.8
 step = 0.05
 tracks/0/type = "value"
@@ -38,10 +25,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.15, 0.35, 0.5, 0.65, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 7, 8, 9, 10, 5, 0 ]
+"values": [ 7, 8, 9, 10, 0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("hitbox/CollisionShape2D:disabled")
@@ -56,7 +43,8 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
+resource_name = "Idle"
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("character:frame")
@@ -71,7 +59,8 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
+resource_name = "Light"
 length = 0.4
 step = 0.05
 tracks/0/type = "value"
@@ -97,6 +86,34 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Parry"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 12, 13, 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("blockbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -143,13 +160,14 @@ position = Vector2( 17.5, 0 )
 texture = ExtResource( 2 )
 
 [node name="character" type="Sprite" parent="center"]
+position = Vector2( 8, 5 )
 rotation = 1.5708
 texture = ExtResource( 1 )
-offset = Vector2( 3, -5 )
 vframes = 3
 hframes = 6
 
 [node name="hitbox" type="Area2D" parent="center"]
+collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/hitbox"]
@@ -158,9 +176,9 @@ shape = SubResource( 1 )
 disabled = true
 
 [node name="blockbox" type="Area2D" parent="center"]
-visible = false
 collision_layer = 0
-collision_mask = 0
+collision_mask = 2147483649
+script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/blockbox"]
 position = Vector2( 16, 0 )
@@ -168,10 +186,10 @@ shape = SubResource( 2 )
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="center"]
-anims/Block = SubResource( 3 )
-anims/Heavy = SubResource( 4 )
-anims/Idle = SubResource( 5 )
-anims/Light = SubResource( 6 )
+anims/Heavy = SubResource( 3 )
+anims/Idle = SubResource( 4 )
+anims/Light = SubResource( 5 )
+anims/Parry = SubResource( 6 )
 anims/Prep = SubResource( 7 )
 anims/Windup = SubResource( 8 )
 
@@ -180,16 +198,16 @@ shape = SubResource( 9 )
 
 [node name="hurtbox" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 0
+script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 shape = SubResource( 9 )
 
-[node name="Label" type="Label" parent="."]
+[node name="debug_state" type="Label" parent="."]
 margin_left = -40.0
 margin_top = -36.0
 margin_bottom = -22.0
-text = "default"
+text = "DEBUG_STATE"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -202,7 +220,25 @@ one_shot = true
 
 [node name="heavy_windup_timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="parry_invincible_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="knockback_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="dodge_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="dodge_cooldown_timer" type="Timer" parent="."]
+one_shot = true
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="blocked_attack" from="center/blockbox" to="." method="_on_blockbox_blocked_attack"]
+[connection signal="damage_taken" from="hurtbox" to="." method="_on_hurtbox_damage_taken"]
 [connection signal="timeout" from="attack_cooldown_timer" to="." method="_on_attack_cooldown_timer_timeout"]
 [connection signal="timeout" from="light_windup_timer" to="." method="_on_light_windup_timer_timeout"]
 [connection signal="timeout" from="heavy_windup_timer" to="." method="_on_heavy_windup_timer_timeout"]
+[connection signal="timeout" from="parry_invincible_timer" to="." method="_on_parry_invincible_timer_timeout"]
+[connection signal="timeout" from="knockback_timer" to="." method="_on_knockback_timer_timeout"]
+[connection signal="timeout" from="dodge_timer" to="." method="_on_dodge_timer_timeout"]
+[connection signal="timeout" from="dodge_cooldown_timer" to="." method="_on_dodge_cooldown_timer_timeout"]

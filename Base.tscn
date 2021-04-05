@@ -14,23 +14,9 @@ centered = false
 
 [node name="npc" parent="." instance=ExtResource( 2 )]
 position = Vector2( 213.482, 35.2271 )
-health = 75
 
 [node name="npc2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 248, 64 )
-health = 75
-
-[node name="npc3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 216, 72 )
-health = 75
-
-[node name="npc4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 248, 32 )
-health = 75
-
-[node name="npc5" parent="." instance=ExtResource( 2 )]
-position = Vector2( 296, 40 )
-health = 75
+position = Vector2( 248, 96 )
 
 [node name="npc2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 248, 96 )
