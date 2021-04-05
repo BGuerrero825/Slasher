@@ -1,12 +1,11 @@
 [gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://art/knight_old.png" type="Texture" id=1]
+[ext_resource path="res://art/knight.png" type="Texture" id=1]
 [ext_resource path="res://art/direction_indicator.png" type="Texture" id=2]
 [ext_resource path="res://art/character_plate.png" type="Texture" id=3]
 [ext_resource path="res://objects/hurtbox.gd" type="Script" id=4]
 [ext_resource path="res://code/player.gd" type="Script" id=5]
 [ext_resource path="res://objects/blockbox.gd" type="Script" id=6]
-
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 20 )
@@ -25,10 +24,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 7, 8, 9, 10, 0 ]
+"values": [ 2, 8, 9, 10 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("hitbox/CollisionShape2D:disabled")
@@ -73,7 +72,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0.05, 0.15, 0.3, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 3, 4, 5, 0 ]
+"values": [ 2, 3, 8, 0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("hitbox/CollisionShape2D:disabled")
@@ -163,8 +162,7 @@ texture = ExtResource( 2 )
 position = Vector2( 8, 5 )
 rotation = 1.5708
 texture = ExtResource( 1 )
-vframes = 3
-hframes = 6
+hframes = 9
 
 [node name="hitbox" type="Area2D" parent="center"]
 collision_layer = 2
