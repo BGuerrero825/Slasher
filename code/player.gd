@@ -25,7 +25,7 @@ export var KNOCKBACK_STRENGTH := 40.0  # knockback strength
 
 export var DODGE_TIMER = 0.15
 export var DODGE_COOLDOWN_TIME := 1.0
-export var DODGE_IMPULSE := 80_000
+export var DODGE_IMPULSE := 400
 
 enum {ATTACK_READY, LIGHT_WINDUP, HEAVY_WINDUP, LIGHT_ATTACKING, 
 		HEAVY_ATTACKING, ATTACK_COOLDOWN, PARRY, KNOCKBACK, DODGE}
@@ -46,13 +46,12 @@ var dodge_allowed := true
 var dodge_vel := Vector2(0.0, 0.0)
 
 onready var center = $center
-onready var animation = $center/AnimationPlayer
+onready var animation = $AnimationPlayer
 
 func _ready():
 	$"/root/Global".register_player(self)
 
 func _process(delta):
-
 	# COMBAT CODE
 	match current_state:
 		ATTACK_READY:
@@ -117,7 +116,7 @@ func _process(delta):
 			$debug_state.text = 'DODGE'
 			animation.play("Dodge")
 			if dodge_allowed:
-				velocity = velocity.normalized() * DODGE_IMPULSE * delta
+				velocity = velocity.normalized() * DODGE_IMPULSE
 			
 			movement_allowed = false
 			dodge_allowed = false
@@ -127,7 +126,7 @@ func _process(delta):
 			if not $dodge_cooldown_timer.time_left > 0:
 				$dodge_cooldown_timer.start(DODGE_COOLDOWN_TIME)
 	
-	
+	#debug code for spawning an enemy
 	if Input.is_action_just_released("5"):
 		var new_NPC = NEW_NPC.instance()
 		get_tree().get_root().add_child(new_NPC)
@@ -191,7 +190,7 @@ func _on_hurtbox_damage_taken(amount, dmg_source):
 		print("BLOCKED ATTACK WITH I FRAME")
 	
 	if player_health <= 0:
-		print("PLAYER IS FUCKING DEAD")
+		print("PLAYER IS DEAD. (just block lul)")
 
 
 func _on_blockbox_blocked_attack():
