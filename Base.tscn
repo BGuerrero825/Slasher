@@ -18,9 +18,6 @@ position = Vector2( 213.482, 35.2271 )
 [node name="npc2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 248, 96 )
 
-[node name="npc2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 248, 96 )
-
 [node name="player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 128, 96 )
 LIGHT_ATTACK_DMG = 10

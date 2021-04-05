@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-
+const NEW_NPC = preload("res://objects/npc.tscn")
 export var player_health = 40
 
 #movement constants
@@ -50,7 +50,6 @@ onready var animation = $center/AnimationPlayer
 
 func _ready():
 	$"/root/Global".register_player(self)
-#	animation.play("Idle")
 
 func _process(delta):
 
@@ -58,6 +57,7 @@ func _process(delta):
 	match current_state:
 		ATTACK_READY:
 			$debug_state.text = 'ATTACK_READY'
+			animation.play("Idle")
 			if Input.is_action_pressed("attack"):
 				current_state = LIGHT_WINDUP
 				# start light to heavy attack transition timer
@@ -115,7 +115,7 @@ func _process(delta):
 		
 		DODGE:
 			$debug_state.text = 'DODGE'
-			
+			animation.play("Dodge")
 			if dodge_allowed:
 				velocity = velocity.normalized() * DODGE_IMPULSE * delta
 			
@@ -126,7 +126,11 @@ func _process(delta):
 				$dodge_timer.start(DODGE_TIMER)
 			if not $dodge_cooldown_timer.time_left > 0:
 				$dodge_cooldown_timer.start(DODGE_COOLDOWN_TIME)
-			
+	
+	
+	if Input.is_action_just_released("5"):
+		var new_NPC = NEW_NPC.instance()
+		get_tree().get_root().add_child(new_NPC)
 			
 	
 	# Parry allowed in following states

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://art/knight.png" type="Texture" id=1]
 [ext_resource path="res://art/direction_indicator.png" type="Texture" id=2]
@@ -13,6 +13,22 @@ extents = Vector2( 16, 20 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 16, 24 )
 
+[sub_resource type="Animation" id=10]
+resource_name = "Dodge"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 8, 0 ]
+}
+
 [sub_resource type="Animation" id=3]
 resource_name = "Heavy"
 length = 0.8
@@ -24,10 +40,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 2, 8, 9, 10 ]
+"values": [ 5, 6, 6, 7, 0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("hitbox/CollisionShape2D:disabled")
@@ -72,7 +88,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0.05, 0.15, 0.3, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 2, 3, 8, 0 ]
+"values": [ 2, 3, 3, 0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("hitbox/CollisionShape2D:disabled")
@@ -97,10 +113,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 12, 13, 0 ]
+"values": [ 7, 0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("blockbox/CollisionShape2D:disabled")
@@ -140,7 +156,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 6 ]
+"values": [ 4 ]
 }
 
 [sub_resource type="CircleShape2D" id=9]
@@ -159,10 +175,10 @@ position = Vector2( 17.5, 0 )
 texture = ExtResource( 2 )
 
 [node name="character" type="Sprite" parent="center"]
-position = Vector2( 8, 5 )
 rotation = 1.5708
 texture = ExtResource( 1 )
-hframes = 9
+hframes = 10
+frame = 8
 
 [node name="hitbox" type="Area2D" parent="center"]
 collision_layer = 2
@@ -184,6 +200,7 @@ shape = SubResource( 2 )
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="center"]
+anims/Dodge = SubResource( 10 )
 anims/Heavy = SubResource( 3 )
 anims/Idle = SubResource( 4 )
 anims/Light = SubResource( 5 )
