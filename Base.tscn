@@ -9,6 +9,7 @@
 
 [node name="background" type="Sprite" parent="."]
 position = Vector2( -18.0793, -7.57955 )
+z_index = -5
 texture = ExtResource( 1 )
 centered = false
 
@@ -33,6 +34,7 @@ margin_left = 8.0
 margin_top = 8.0
 margin_right = 48.0
 margin_bottom = 51.0
+rect_scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
