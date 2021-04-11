@@ -12,7 +12,7 @@
 extents = Vector2( 16, 20 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 16, 24 )
+extents = Vector2( 18.701, 24 )
 
 [sub_resource type="CircleShape2D" id=3]
 
@@ -195,14 +195,15 @@ rotation = 1.5708
 z_index = 1
 texture = ExtResource( 1 )
 hframes = 10
-frame = 1
+frame = 3
 
 [node name="hitbox" type="Area2D" parent="center"]
 collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/hitbox"]
-position = Vector2( 16, 0 )
+position = Vector2( 32, 0 )
+scale = Vector2( 1.82755, 2.21364 )
 shape = SubResource( 1 )
 disabled = true
 
@@ -212,11 +213,13 @@ collision_mask = 2147483649
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/blockbox"]
-position = Vector2( 16, 0 )
+position = Vector2( 32, 0 )
+scale = Vector2( 1.57011, 1.84162 )
 shape = SubResource( 2 )
 disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 2.03794, 2.03794 )
 shape = SubResource( 3 )
 
 [node name="hurtbox" type="Area2D" parent="."]
@@ -224,9 +227,11 @@ collision_layer = 0
 script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
+scale = Vector2( 2.3078, 2.3078 )
 shape = SubResource( 3 )
 
 [node name="debug_state" type="Label" parent="."]
+visible = false
 margin_left = -40.0
 margin_top = -36.0
 margin_bottom = -22.0

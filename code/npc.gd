@@ -12,8 +12,8 @@ export var KNOCKBACK_STRENGTH := 40.0  # knockback strength
 
 export var DAMAGE := 10.0
 
-var STANDOFF_DISTANCE := 40.0  # distance the AI wants to sit from the player
-var RUNAWAY_DISTANCE := 25.0  # distance the AI wants to run from the player
+onready var STANDOFF_DISTANCE : float = $range_ref/standoff_distance.shape.radius  # distance the AI wants to sit from the player
+onready var RUNAWAY_DISTANCE : float = $range_ref/runaway_distance.shape.radius  # distance the AI wants to sit from the player
 
 enum {ATTACKING, STANDOFF, RETREATING, BACKING_AWAY, MOVING_TO_PLAYER, SLEEP, KNOCK_BACK}
 
@@ -37,12 +37,12 @@ func _process(delta):
 	# orient towards player
 	$center.rotation = PI + position.angle_to_point(player_pos)
 	
-	#$Label.text = str(position.distance_to(player_pos))
+	#$debug_state.text = str(position.distance_to(player_pos))
 	
 	# Stateful Code
 	match current_state:
 		ATTACKING:
-			$Label.text = "ATTACKING"
+			$debug_state.text = "ATTACKING"
 			$AnimationPlayer.play("Heavy")
 			
 			if not $cooldown_timer.time_left > 0:
@@ -52,7 +52,7 @@ func _process(delta):
 			attack_available = false
 		
 		STANDOFF:  # attacking range
-			$Label.text = "STANDOFF"
+			$debug_state.text = "STANDOFF"
 			velocity = Vector2.ZERO
 			# intended to strafe/orbit around the player
 #			velocity.x = cos($center.rotation)+PI/2
@@ -69,10 +69,10 @@ func _process(delta):
 				current_state = MOVING_TO_PLAYER
 		
 		RETREATING:
-			$Label.text = "RETREATING"
+			$debug_state.text = "RETREATING"
 		
 		BACKING_AWAY:
-			$Label.text = "BACKING_AWAY"
+			$debug_state.text = "BACKING_AWAY"
 			velocity.x = cos($center.rotation)
 			velocity.y = sin($center.rotation)
 			velocity = -speed * velocity.normalized()
@@ -81,7 +81,7 @@ func _process(delta):
 				current_state = STANDOFF
 		
 		MOVING_TO_PLAYER:
-			$Label.text = "MOVING_TO_PLAYER"
+			$debug_state.text = "MOVING_TO_PLAYER"
 			velocity.x = cos($center.rotation)
 			velocity.y = sin($center.rotation)
 			velocity = speed * velocity.normalized()
@@ -93,13 +93,13 @@ func _process(delta):
 			if not $knockback_timer.time_left > 0:
 				$knockback_timer.start(KNOCKBACK_TIME)
 			
-			$Label.text = "KNOCK_BACK"
+			$debug_state.text = "KNOCK_BACK"
 			velocity.x = -cos($center.rotation)
 			velocity.y = -sin($center.rotation)
 			velocity = KNOCKBACK_STRENGTH * velocity.normalized()
 		
 		SLEEP:
-			$Label.text = "SLEEP"
+			$debug_state.text = "SLEEP"
 			if distance_to_player > STANDOFF_DISTANCE:
 				current_state = MOVING_TO_PLAYER
 	
