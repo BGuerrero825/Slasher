@@ -13,7 +13,7 @@ export var KNOCKBACK_STRENGTH := 40.0  # knockback strength
 export var DAMAGE := 10.0
 
 onready var STANDOFF_DISTANCE : float = $range_ref/standoff_distance.shape.radius  # distance the AI wants to sit from the player
-onready var RUNAWAY_DISTANCE : float = $range_ref/runaway_distance.shape.radius  # distance the AI wants to sit from the player
+onready var RUNAWAY_DISTANCE : float = $range_ref/runaway_distance.shape.radius  # distance the AI wants to run from the player
 
 enum {ATTACKING, STANDOFF, RETREATING, BACKING_AWAY, MOVING_TO_PLAYER, SLEEP, KNOCK_BACK}
 
@@ -45,10 +45,10 @@ func _process(delta):
 			$debug_state.text = "ATTACKING"
 			$AnimationPlayer.play("Heavy")
 			
-			if not $cooldown_timer.time_left > 0:
-				$cooldown_timer.start(ATTACK_COOLDOWN_TIME)
-			if not $move_delay_timer.time_left > 0:
-				$move_delay_timer.start(MOVE_DELAY_TIME)
+			if not $timers/cooldown_timer.time_left > 0:
+				$timers/cooldown_timer.start(ATTACK_COOLDOWN_TIME)
+			if not $timers/move_delay_timer.time_left > 0:
+				$timers/move_delay_timer.start(MOVE_DELAY_TIME)
 			attack_available = false
 		
 		STANDOFF:  # attacking range
@@ -60,8 +60,8 @@ func _process(delta):
 #			velocity = speed * velocity.normalized()
 			
 			
-			if attack_available and not $attack_timer.time_left > 0:  # only activate if timer isn't running
-				$attack_timer.start(ATTACK_DELAY_TIME)
+			if attack_available and not $timers/attack_timer.time_left > 0:  # only activate if timer isn't running
+				$timers/attack_timer.start(ATTACK_DELAY_TIME)
 			
 			if distance_to_player < RUNAWAY_DISTANCE:
 				current_state = BACKING_AWAY
@@ -90,8 +90,8 @@ func _process(delta):
 				current_state = STANDOFF
 		
 		KNOCK_BACK:
-			if not $knockback_timer.time_left > 0:
-				$knockback_timer.start(KNOCKBACK_TIME)
+			if not $timers/knockback_timer.time_left > 0:
+				$timers/knockback_timer.start(KNOCKBACK_TIME)
 			
 			$debug_state.text = "KNOCK_BACK"
 			velocity.x = -cos($center.rotation)

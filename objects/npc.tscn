@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://art/base.png" type="Texture" id=1]
 [ext_resource path="res://art/direction_indicator.png" type="Texture" id=2]
@@ -42,7 +42,10 @@ tracks/1/keys = {
 }
 
 [sub_resource type="CircleShape2D" id=5]
-radius = 32.0
+radius = 58.7585
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 47.2507
 
 [node name="npc" type="KinematicBody2D"]
 script = ExtResource( 3 )
@@ -104,16 +107,18 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Heavy = SubResource( 4 )
 
-[node name="attack_timer" type="Timer" parent="."]
+[node name="timers" type="Node2D" parent="."]
+
+[node name="attack_timer" type="Timer" parent="timers"]
 one_shot = true
 
-[node name="cooldown_timer" type="Timer" parent="."]
+[node name="cooldown_timer" type="Timer" parent="timers"]
 one_shot = true
 
-[node name="move_delay_timer" type="Timer" parent="."]
+[node name="move_delay_timer" type="Timer" parent="timers"]
 one_shot = true
 
-[node name="knockback_timer" type="Timer" parent="."]
+[node name="knockback_timer" type="Timer" parent="timers"]
 one_shot = true
 
 [node name="range_ref" type="Area2D" parent="."]
@@ -121,14 +126,13 @@ collision_layer = 0
 collision_mask = 0
 
 [node name="standoff_distance" type="CollisionShape2D" parent="range_ref"]
-visible = false
 shape = SubResource( 5 )
 
 [node name="runaway_distance" type="CollisionShape2D" parent="range_ref"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="damage_taken" from="hurtbox" to="." method="_on_hurtbox_damage_taken"]
-[connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]
-[connection signal="timeout" from="cooldown_timer" to="." method="_on_cooldown_timer_timeout"]
-[connection signal="timeout" from="move_delay_timer" to="." method="_on_move_delay_timer_timeout"]
-[connection signal="timeout" from="knockback_timer" to="." method="_on_knockback_timer_timeout"]
+[connection signal="timeout" from="timers/attack_timer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="timers/cooldown_timer" to="." method="_on_cooldown_timer_timeout"]
+[connection signal="timeout" from="timers/move_delay_timer" to="." method="_on_move_delay_timer_timeout"]
+[connection signal="timeout" from="timers/knockback_timer" to="." method="_on_knockback_timer_timeout"]
