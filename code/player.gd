@@ -4,9 +4,9 @@ const NEW_NPC = preload("res://objects/npc.tscn")
 export var player_health = 40
 
 #movement constants
-export var MAX_SPEED := 85.0
-export var ACCELERATION := 500.0
-export var FRICTION := 350.0
+export var MAX_SPEED := 115.0
+export var ACCELERATION := 600.0
+export var FRICTION := 450.0
 
 export var LIGHT_ATTACK_COOLDOWN_TIME := .5
 export var HEAVY_ATTACK_COOLDOWN_TIME := 1.0

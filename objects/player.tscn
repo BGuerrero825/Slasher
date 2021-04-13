@@ -231,7 +231,6 @@ scale = Vector2( 2.3078, 2.3078 )
 shape = SubResource( 3 )
 
 [node name="debug_state" type="Label" parent="."]
-visible = false
 margin_left = -40.0
 margin_top = -36.0
 margin_bottom = -22.0
