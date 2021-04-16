@@ -41,6 +41,7 @@ resource_name = "Walk"
 [node name="peasant" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 speed = 50.0
+LUNGE_SPEED = 200.0
 
 [node name="character" parent="center" index="1"]
 texture = ExtResource( 5 )

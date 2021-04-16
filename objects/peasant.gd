@@ -2,6 +2,7 @@ extends "res://code/npc.gd"
 
 
 func _process(delta):
+	
 	var player_pos = $"/root/Global".player.get_position()
 	var distance_to_player = position.distance_to(player_pos)
 	
@@ -16,11 +17,14 @@ func _process(delta):
 			$debug_state.text = "ATTACKING"
 			$AnimationPlayer2.play("Heavy")
 			
-			if not $timers/cooldown_timer.time_left > 0:
-				$timers/cooldown_timer.start(ATTACK_COOLDOWN_TIME)
-			if not $timers/move_delay_timer.time_left > 0:
-				$timers/move_delay_timer.start(MOVE_DELAY_TIME)
+#			if not $timers/cooldown_timer.time_left > 0:
+#				$timers/cooldown_timer.start(ATTACK_COOLDOWN_TIME)
 			attack_available = false
+			
+			if lunging:  # defined in animation
+				velocity.x = cos($center.rotation)
+				velocity.y = sin($center.rotation)
+				velocity = LUNGE_SPEED * velocity.normalized()
 		
 		STANDOFF:  # attacking range
 			$debug_state.text = "STANDOFF"

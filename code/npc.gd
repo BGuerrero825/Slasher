@@ -9,6 +9,7 @@ export var ATTACK_COOLDOWN_TIME := 1.5  # delay between attacks
 export var MOVE_DELAY_TIME := 0.5  # delay before moving after attacking
 export var KNOCKBACK_TIME := 0.1  # total time spent in knockback
 export var KNOCKBACK_STRENGTH := 40.0  # knockback strength
+export var LUNGE_SPEED := 50.0  # lunge speed
 
 export var DAMAGE := 10.0
 
@@ -25,6 +26,7 @@ var attack_available := true
 var current_damage := DAMAGE
 
 var velocity := Vector2()
+export var lunging := false  # INTERNAL USE ONLY
 
 
 func _on_hurtbox_damage_taken(amount):
@@ -45,13 +47,21 @@ func _on_cooldown_timer_timeout():
 	attack_available = true
 
 
-func _on_move_delay_timer_timeout():
-	current_state = STANDOFF
-
-
 func _on_hitbox_area_entered(area):
 	area.take_damage(current_damage, self)
 
 
 func _on_knockback_timer_timeout():
 	current_state = STANDOFF
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	print("ANIMATION_FINISHED", anim_name)
+	current_state = STANDOFF
+	if anim_name == "Heavy":
+#		$timers/move_delay_timer.start(MOVE_DELAY_TIME)
+		$timers/cooldown_timer.start(ATTACK_COOLDOWN_TIME)
+
+
+#func _on_move_delay_timer_timeout():
+#	print("MOVE TIMER ENDED")

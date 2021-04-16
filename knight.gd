@@ -18,8 +18,6 @@ func _process(delta):
 			
 			if not $timers/cooldown_timer.time_left > 0:
 				$timers/cooldown_timer.start(ATTACK_COOLDOWN_TIME)
-			if not $timers/move_delay_timer.time_left > 0:
-				$timers/move_delay_timer.start(MOVE_DELAY_TIME)
 			attack_available = false
 		
 		STANDOFF:  # attacking range
