@@ -4,18 +4,18 @@ const NEW_NPC = preload("res://objects/npc.tscn")
 export var player_health = 40
 
 #movement constants
-export var MAX_SPEED := 115.0
-export var ACCELERATION := 600.0
-export var FRICTION := 450.0
+export var MAX_SPEED := 150.0
+export var ACCELERATION := 800.0
+export var FRICTION := 550.0
 
-export var LIGHT_ATTACK_COOLDOWN_TIME := .5
+export var LIGHT_ATTACK_COOLDOWN_TIME := .55
 export var HEAVY_ATTACK_COOLDOWN_TIME := 1.0
 export var PARRY_COOLDOWN_TIME := .4
 
 export var PARRY_INVINCIBILITY_TIME := .8
 
-export var LIGHT_ATTACK_WINDOW := .8
-export var HEAVY_ATTACK_WINDOW := .5
+export var LIGHT_ATTACK_WINDOW := .4
+export var HEAVY_ATTACK_WINDOW := 1
 
 export var LIGHT_ATTACK_DMG := 1
 export var HEAVY_ATTACK_DMG := 2
@@ -23,12 +23,12 @@ export var HEAVY_ATTACK_DMG := 2
 export var KNOCKBACK_TIME := 0.1  # total time spent in knockback
 export var KNOCKBACK_STRENGTH := 40.0  # knockback strength
 
-export var DODGE_TIMER = 0.15
-export var DODGE_COOLDOWN_TIME := 1.0
-export var DODGE_IMPULSE := 400
+export var DODGE_TIMER = 0.2
+export var DODGE_COOLDOWN_TIME := 0.50
+export var DODGE_IMPULSE := 375
 
 enum {ATTACK_READY, LIGHT_WINDUP, HEAVY_WINDUP, LIGHT_ATTACKING, 
-		HEAVY_ATTACKING, ATTACK_COOLDOWN, PARRY, KNOCKBACK, DODGE}
+		HEAVY_ATTACKING, ATTACK_COOLDOWN, PARRY, KNOCKBACK, DODGE, DODGE_RECOVERY}
 
 var current_state := ATTACK_READY
 
@@ -38,6 +38,7 @@ var invincible := false
 var current_damage := 0.0
 var last_dmg_source = self
 
+var input_vector := Vector2.ZERO
 var velocity := Vector2.ZERO
 var mouse_angle := 0.0
 var movement_allowed := true
@@ -116,16 +117,18 @@ func _process(delta):
 			$debug_state.text = 'DODGE'
 			animation.play("Dodge")
 			if dodge_allowed:
-				velocity = velocity.normalized() * DODGE_IMPULSE
-			
+				velocity = input_vector.normalized() * DODGE_IMPULSE
 			movement_allowed = false
 			dodge_allowed = false
 			invincible = true
 			if not $dodge_timer.time_left > 0:
 				$dodge_timer.start(DODGE_TIMER)
+	
+		DODGE_RECOVERY:
+			$debug_state.text = 'DODGE_RECOVERY'
 			if not $dodge_cooldown_timer.time_left > 0:
 				$dodge_cooldown_timer.start(DODGE_COOLDOWN_TIME)
-	
+			
 	#debug code for spawning an enemy
 	if Input.is_action_just_released("5"):
 		var new_NPC = NEW_NPC.instance()
@@ -139,7 +142,7 @@ func _process(delta):
 	# MOVEMENT CODE
 	#set input vector based on input strength from x axis (a/d) and y axis (w/s)
 	if movement_allowed:
-		var input_vector = Vector2.ZERO
+		input_vector = Vector2.ZERO
 		input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 		input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 		input_vector = input_vector.normalized()
@@ -208,7 +211,7 @@ func _on_knockback_timer_timeout():
 
 
 func _on_dodge_timer_timeout():
-	current_state = ATTACK_READY
+	current_state = DODGE_RECOVERY
 	movement_allowed = true
 	invincible = false
 	velocity = Vector2(0.0, 0.0)
@@ -216,3 +219,4 @@ func _on_dodge_timer_timeout():
 
 func _on_dodge_cooldown_timer_timeout():
 	dodge_allowed = true
+	current_state = ATTACK_READY

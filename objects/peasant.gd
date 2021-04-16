@@ -14,7 +14,7 @@ func _process(delta):
 	match current_state:
 		ATTACKING:
 			$debug_state.text = "ATTACKING"
-			$AnimationPlayer.play("Heavy")
+			$AnimationPlayer2.play("Heavy")
 			
 			if not $timers/cooldown_timer.time_left > 0:
 				$timers/cooldown_timer.start(ATTACK_COOLDOWN_TIME)
