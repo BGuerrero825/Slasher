@@ -27,11 +27,10 @@ var current_damage := DAMAGE
 var velocity := Vector2()
 
 
-func _on_hurtbox_damage_taken(amount):
+func _on_hurtbox_damage_taken(amount, source):
 	current_state = KNOCK_BACK
-	
 	health = health - amount
-	print("NPC_Health: ", health)
+	print("NPC_Health: ", health, " damage taken: ", amount)
 	if health <= 0:
 		queue_free()
 
