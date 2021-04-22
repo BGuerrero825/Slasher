@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const NEW_NPC = preload("res://objects/npc.tscn")
+const NEW_NPC = preload("res://objects/knight.tscn")
 export var player_health = 40
 
 #movement constants
@@ -178,16 +178,14 @@ func _on_heavy_windup_timer_timeout():
 
 
 func _on_hitbox_area_entered(area):
-	area.take_damage(current_damage)
+	area.take_damage(current_damage, self)
 
 
-func _on_hurtbox_damage_taken(amount, dmg_source):
-#	print("DMG_SOURCE: ", dmg_source.position)
-	
+func _on_hurtbox_damage_taken(amount, source):	
 	if not invincible:
 		player_health -= amount
 		print("Player_Health: ", player_health)
-		last_dmg_source = dmg_source
+		last_dmg_source = source
 		current_state = KNOCKBACK
 	else:
 		print("BLOCKED ATTACK WITH I FRAME")
