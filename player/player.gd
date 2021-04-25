@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const NEW_NPC = preload("res://objects/knight.tscn")
+const NEW_NPC = preload("res://npc/knight/knight.tscn")
 export var player_health = 40
 
 #movement constants

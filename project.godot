@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "BasePlayerState",
+"language": "GDScript",
+"path": "res://player/BasePlayerState.gd"
+}, {
+"base": "Node2D",
+"class": "PlayerFSM",
+"language": "GDScript",
+"path": "res://player/state_machine.gd"
+} ]
 _global_script_class_icons={
-
+"BasePlayerState": "",
+"PlayerFSM": ""
 }
 
 [application]
@@ -21,7 +32,7 @@ config/icon="res://art/icon.png"
 
 [autoload]
 
-Global="*res://code/global.gd"
+Global="*res://global.gd"
 
 [display]
 
