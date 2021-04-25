@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+class_name Player
+
 const NEW_NPC = preload("res://npc/knight/knight.tscn")
 export var player_health = 40
 
@@ -47,17 +49,19 @@ var dodge_allowed := true
 var dodge_vel := Vector2(0.0, 0.0)
 
 onready var center = $center
-onready var animation = $AnimationPlayer
+onready var animation_player = $AnimationPlayer
+onready var state_machine: PlayerFSM = $state_machine
 
 func _ready():
 	$"/root/Global".register_player(self)
+	state_machine.init(self)
 
 func _process(delta):
 	# COMBAT CODE
 	match current_state:
 		ATTACK_READY:
 			$debug_state.text = 'ATTACK_READY'
-			animation.play("Idle")
+			animation_player.play("Idle")
 			if Input.is_action_pressed("attack"):
 				current_state = LIGHT_WINDUP
 				# start light to heavy attack transition timer
@@ -65,13 +69,13 @@ func _process(delta):
 		
 		LIGHT_WINDUP:
 			$debug_state.text = 'LIGHT_WINDUP'
-			animation.play("Prep")
+			animation_player.play("Prep")
 			if Input.is_action_just_released("attack"):
 				current_state = LIGHT_ATTACKING
 		
 		LIGHT_ATTACKING:
 			$debug_state.text = 'LIGHT_ATTACKING'
-			animation.play("Light")
+			animation_player.play("Light")
 			current_state = ATTACK_COOLDOWN
 			current_damage = LIGHT_ATTACK_DMG
 			$attack_cooldown_timer.start(LIGHT_ATTACK_COOLDOWN_TIME)
@@ -79,20 +83,20 @@ func _process(delta):
 		HEAVY_WINDUP:
 			# heavy_windup_timer started in _on_light_windup_timer_timeout
 			$debug_state.text = 'HEAVY_WINDUP'
-			animation.play("Windup")
+			animation_player.play("Windup")
 			if Input.is_action_just_released("attack"):
 				current_state = HEAVY_ATTACKING
 		
 		HEAVY_ATTACKING:
 			$debug_state.text = 'HEAVY_ATTACKING'
-			animation.play("Heavy")
+			animation_player.play("Heavy")
 			current_state = ATTACK_COOLDOWN
 			current_damage = HEAVY_ATTACK_DMG
 			$attack_cooldown_timer.start(HEAVY_ATTACK_COOLDOWN_TIME)
 		
 		PARRY:
 			$debug_state.text = 'PARRY'
-			animation.play("Parry")
+			animation_player.play("Parry")
 			current_state = ATTACK_COOLDOWN
 			$attack_cooldown_timer.start(PARRY_COOLDOWN_TIME)
 		
@@ -115,7 +119,7 @@ func _process(delta):
 		
 		DODGE:
 			$debug_state.text = 'DODGE'
-			animation.play("Dodge")
+			animation_player.play("Dodge")
 			if dodge_allowed:
 				velocity = input_vector.normalized() * DODGE_IMPULSE
 			movement_allowed = false
@@ -164,6 +168,12 @@ func _process(delta):
 func _on_attack_cooldown_timer_timeout():
 	current_state = ATTACK_READY
 
+func play(anim:String):
+	var x = animation_player.current_animation
+	print(x)
+	if animation_player.current_animation == anim:
+		return
+	animation_player.play(anim)
 
 func _on_light_windup_timer_timeout():
 	if current_state == LIGHT_WINDUP:
