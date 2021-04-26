@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://art/knight.png" type="Texture" id=1]
 [ext_resource path="res://art/direction_indicator.png" type="Texture" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://player/HeavyState.gd" type="Script" id=12]
 [ext_resource path="res://player/ParryState.gd" type="Script" id=13]
 [ext_resource path="res://player/DodgeState.gd" type="Script" id=14]
+[ext_resource path="res://player/PrepState.gd" type="Script" id=15]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 20 )
@@ -24,6 +25,7 @@ extents = Vector2( 18.701, 24 )
 [sub_resource type="CircleShape2D" id=3]
 
 [sub_resource type="Animation" id=4]
+resource_name = "dodge"
 length = 0.5
 step = 0.05
 tracks/0/type = "value"
@@ -40,6 +42,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=5]
+resource_name = "heavy"
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/hitbox/CollisionShape2D:disabled")
@@ -67,6 +70,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=6]
+resource_name = "idle"
 loop = true
 step = 0.05
 tracks/0/type = "value"
@@ -95,6 +99,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=7]
+resource_name = "light"
 length = 0.6
 step = 0.05
 tracks/0/type = "value"
@@ -123,6 +128,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=8]
+resource_name = "parry"
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -150,6 +156,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=9]
+resource_name = "prep"
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -165,6 +172,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=10]
+resource_name = "windup"
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
 tracks/0/interp = 1
@@ -184,25 +192,28 @@ script = ExtResource( 4 )
 [node name="state_machine" type="Node2D" parent="."]
 script = ExtResource( 6 )
 
-[node name="Recovery" type="Node2D" parent="state_machine"]
+[node name="recovery" type="Node2D" parent="state_machine"]
 script = ExtResource( 8 )
 
-[node name="Idle" type="Node2D" parent="state_machine"]
+[node name="idle" type="Node2D" parent="state_machine"]
 script = ExtResource( 9 )
 
-[node name="Windup" type="Node2D" parent="state_machine"]
+[node name="prep" type="Node2D" parent="state_machine"]
+script = ExtResource( 15 )
+
+[node name="windup" type="Node2D" parent="state_machine"]
 script = ExtResource( 10 )
 
-[node name="Light" type="Node2D" parent="state_machine"]
+[node name="light" type="Node2D" parent="state_machine"]
 script = ExtResource( 11 )
 
-[node name="Heavy" type="Node2D" parent="state_machine"]
+[node name="heavy" type="Node2D" parent="state_machine"]
 script = ExtResource( 12 )
 
-[node name="Parry" type="Node2D" parent="state_machine"]
+[node name="parry" type="Node2D" parent="state_machine"]
 script = ExtResource( 13 )
 
-[node name="Dodge" type="Node2D" parent="state_machine"]
+[node name="dodge" type="Node2D" parent="state_machine"]
 script = ExtResource( 14 )
 
 [node name="base" type="Sprite" parent="."]
@@ -229,6 +240,7 @@ z_index = 1
 texture = ExtResource( 1 )
 vframes = 6
 hframes = 10
+frame = 20
 
 [node name="hitbox" type="Area2D" parent="center"]
 collision_layer = 2
@@ -248,7 +260,6 @@ collision_mask = 2147483649
 position = Vector2( 32, 0 )
 scale = Vector2( 1.57011, 1.84162 )
 shape = SubResource( 2 )
-disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 2.03794, 2.03794 )
@@ -272,22 +283,13 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Dodge = SubResource( 4 )
-anims/Heavy = SubResource( 5 )
-anims/Idle = SubResource( 6 )
-anims/Light = SubResource( 7 )
-anims/Parry = SubResource( 8 )
-anims/Prep = SubResource( 9 )
-anims/Windup = SubResource( 10 )
-
-[node name="attack_cooldown_timer" type="Timer" parent="."]
-one_shot = true
-
-[node name="light_windup_timer" type="Timer" parent="."]
-one_shot = true
-
-[node name="heavy_windup_timer" type="Timer" parent="."]
-one_shot = true
+anims/dodge = SubResource( 4 )
+anims/heavy = SubResource( 5 )
+anims/idle = SubResource( 6 )
+anims/light = SubResource( 7 )
+anims/parry = SubResource( 8 )
+anims/prep = SubResource( 9 )
+anims/windup = SubResource( 10 )
 
 [node name="parry_invincible_timer" type="Timer" parent="."]
 one_shot = true
@@ -301,9 +303,6 @@ one_shot = true
 [node name="dodge_cooldown_timer" type="Timer" parent="."]
 one_shot = true
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
-[connection signal="timeout" from="attack_cooldown_timer" to="." method="_on_attack_cooldown_timer_timeout"]
-[connection signal="timeout" from="light_windup_timer" to="." method="_on_light_windup_timer_timeout"]
-[connection signal="timeout" from="heavy_windup_timer" to="." method="_on_heavy_windup_timer_timeout"]
 [connection signal="timeout" from="parry_invincible_timer" to="." method="_on_parry_invincible_timer_timeout"]
 [connection signal="timeout" from="knockback_timer" to="." method="_on_knockback_timer_timeout"]
 [connection signal="timeout" from="dodge_timer" to="." method="_on_dodge_timer_timeout"]

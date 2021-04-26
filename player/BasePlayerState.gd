@@ -13,5 +13,5 @@ func run(player: KinematicBody2D):
 	return null
 
 func exit(player: KinematicBody2D):
-	if player and player.anim:
-		player.anim.clear_queue()
+	if player and player.animation_player:
+		player.animation_player.clear_queue()
