@@ -14,4 +14,7 @@ func run(player : KinematicBody2D):
 
 	if light_timer.time_left <= 0:
 		return "windup"
+	
+	if Input.is_action_just_pressed("block"):
+		return "parry"
 

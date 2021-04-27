@@ -12,12 +12,16 @@ export var MAX_SPEED := 150.0
 export var ACCELERATION := 800.0
 export var FRICTION := 550.0
 
-export var heavy_attack_charge_time : float = 1.0
-export var light_attack_window : float = 0.15
+export var heavy_attack_charge_time : float = 1.5
+export var light_attack_window : float = 0.45
 
 export var light_recovery_time : float = 0.2
 export var heavy_recovery_time : float = 2.5
+export var parry_recovery_time : float = 0.5
+export var dodge_recovery_time : float = 0.5
 var recovery_time : float = 100.0  # SET IN STATE MACHINE
+
+export var dodge_impulse : float = 350.0
 
 export var light_attack_dmg : float = 5.0
 export var heavy_attack_dmg : float = 15.0

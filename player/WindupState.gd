@@ -16,4 +16,7 @@ func run(player : KinematicBody2D):
 	# heavy timer ends, enter heavy state
 	if heavy_timer.time_left <= 0:
 		return "heavy"
+	
+	if Input.is_action_just_pressed("block"):
+		return "parry"
 
