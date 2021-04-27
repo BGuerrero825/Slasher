@@ -8,6 +8,9 @@ func enter(player : KinematicBody2D):
 	light_timer = get_tree().create_timer(player.light_attack_window)
 
 
+################################################
+#  make this one end based on the animation completing
+################################################
 func run(player : KinematicBody2D):
 	if Input.is_action_just_released("attack"):
 		return "light"
