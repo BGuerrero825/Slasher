@@ -240,7 +240,7 @@ z_index = 1
 texture = ExtResource( 1 )
 vframes = 6
 hframes = 10
-frame = 40
+frame = 30
 
 [node name="hitbox" type="Area2D" parent="center"]
 collision_layer = 2
