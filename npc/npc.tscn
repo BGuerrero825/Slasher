@@ -72,8 +72,9 @@ texture = ExtResource( 2 )
 rotation = 1.5708
 z_index = 1
 texture = ExtResource( 5 )
-vframes = 6
+vframes = 7
 hframes = 10
+frame = 10
 
 [node name="hitbox" type="Area2D" parent="center"]
 collision_mask = 0

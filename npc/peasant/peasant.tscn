@@ -47,7 +47,7 @@ LUNGE_SPEED = 200.0
 texture = ExtResource( 5 )
 vframes = 1
 hframes = 7
-frame = 2
+frame = 0
 
 [node name="CollisionShape2D" parent="center/hitbox" index="0"]
 shape = SubResource( 1 )
