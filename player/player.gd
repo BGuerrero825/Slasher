@@ -129,10 +129,9 @@ func _on_blockbox_blocked_attack():
 	invincible = true
 
 
-#func _on_parry_invincible_timer_timeout():
-#	invincible = false
-#
-#
+func _on_parry_invincible_timer_timeout():
+	invincible = false
+
 #func _on_knockback_timer_timeout():
 #	current_state = ATTACK_READY
 #	movement_allowed = true

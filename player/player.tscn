@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://art/knight.png" type="Texture" id=1]
 [ext_resource path="res://art/direction_indicator.png" type="Texture" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://player/ParryState.gd" type="Script" id=13]
 [ext_resource path="res://player/DodgeState.gd" type="Script" id=14]
 [ext_resource path="res://player/PrepState.gd" type="Script" id=15]
+[ext_resource path="res://player/player_blockbox.gd" type="Script" id=16]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 20 )
@@ -255,6 +256,7 @@ disabled = true
 [node name="blockbox" type="Area2D" parent="center"]
 collision_layer = 0
 collision_mask = 2147483649
+script = ExtResource( 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/blockbox"]
 position = Vector2( 32, 0 )
@@ -303,6 +305,7 @@ one_shot = true
 [node name="dodge_cooldown_timer" type="Timer" parent="."]
 one_shot = true
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="blocked_attack" from="center/blockbox" to="." method="_on_blockbox_blocked_attack"]
 [connection signal="damage_taken" from="hurtbox" to="." method="_on_hurtbox_damage_taken"]
 [connection signal="timeout" from="parry_invincible_timer" to="." method="_on_parry_invincible_timer_timeout"]
 [connection signal="timeout" from="knockback_timer" to="." method="_on_knockback_timer_timeout"]
