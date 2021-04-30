@@ -8,9 +8,26 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "BasePlayerState",
+"language": "GDScript",
+"path": "res://player/BasePlayerState.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://player/player.gd"
+}, {
+"base": "Node2D",
+"class": "PlayerFSM",
+"language": "GDScript",
+"path": "res://player/state_machine.gd"
+} ]
 _global_script_class_icons={
-
+"BasePlayerState": "",
+"Player": "",
+"PlayerFSM": ""
 }
 
 [application]
@@ -21,7 +38,7 @@ config/icon="res://art/icon.png"
 
 [autoload]
 
-Global="*res://code/global.gd"
+Global="*res://global.gd"
 
 [display]
 

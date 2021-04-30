@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://objects/npc.tscn" type="PackedScene" id=1]
-[ext_resource path="res://code/peasant.gd" type="Script" id=2]
+[ext_resource path="res://npc/npc.tscn" type="PackedScene" id=1]
+[ext_resource path="res://npc/peasant/peasant.gd" type="Script" id=2]
 [ext_resource path="res://art/peasant.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -41,6 +41,7 @@ resource_name = "Walk"
 [node name="peasant" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 speed = 50.0
+LUNGE_SPEED = 200.0
 
 [node name="character" parent="center" index="1"]
 texture = ExtResource( 5 )
