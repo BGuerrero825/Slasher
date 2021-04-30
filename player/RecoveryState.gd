@@ -12,3 +12,5 @@ func run(player : KinematicBody2D):
 	if cooldown_timer.time_left <= 0:
 		return "idle"
 	
+	if Input.is_action_just_pressed("block"):
+		return "parry"

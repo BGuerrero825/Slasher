@@ -25,7 +25,7 @@ export var dodge_impulse : float = 350.0
 
 export var light_attack_dmg : float = 5.0
 export var heavy_attack_dmg : float = 15.0
-var active_dmg : float = 0.0  # SET IN STATE MACHINE
+var active_dmg : float = 25.0  # SET IN STATE MACHINE
 
 
 ## REFACTOR BELOW
@@ -43,7 +43,7 @@ export var DODGE_IMPULSE := 375
 var parry_available := true
 var invincible := false
 
-var last_dmg_source = self
+#var last_dmg_source = self
 
 var input_vector := Vector2.ZERO
 var velocity := Vector2.ZERO
@@ -66,49 +66,6 @@ func _process(delta):
 	# display state
 	$debug_state.text = state_machine.active_state.tag
 	
-	# COMBAT CODE
-#	match current_state:
-
-#
-#		PARRY:
-#			$debug_state.text = 'PARRY'
-#			animation_player.play("Parry")
-#			current_state = ATTACK_COOLDOWN
-#			$attack_cooldown_timer.start(PARRY_COOLDOWN_TIME)
-#
-#		ATTACK_COOLDOWN:
-#			$debug_state.text = 'ATTACK_COOLDOWN'
-#			$light_windup_timer.stop()
-#			$heavy_windup_timer.stop()
-#
-#		KNOCKBACK:
-#			$debug_state.text = 'KNOCKBACK'
-#
-#			movement_allowed = false
-#			if not $knockback_timer.time_left > 0:
-#				$knockback_timer.start(KNOCKBACK_TIME)
-#
-#			$debug_state.text = "KNOCK_BACK"
-#			velocity.x = -cos($center.rotation)
-#			velocity.y = -sin($center.rotation)
-#			velocity = KNOCKBACK_STRENGTH * velocity.normalized()
-#
-#		DODGE:
-#			$debug_state.text = 'DODGE'
-#			animation_player.play("Dodge")
-#			if dodge_allowed:
-#				velocity = input_vector.normalized() * DODGE_IMPULSE
-#			movement_allowed = false
-#			dodge_allowed = false
-#			invincible = true
-#			if not $dodge_timer.time_left > 0:
-#				$dodge_timer.start(DODGE_TIMER)
-#
-#		DODGE_RECOVERY:
-#			$debug_state.text = 'DODGE_RECOVERY'
-#			if not $dodge_cooldown_timer.time_left > 0:
-#				$dodge_cooldown_timer.start(DODGE_COOLDOWN_TIME)
-			
 	#debug code for spawning an enemy
 	if Input.is_action_just_released("5"):
 		var new_NPC = NEW_NPC.instance()
@@ -148,20 +105,23 @@ func play(anim:String):
 
 
 func _on_hitbox_area_entered(area):
-	area.take_damage(active_dmg, self)
+	area.take_damage(active_dmg)
 
 
-#func _on_hurtbox_damage_taken(amount, source):	
-#	if not invincible:
-#		player_health -= amount
-#		print("Player_Health: ", player_health)
-#		last_dmg_source = source
-#		current_state = KNOCKBACK
-#	else:
-#		print("BLOCKED ATTACK WITH I FRAME")
-#
-#	if player_health <= 0:
-#		print("PLAYER IS DEAD. (just block lul)")
+func _on_hurtbox_damage_taken(amount, source):	
+	if not invincible:
+		player_health -= amount
+		print("Player_Health: ", player_health)
+		knockback(source)
+	else:
+		print("BLOCKED ATTACK WITH I FRAME")
+
+	if player_health <= 0:
+		print("PLAYER IS DEAD. (just block lul)")
+
+
+func knockback(dmg_source):
+	pass
 
 
 func _on_blockbox_blocked_attack():

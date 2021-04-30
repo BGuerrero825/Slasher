@@ -1,6 +1,6 @@
 extends Area2D
 
-signal damage_taken(amount, dmg_source)
+signal npc_damage_taken(amount)
 
-func take_damage(amount, dmg_source):
-	emit_signal("damage_taken", amount, dmg_source)
+func take_damage(amount):
+	emit_signal("npc_damage_taken", amount)

@@ -29,7 +29,7 @@ var velocity := Vector2()
 export var lunging := false  # INTERNAL USE ONLY
 
 
-func _on_hurtbox_damage_taken(amount, source):
+func _on_hurtbox_npc_damage_taken(amount):
 	current_state = KNOCK_BACK
 	health = health - amount
 	print("NPC_Health: ", health, " damage taken: ", amount)
@@ -62,5 +62,3 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		$timers/cooldown_timer.start(ATTACK_COOLDOWN_TIME)
 
 
-#func _on_move_delay_timer_timeout():
-#	print("MOVE TIMER ENDED")

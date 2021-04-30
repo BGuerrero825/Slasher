@@ -134,6 +134,7 @@ shape = SubResource( 5 )
 [node name="runaway_distance" type="CollisionShape2D" parent="range_ref"]
 shape = SubResource( 6 )
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="npc_damage_taken" from="hurtbox" to="." method="_on_hurtbox_npc_damage_taken"]
 [connection signal="timeout" from="timers/attack_timer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="timers/cooldown_timer" to="." method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="timers/move_delay_timer" to="." method="_on_move_delay_timer_timeout"]
