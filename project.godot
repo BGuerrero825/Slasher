@@ -10,9 +10,19 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node2D",
+"class": "BaseNPCState",
+"language": "GDScript",
+"path": "res://npc/BaseNPCState.gd"
+}, {
+"base": "Node2D",
 "class": "BasePlayerState",
 "language": "GDScript",
 "path": "res://player/BasePlayerState.gd"
+}, {
+"base": "Node2D",
+"class": "NPCFSM",
+"language": "GDScript",
+"path": "res://npc/npc_state_machine.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Player",
@@ -25,7 +35,9 @@ _global_script_classes=[ {
 "path": "res://player/state_machine.gd"
 } ]
 _global_script_class_icons={
+"BaseNPCState": "",
 "BasePlayerState": "",
+"NPCFSM": "",
 "Player": "",
 "PlayerFSM": ""
 }

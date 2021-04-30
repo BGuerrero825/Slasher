@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://art/base.png" type="Texture" id=1]
 [ext_resource path="res://art/direction_indicator.png" type="Texture" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://npc/npc.gd" type="Script" id=4]
 [ext_resource path="res://art/knight.png" type="Texture" id=5]
 [ext_resource path="res://art/shadow.png" type="Texture" id=6]
+[ext_resource path="res://npc/npc_state_machine.gd" type="Script" id=7]
+[ext_resource path="res://npc/idleNPCstate.gd" type="Script" id=8]
+[ext_resource path="res://npc/attackNPCstate.gd" type="Script" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 24 )
@@ -51,6 +54,15 @@ radius = 47.2507
 [node name="npc" type="KinematicBody2D"]
 script = ExtResource( 4 )
 
+[node name="npc_state_machine" type="Node2D" parent="."]
+script = ExtResource( 7 )
+
+[node name="idle" type="Node2D" parent="npc_state_machine"]
+script = ExtResource( 8 )
+
+[node name="attack" type="Node2D" parent="npc_state_machine"]
+script = ExtResource( 9 )
+
 [node name="base" type="Sprite" parent="."]
 z_index = 1
 texture = ExtResource( 1 )
@@ -74,6 +86,7 @@ z_index = 1
 texture = ExtResource( 5 )
 vframes = 6
 hframes = 10
+frame = 10
 
 [node name="hitbox" type="Area2D" parent="center"]
 collision_mask = 0
@@ -98,10 +111,12 @@ script = ExtResource( 3 )
 shape = SubResource( 3 )
 
 [node name="debug_state" type="Label" parent="."]
-margin_left = -24.0
-margin_top = -32.0
-margin_right = 16.0
-margin_bottom = -18.0
+margin_left = -39.0
+margin_top = -48.0
+margin_right = 38.0
+margin_bottom = -34.0
+text = "debug_state"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -123,15 +138,16 @@ one_shot = true
 [node name="knockback_timer" type="Timer" parent="timers"]
 one_shot = true
 
-[node name="range_ref" type="Area2D" parent="."]
-visible = false
-collision_layer = 0
-collision_mask = 0
+[node name="standoff_distance" type="Area2D" parent="."]
+collision_mask = 2147483648
 
-[node name="standoff_distance" type="CollisionShape2D" parent="range_ref"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="standoff_distance"]
 shape = SubResource( 5 )
 
-[node name="runaway_distance" type="CollisionShape2D" parent="range_ref"]
+[node name="runaway_distance" type="Area2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="runaway_distance"]
 shape = SubResource( 6 )
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="npc_damage_taken" from="hurtbox" to="." method="_on_hurtbox_npc_damage_taken"]
@@ -139,3 +155,7 @@ shape = SubResource( 6 )
 [connection signal="timeout" from="timers/cooldown_timer" to="." method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="timers/move_delay_timer" to="." method="_on_move_delay_timer_timeout"]
 [connection signal="timeout" from="timers/knockback_timer" to="." method="_on_knockback_timer_timeout"]
+[connection signal="area_entered" from="standoff_distance" to="." method="_on_standoff_distance_area_entered"]
+[connection signal="area_exited" from="standoff_distance" to="." method="_on_standoff_distance_area_exited"]
+[connection signal="area_entered" from="runaway_distance" to="." method="_on_runaway_distance_area_entered"]
+[connection signal="area_exited" from="runaway_distance" to="." method="_on_runaway_distance_area_exited"]

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://art/grass_background.png" type="Texture" id=1]
 [ext_resource path="res://art/horizontal_wall.png" type="Texture" id=2]
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://art/helmet1_icon.png" type="Texture" id=4]
+[ext_resource path="res://npc/npc.tscn" type="PackedScene" id=5]
 [ext_resource path="res://art/vertical_wall.png" type="Texture" id=7]
 
 [sub_resource type="AtlasTexture" id=1]
@@ -85,3 +86,7 @@ texture = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="horizontal_wall2/StaticBody2D"]
 position = Vector2( 0, -10 )
 shape = SubResource( 3 )
+
+[node name="npc" parent="." instance=ExtResource( 5 )]
+position = Vector2( 192, 88 )
+health = 75.0
