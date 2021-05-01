@@ -25,7 +25,7 @@ extents = Vector2( 18.701, 24 )
 
 [sub_resource type="CircleShape2D" id=3]
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=4]
 resource_name = "combo"
 step = 0.05
 tracks/0/type = "value"
@@ -41,8 +41,7 @@ tracks/0/keys = {
 "values": [ 20, 21, 50, 51, 52, 53, 54, 55, 56, 57, 0 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "dodge"
+[sub_resource type="Animation" id=5]
 length = 0.5
 step = 0.05
 tracks/0/type = "value"
@@ -58,8 +57,7 @@ tracks/0/keys = {
 "values": [ 40, 41, 0 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "heavy"
+[sub_resource type="Animation" id=6]
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/hitbox/CollisionShape2D:disabled")
@@ -86,8 +84,7 @@ tracks/1/keys = {
 "values": [ 30, 31, 32, 33, 34, 35, 36, 37, 38, 0 ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "idle"
+[sub_resource type="Animation" id=7]
 loop = true
 step = 0.05
 tracks/0/type = "value"
@@ -115,8 +112,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=7]
-resource_name = "light"
+[sub_resource type="Animation" id=8]
 length = 0.6
 step = 0.05
 tracks/0/type = "value"
@@ -144,8 +140,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "parry"
+[sub_resource type="Animation" id=9]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -172,8 +167,7 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "prep"
+[sub_resource type="Animation" id=10]
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -188,8 +182,7 @@ tracks/0/keys = {
 "values": [ 10, 11 ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "windup"
+[sub_resource type="Animation" id=11]
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
 tracks/0/interp = 1
@@ -233,15 +226,16 @@ script = ExtResource( 13 )
 [node name="dodge" type="Node2D" parent="state_machine"]
 script = ExtResource( 14 )
 
-[node name="base" type="Sprite" parent="."]
-show_behind_parent = true
-z_index = 1
-texture = ExtResource( 3 )
-
-[node name="shadow" type="Sprite" parent="base"]
+[node name="shadow" type="Sprite" parent="."]
 show_behind_parent = true
 z_index = -1
 texture = ExtResource( 7 )
+
+[node name="base" type="Sprite" parent="."]
+visible = false
+show_behind_parent = true
+z_index = 1
+texture = ExtResource( 3 )
 
 [node name="center" type="Position2D" parent="."]
 z_index = 2
@@ -300,14 +294,14 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/combo = SubResource( 11 )
-anims/dodge = SubResource( 4 )
-anims/heavy = SubResource( 5 )
-anims/idle = SubResource( 6 )
-anims/light = SubResource( 7 )
-anims/parry = SubResource( 8 )
-anims/prep = SubResource( 9 )
-anims/windup = SubResource( 10 )
+anims/combo = SubResource( 4 )
+anims/dodge = SubResource( 5 )
+anims/heavy = SubResource( 6 )
+anims/idle = SubResource( 7 )
+anims/light = SubResource( 8 )
+anims/parry = SubResource( 9 )
+anims/prep = SubResource( 10 )
+anims/windup = SubResource( 11 )
 
 [node name="parry_invincible_timer" type="Timer" parent="."]
 one_shot = true
