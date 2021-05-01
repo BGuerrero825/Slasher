@@ -21,7 +21,7 @@ export var parry_recovery_time : float = 0.5
 export var dodge_recovery_time : float = 0.5
 var recovery_time : float = 100.0  # SET IN STATE MACHINE
 
-export var dodge_impulse : float = 350.0
+export var dodge_impulse : float = 450.0
 
 export var light_attack_dmg : float = 5.0
 export var heavy_attack_dmg : float = 15.0
