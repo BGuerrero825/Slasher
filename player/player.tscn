@@ -354,15 +354,6 @@ anims/windup = SubResource( 12 )
 [node name="parry_invincible_timer" type="Timer" parent="."]
 one_shot = true
 
-[node name="knockback_timer" type="Timer" parent="."]
-one_shot = true
-
-[node name="dodge_timer" type="Timer" parent="."]
-one_shot = true
-
-[node name="dodge_cooldown_timer" type="Timer" parent="."]
-one_shot = true
-
 [node name="hit_freeze_timer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
@@ -375,7 +366,4 @@ stream = ExtResource( 18 )
 [connection signal="blocked_attack" from="center/blockbox" to="." method="_on_blockbox_blocked_attack"]
 [connection signal="damage_taken" from="hurtbox" to="." method="_on_hurtbox_damage_taken"]
 [connection signal="timeout" from="parry_invincible_timer" to="." method="_on_parry_invincible_timer_timeout"]
-[connection signal="timeout" from="knockback_timer" to="." method="_on_knockback_timer_timeout"]
-[connection signal="timeout" from="dodge_timer" to="." method="_on_dodge_timer_timeout"]
-[connection signal="timeout" from="dodge_cooldown_timer" to="." method="_on_dodge_cooldown_timer_timeout"]
 [connection signal="timeout" from="hit_freeze_timer" to="." method="_on_hit_freeze_timer_timeout"]

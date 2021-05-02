@@ -141,22 +141,6 @@ func _on_blockbox_blocked_attack():
 func _on_parry_invincible_timer_timeout():
 	invincible = false
 
-#func _on_knockback_timer_timeout():
-#	current_state = ATTACK_READY
-#	movement_allowed = true
-#
-#
-#func _on_dodge_timer_timeout():
-#	current_state = DODGE_RECOVERY
-#	movement_allowed = true
-#	invincible = false
-#	velocity = Vector2(0.0, 0.0)
-#
-#
-#func _on_dodge_cooldown_timer_timeout():
-#	dodge_allowed = true
-#	current_state = ATTACK_READY
-
 
 func _on_hit_freeze_timer_timeout():
 	animation_player.play()
