@@ -241,6 +241,26 @@ tracks/0/keys = {
 
 [node name="player" type="KinematicBody2D"]
 script = ExtResource( 4 )
+player_health = null
+MAX_SPEED = null
+ACCELERATION = null
+FRICTION = null
+heavy_attack_charge_time = null
+light_attack_window = null
+light_recovery_time = null
+heavy_recovery_time = null
+parry_recovery_time = null
+dodge_recovery_time = null
+dodge_impulse = null
+light_attack_dmg = null
+heavy_attack_dmg = null
+PARRY_COOLDOWN_TIME = null
+PARRY_INVINCIBILITY_TIME = null
+KNOCKBACK_TIME = null
+KNOCKBACK_STRENGTH = null
+DODGE_TIMER = null
+DODGE_COOLDOWN_TIME = null
+DODGE_IMPULSE = null
 
 [node name="state_machine" type="Node2D" parent="."]
 script = ExtResource( 6 )

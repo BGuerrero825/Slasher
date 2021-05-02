@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "NPCFSM",
 "language": "GDScript",
-"path": "res://npc/npc_state_machine.gd"
+"path": "res://npc/NPCFSM.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Player",
