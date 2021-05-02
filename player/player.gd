@@ -16,7 +16,7 @@ export var heavy_attack_charge_time : float = 1.5
 export var light_attack_window : float = 0.45
 
 export var light_recovery_time : float = 0.2
-export var heavy_recovery_time : float = 0.5
+export var heavy_recovery_time : float = 0.2
 export var parry_recovery_time : float = 0.3
 export var dodge_recovery_time : float = 0.3
 var recovery_time : float = 100.0  # SET IN STATE MACHINE
@@ -72,6 +72,11 @@ func _process(delta):
 		get_tree().get_root().add_child(new_NPC)
 			
 	
+	#debug code for flipping sprite
+	if Input.is_action_just_released("1"):
+		$center/character.flip_h = !$center/character.flip_h
+			
+	
 	# Parry allowed in following states
 #	if Input.is_action_just_pressed("block") and parry_available:# and current_state in []:
 #		current_state = PARRY
@@ -109,6 +114,7 @@ func _on_hitbox_area_entered(area):
 	#freeze animation on hit
 	animation_player.play(animation_player.current_animation, 0.0, 0.0)
 	$hit_freeze_timer.start()
+	$sounds/clash.play()
 
 
 func _on_hurtbox_damage_taken(amount, source):	
