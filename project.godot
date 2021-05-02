@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://player/BasePlayerState.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "NPC",
+"language": "GDScript",
+"path": "res://npc/npc.gd"
+}, {
 "base": "Node2D",
 "class": "NPCFSM",
 "language": "GDScript",
@@ -37,6 +42,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "BaseNPCState": "",
 "BasePlayerState": "",
+"NPC": "",
 "NPCFSM": "",
 "Player": "",
 "PlayerFSM": ""
