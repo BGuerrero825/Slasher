@@ -16,9 +16,9 @@ export var heavy_attack_charge_time : float = 1.5
 export var light_attack_window : float = 0.45
 
 export var light_recovery_time : float = 0.2
-export var heavy_recovery_time : float = 2.5
-export var parry_recovery_time : float = 0.5
-export var dodge_recovery_time : float = 0.5
+export var heavy_recovery_time : float = 0.5
+export var parry_recovery_time : float = 0.3
+export var dodge_recovery_time : float = 0.3
 var recovery_time : float = 100.0  # SET IN STATE MACHINE
 
 export var dodge_impulse : float = 450.0
@@ -106,6 +106,9 @@ func play(anim:String):
 
 func _on_hitbox_area_entered(area):
 	area.take_damage(active_dmg)
+	#freeze animation on hit
+	animation_player.play(animation_player.current_animation, 0.0, 0.0)
+	$hit_freeze_timer.start()
 
 
 func _on_hurtbox_damage_taken(amount, source):	
@@ -147,3 +150,7 @@ func _on_parry_invincible_timer_timeout():
 #func _on_dodge_cooldown_timer_timeout():
 #	dodge_allowed = true
 #	current_state = ATTACK_READY
+
+
+func _on_hit_freeze_timer_timeout():
+	animation_player.play()
