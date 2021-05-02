@@ -1,11 +1,11 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://art/knight.png" type="Texture" id=1]
 [ext_resource path="res://art/direction_indicator.png" type="Texture" id=2]
 [ext_resource path="res://art/base.png" type="Texture" id=3]
-[ext_resource path="res://player/player.gd" type="Script" id=4]
+[ext_resource path="res://player/Player.gd" type="Script" id=4]
 [ext_resource path="res://player/player_hurtbox.gd" type="Script" id=5]
-[ext_resource path="res://player/state_machine.gd" type="Script" id=6]
+[ext_resource path="res://player/PlayerFSM.gd" type="Script" id=6]
 [ext_resource path="res://art/shadow.png" type="Texture" id=7]
 [ext_resource path="res://player/RecoveryState.gd" type="Script" id=8]
 [ext_resource path="res://player/IdleState.gd" type="Script" id=9]
@@ -16,6 +16,8 @@
 [ext_resource path="res://player/DodgeState.gd" type="Script" id=14]
 [ext_resource path="res://player/PrepState.gd" type="Script" id=15]
 [ext_resource path="res://player/player_blockbox.gd" type="Script" id=16]
+[ext_resource path="res://player/ComboState.gd" type="Script" id=17]
+[ext_resource path="res://sound/sword_clash.ogg" type="AudioStream" id=18]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 20 )
@@ -25,8 +27,9 @@ extents = Vector2( 18.701, 24 )
 
 [sub_resource type="CircleShape2D" id=3]
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=4]
 resource_name = "combo"
+length = 0.8
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -35,14 +38,25 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 20, 21, 50, 51, 52, 53, 54, 55, 56, 57, 0 ]
+"values": [ 50, 51, 52, 53, 54, 55, 56, 57, 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("center/hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.45 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "dodge"
+[sub_resource type="Animation" id=5]
 length = 0.5
 step = 0.05
 tracks/0/type = "value"
@@ -58,8 +72,8 @@ tracks/0/keys = {
 "values": [ 40, 41, 0 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "heavy"
+[sub_resource type="Animation" id=6]
+length = 1.1
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/hitbox/CollisionShape2D:disabled")
@@ -68,7 +82,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.5 ),
+"times": PoolRealArray( 0, 0.3, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true ]
@@ -80,14 +94,13 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 0.85, 1, 1.1 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 30, 31, 32, 33, 34, 35, 36, 37, 38, 0 ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "idle"
+[sub_resource type="Animation" id=7]
 loop = true
 step = 0.05
 tracks/0/type = "value"
@@ -114,9 +127,20 @@ tracks/1/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("center/hitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
-[sub_resource type="Animation" id=7]
-resource_name = "light"
+[sub_resource type="Animation" id=8]
 length = 0.6
 step = 0.05
 tracks/0/type = "value"
@@ -138,14 +162,13 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.05, 0.25 ),
+"times": PoolRealArray( 0, 0.05, 0.2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "parry"
+[sub_resource type="Animation" id=9]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -172,8 +195,7 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "prep"
+[sub_resource type="Animation" id=10]
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -188,8 +210,22 @@ tracks/0/keys = {
 "values": [ 10, 11 ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "windup"
+[sub_resource type="Animation" id=11]
+resource_name = "recovery"
+tracks/0/type = "value"
+tracks/0/path = NodePath("center/character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=12]
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
 tracks/0/interp = 1
@@ -233,15 +269,19 @@ script = ExtResource( 13 )
 [node name="dodge" type="Node2D" parent="state_machine"]
 script = ExtResource( 14 )
 
-[node name="base" type="Sprite" parent="."]
-show_behind_parent = true
-z_index = 1
-texture = ExtResource( 3 )
+[node name="combo" type="Node2D" parent="state_machine"]
+script = ExtResource( 17 )
 
-[node name="shadow" type="Sprite" parent="base"]
+[node name="shadow" type="Sprite" parent="."]
 show_behind_parent = true
 z_index = -1
 texture = ExtResource( 7 )
+
+[node name="base" type="Sprite" parent="."]
+visible = false
+show_behind_parent = true
+z_index = 1
+texture = ExtResource( 3 )
 
 [node name="center" type="Position2D" parent="."]
 z_index = 2
@@ -277,6 +317,7 @@ script = ExtResource( 16 )
 position = Vector2( 32, 0 )
 scale = Vector2( 1.57011, 1.84162 )
 shape = SubResource( 2 )
+disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 2.03794, 2.03794 )
@@ -300,14 +341,15 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/combo = SubResource( 11 )
-anims/dodge = SubResource( 4 )
-anims/heavy = SubResource( 5 )
-anims/idle = SubResource( 6 )
-anims/light = SubResource( 7 )
-anims/parry = SubResource( 8 )
-anims/prep = SubResource( 9 )
-anims/windup = SubResource( 10 )
+anims/combo = SubResource( 4 )
+anims/dodge = SubResource( 5 )
+anims/heavy = SubResource( 6 )
+anims/idle = SubResource( 7 )
+anims/light = SubResource( 8 )
+anims/parry = SubResource( 9 )
+anims/prep = SubResource( 10 )
+anims/recovery = SubResource( 11 )
+anims/windup = SubResource( 12 )
 
 [node name="parry_invincible_timer" type="Timer" parent="."]
 one_shot = true
@@ -320,6 +362,15 @@ one_shot = true
 
 [node name="dodge_cooldown_timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="hit_freeze_timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="sounds" type="Node2D" parent="."]
+
+[node name="clash" type="AudioStreamPlayer2D" parent="sounds"]
+stream = ExtResource( 18 )
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="blocked_attack" from="center/blockbox" to="." method="_on_blockbox_blocked_attack"]
 [connection signal="damage_taken" from="hurtbox" to="." method="_on_hurtbox_damage_taken"]
@@ -327,3 +378,4 @@ one_shot = true
 [connection signal="timeout" from="knockback_timer" to="." method="_on_knockback_timer_timeout"]
 [connection signal="timeout" from="dodge_timer" to="." method="_on_dodge_timer_timeout"]
 [connection signal="timeout" from="dodge_cooldown_timer" to="." method="_on_dodge_cooldown_timer_timeout"]
+[connection signal="timeout" from="hit_freeze_timer" to="." method="_on_hit_freeze_timer_timeout"]
