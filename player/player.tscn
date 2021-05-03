@@ -21,14 +21,6 @@
 [ext_resource path="res://sound/grass_walk.ogg" type="AudioStream" id=19]
 [ext_resource path="res://art/helmet1.png" type="Texture" id=20]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 16, 20 )
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 18.701, 24 )
-
-[sub_resource type="CircleShape2D" id=3]
-
 [sub_resource type="Animation" id=4]
 resource_name = "combo"
 length = 0.8
@@ -349,8 +341,38 @@ tracks/1/keys = {
 "values": [ Vector2( 5, -3 ) ]
 }
 
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 20 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 18.701, 24 )
+
+[sub_resource type="CircleShape2D" id=3]
+
 [node name="player" type="KinematicBody2D"]
 script = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/combo = SubResource( 4 )
+anims/dodge = SubResource( 5 )
+anims/heavy = SubResource( 6 )
+anims/idle = SubResource( 7 )
+anims/light = SubResource( 8 )
+anims/parry = SubResource( 9 )
+anims/prep = SubResource( 10 )
+anims/recovery = SubResource( 11 )
+anims/windup = SubResource( 12 )
+
+[node name="debug_state" type="Label" parent="."]
+margin_left = -39.37
+margin_top = -47.2049
+margin_right = 49.63
+margin_bottom = -33.2049
+text = "debug_state"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="state_machine" type="Node2D" parent="."]
 script = ExtResource( 6 )
@@ -448,26 +470,6 @@ script = ExtResource( 5 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 scale = Vector2( 2.3078, 2.3078 )
 shape = SubResource( 3 )
-
-[node name="debug_state" type="Label" parent="."]
-margin_left = -40.0
-margin_top = -36.0
-margin_bottom = -22.0
-text = "DEBUG_STATE"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/combo = SubResource( 4 )
-anims/dodge = SubResource( 5 )
-anims/heavy = SubResource( 6 )
-anims/idle = SubResource( 7 )
-anims/light = SubResource( 8 )
-anims/parry = SubResource( 9 )
-anims/prep = SubResource( 10 )
-anims/recovery = SubResource( 11 )
-anims/windup = SubResource( 12 )
 
 [node name="parry_invincible_timer" type="Timer" parent="."]
 one_shot = true

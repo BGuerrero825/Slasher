@@ -3,7 +3,7 @@ extends KinematicBody2D
 class_name Player, "res://art/helmet1_icon.png"
 
 const NEW_NPC = preload("res://npc/knight/knight.tscn")
-export var player_health = 40
+export var player_health : float = 40.0
 
 
 
@@ -129,8 +129,9 @@ func _on_hitbox_area_entered(area):
 	
 
 
-func _on_hurtbox_damage_taken(amount, source):	
+func _on_hurtbox_damage_taken(amount, source):
 	if not invincible:
+#		print("amount: ", amount, "  source: ", source)
 		player_health -= amount
 		print("Player_Health: ", player_health)
 		knockback(source)

@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+class_name NPC
 
 export var health := 25.0
 export var speed := 35.0
@@ -8,6 +9,17 @@ export var speed := 35.0
 #################################################
 var in_attack_range : bool = false
 var in_runaway_range : bool = false
+
+# Valid stances: 'disabled', 'charge', 'search', 'fight', 'retreat'
+export var stance : String = 'fight'
+
+# For this to work, the player has to be added to the scene first (higher in the tree)
+onready var player_ref : KinematicBody2D = $"/root/Global".player
+
+var move_direction : Vector2 = Vector2.ZERO
+
+export var heavy_recovery_time : float = 1.5
+var recovery_time : float = 1.0
 
 
 export var ATTACK_DELAY_TIME := 0.01  # delay before initiating an attack while in range
@@ -34,7 +46,7 @@ var current_state := SLEEP
 var attack_available := true
 var current_damage := DAMAGE
 
-var velocity := Vector2()
+var velocity := Vector2.ZERO
 export var lunging := false  # INTERNAL USE ONLY
 
 
@@ -46,7 +58,17 @@ func _process(delta):
 	state_machine.run()
 	# display state
 	$debug_state.text = state_machine.active_state.tag
+	
+	# movement
+	if move_direction == Vector2.UP:
+		velocity.x = cos($center.rotation)
+		velocity.y = sin($center.rotation)
+		velocity = speed * velocity.normalized()
+	velocity = move_and_slide(velocity)
 
+
+func rotate_towards(angle):
+	$center.rotation = angle
 
 func _on_hurtbox_npc_damage_taken(amount):
 	current_state = KNOCK_BACK
