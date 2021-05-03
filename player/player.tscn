@@ -21,7 +21,7 @@
 [ext_resource path="res://sound/grass_walk.ogg" type="AudioStream" id=19]
 [ext_resource path="res://art/helmet1.png" type="Texture" id=20]
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=1]
 resource_name = "combo"
 length = 0.8
 step = 0.05
@@ -62,7 +62,7 @@ tracks/2/keys = {
 "values": [ Vector2( 8, -2 ), Vector2( 5, -2 ), Vector2( 4, -3 ), Vector2( 10, 4 ), Vector2( 12, 1 ), Vector2( 6, -1 ), Vector2( 4, 0 ), Vector2( 4, 1 ), Vector2( 3, 0 ) ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=2]
 length = 0.5
 step = 0.05
 tracks/0/type = "value"
@@ -90,7 +90,7 @@ tracks/1/keys = {
 "values": [ Vector2( -6, 0 ), Vector2( -3, -1 ), Vector2( 3, 0 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
 length = 1.1
 step = 0.05
 tracks/0/type = "value"
@@ -130,7 +130,7 @@ tracks/2/keys = {
 "values": [ Vector2( 7, -4 ), Vector2( 12, -5 ), Vector2( 25, -7 ), Vector2( 24, -3 ), Vector2( 21, -1 ), Vector2( 21, -1 ), Vector2( 19, -2 ), Vector2( 13, -3 ), Vector2( 8, -3 ), Vector2( 3, 0 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=4]
 loop = true
 step = 0.05
 tracks/0/type = "value"
@@ -182,7 +182,7 @@ tracks/3/keys = {
 "values": [ Vector2( 3, 0 ), Vector2( 2, 0 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=5]
 length = 0.6
 step = 0.05
 tracks/0/type = "value"
@@ -222,7 +222,7 @@ tracks/2/keys = {
 "values": [ Vector2( -1, -3 ), Vector2( 9, -4 ), Vector2( 9, -3 ), Vector2( 8, -3 ), Vector2( 10, -4 ), Vector2( 8, -3 ), Vector2( 3, 0 ) ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=6]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -261,7 +261,7 @@ tracks/2/keys = {
 "values": [ Vector2( -2, 2 ), Vector2( -1, 2 ), Vector2( 3, 0 ) ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=7]
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -288,7 +288,7 @@ tracks/1/keys = {
 "values": [ Vector2( -1, -3 ), Vector2( 2, -2 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=8]
 resource_name = "recovery"
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -315,7 +315,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2, 0 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=9]
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
 tracks/0/interp = 1
@@ -341,27 +341,27 @@ tracks/1/keys = {
 "values": [ Vector2( 5, -3 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 16, 20 )
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 18.701, 24 )
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=12]
 
 [node name="player" type="KinematicBody2D"]
 script = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/combo = SubResource( 4 )
-anims/dodge = SubResource( 5 )
-anims/heavy = SubResource( 6 )
-anims/idle = SubResource( 7 )
-anims/light = SubResource( 8 )
-anims/parry = SubResource( 9 )
-anims/prep = SubResource( 10 )
-anims/recovery = SubResource( 11 )
-anims/windup = SubResource( 12 )
+anims/combo = SubResource( 1 )
+anims/dodge = SubResource( 2 )
+anims/heavy = SubResource( 3 )
+anims/idle = SubResource( 4 )
+anims/light = SubResource( 5 )
+anims/parry = SubResource( 6 )
+anims/prep = SubResource( 7 )
+anims/recovery = SubResource( 8 )
+anims/windup = SubResource( 9 )
 
 [node name="debug_state" type="Label" parent="."]
 margin_left = -39.37
@@ -445,7 +445,7 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/hitbox"]
 position = Vector2( 32, 0 )
 scale = Vector2( 1.82755, 2.21364 )
-shape = SubResource( 1 )
+shape = SubResource( 10 )
 disabled = true
 
 [node name="blockbox" type="Area2D" parent="center"]
@@ -456,12 +456,12 @@ script = ExtResource( 16 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/blockbox"]
 position = Vector2( 32, 0 )
 scale = Vector2( 1.57011, 1.84162 )
-shape = SubResource( 2 )
+shape = SubResource( 11 )
 disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 2.03794, 2.03794 )
-shape = SubResource( 3 )
+shape = SubResource( 12 )
 
 [node name="hurtbox" type="Area2D" parent="."]
 collision_layer = 0
@@ -469,7 +469,7 @@ script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 scale = Vector2( 2.3078, 2.3078 )
-shape = SubResource( 3 )
+shape = SubResource( 12 )
 
 [node name="parry_invincible_timer" type="Timer" parent="."]
 one_shot = true

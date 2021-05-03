@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://npc/NPCFSM.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://player/Player.gd"
+}, {
 "base": "Node2D",
 "class": "PlayerFSM",
 "language": "GDScript",
@@ -39,6 +44,7 @@ _global_script_class_icons={
 "BasePlayerState": "",
 "NPC": "",
 "NPCFSM": "",
+"Player": "res://art/helmet1_icon.png",
 "PlayerFSM": ""
 }
 
