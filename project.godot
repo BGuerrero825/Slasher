@@ -38,7 +38,7 @@ _global_script_class_icons={
 "BaseNPCState": "",
 "BasePlayerState": "",
 "NPCFSM": "",
-"Player": "",
+"Player": "res://art/helmet1_icon.png",
 "PlayerFSM": ""
 }
 

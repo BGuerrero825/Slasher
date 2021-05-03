@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-class_name Player
+class_name Player, "res://art/helmet1_icon.png"
 
 const NEW_NPC = preload("res://npc/knight/knight.tscn")
 export var player_health = 40
@@ -62,6 +62,8 @@ func _ready():
 	state_machine.init(self)
 
 func _process(delta):
+	#if $center/character.flip_h:
+	#	$center/head.position.y *= -1
 	state_machine.run()
 	# display state
 	$debug_state.text = state_machine.active_state.tag
@@ -88,13 +90,17 @@ func _process(delta):
 		input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 		input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 		input_vector = input_vector.normalized()
+		# if inputing to move
 		if input_vector != Vector2.ZERO:
 	#		if walking:
 	#			input_vector = input_vector/2
 			velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
+			# if at max speed 
+			if velocity.length() == MAX_SPEED:
+				audio_continue($sounds/grass)
 		else:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-		
+			$sounds/grass.stop()
 #		if dodge_allowed and input_vector != Vector2.ZERO and Input.is_action_just_pressed("dodge"):
 #			current_state = DODGE
 	
@@ -102,7 +108,11 @@ func _process(delta):
 	mouse_angle = rad2deg(self.get_global_transform().get_origin().angle_to_point(get_global_mouse_position()))
 	center.rotation_degrees = mouse_angle - 180
 
-
+func audio_continue(sound : AudioStreamPlayer2D):
+	if !sound.playing:
+		sound.play()
+			
+	
 func play(anim:String):
 	if animation_player.current_animation == anim:
 		return
@@ -114,7 +124,9 @@ func _on_hitbox_area_entered(area):
 	#freeze animation on hit
 	animation_player.play(animation_player.current_animation, 0.0, 0.0)
 	$hit_freeze_timer.start()
+	$sounds/clash.pitch_scale = 1 + rand_range(-0.2, 0.2)
 	$sounds/clash.play()
+	
 
 
 func _on_hurtbox_damage_taken(amount, source):	
