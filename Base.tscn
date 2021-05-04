@@ -8,10 +8,10 @@
 [ext_resource path="res://npc/peasant/peasant.tscn" type="PackedScene" id=6]
 [ext_resource path="res://art/vertical_wall.png" type="Texture" id=7]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 25, 185 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 185, 25 )
 
 [node name="Base" type="Node2D"]
@@ -53,7 +53,7 @@ texture = ExtResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="vertical_wall/StaticBody2D"]
 position = Vector2( 0, -8 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="vertical_wall2" type="Sprite" parent="."]
 position = Vector2( -88, 321 )
@@ -64,7 +64,7 @@ texture = ExtResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="vertical_wall2/StaticBody2D"]
 position = Vector2( 0, -8 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="horizontal_wall" type="Sprite" parent="."]
 position = Vector2( 69, 499 )
@@ -75,7 +75,7 @@ texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="horizontal_wall/StaticBody2D"]
 position = Vector2( 0, -10 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="horizontal_wall2" type="Sprite" parent="."]
 position = Vector2( 503, 499 )
@@ -86,7 +86,7 @@ texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="horizontal_wall2/StaticBody2D"]
 position = Vector2( 0, -10 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="peasant" parent="." instance=ExtResource( 6 )]
 position = Vector2( 510.169, 131 )

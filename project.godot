@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "BaseNPCState",
 "language": "GDScript",
-"path": "res://npc/BaseNPCState.gd"
+"path": "res://npc/base_npc_state.gd"
 }, {
 "base": "Node2D",
 "class": "BasePlayerState",
 "language": "GDScript",
-"path": "res://player/BasePlayerState.gd"
+"path": "res://player/base_player_state.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "NPC",
@@ -27,17 +27,17 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "NPCFSM",
 "language": "GDScript",
-"path": "res://npc/NPCFSM.gd"
+"path": "res://npc/npc_fsm.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
-"path": "res://player/Player.gd"
+"path": "res://player/player.gd"
 }, {
 "base": "Node2D",
 "class": "PlayerFSM",
 "language": "GDScript",
-"path": "res://player/PlayerFSM.gd"
+"path": "res://player/player_fsm.gd"
 } ]
 _global_script_class_icons={
 "BaseNPCState": "",
