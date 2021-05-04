@@ -42,6 +42,8 @@ export var DODGE_IMPULSE := 375
 
 var parry_available := true
 var invincible := false
+var flipped := false
+var head_y := -100
 
 #var last_dmg_source = self
 
@@ -77,7 +79,7 @@ func _process(delta):
 	#debug code for flipping sprite
 	if Input.is_action_just_released("1"):
 		$center/character.flip_h = !$center/character.flip_h
-			
+		flipped = !flipped
 	
 	# Parry allowed in following states
 #	if Input.is_action_just_pressed("block") and parry_available:# and current_state in []:
@@ -105,8 +107,14 @@ func _process(delta):
 #			current_state = DODGE
 	
 	velocity = move_and_slide(velocity)
+	# set rotation of center node based on angle between player and mouse
 	mouse_angle = rad2deg(self.get_global_transform().get_origin().angle_to_point(get_global_mouse_position()))
 	center.rotation_degrees = mouse_angle - 180
+	
+	#if player is flipped and if the head position has been changed
+	if flipped and head_y != $center/head.position.y:
+		$center/head.position.y *= -1
+		head_y = $center/head.position.y
 
 func audio_continue(sound : AudioStreamPlayer2D):
 	if !sound.playing:
@@ -139,7 +147,7 @@ func _on_hurtbox_damage_taken(amount, source):
 		print("BLOCKED ATTACK WITH I FRAME")
 
 	if player_health <= 0:
-		print("PLAYER IS DEAD. (just block lul)")
+		print("YOU ARE DEAD.")
 
 
 func knockback(dmg_source):

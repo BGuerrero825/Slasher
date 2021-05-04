@@ -429,10 +429,10 @@ z_index = 1
 texture = ExtResource( 1 )
 vframes = 7
 hframes = 10
-frame = 50
+frame = 22
 
 [node name="head" type="Sprite" parent="center"]
-position = Vector2( 8, -2 )
+position = Vector2( 9.00001, -2.99997 )
 rotation = 1.5708
 z_index = 1
 texture = ExtResource( 20 )
