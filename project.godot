@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
-"path": "res://player/player.gd"
+"path": "res://player/player_controller.gd"
 }, {
 "base": "Node2D",
 "class": "PlayerFSM",
