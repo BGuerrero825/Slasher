@@ -6,11 +6,16 @@
 [ext_resource path="res://npc/npc.gd" type="Script" id=4]
 [ext_resource path="res://art/knight.png" type="Texture" id=5]
 [ext_resource path="res://art/shadow.png" type="Texture" id=6]
-[ext_resource path="res://npc/NPCFSM.gd" type="Script" id=7]
-[ext_resource path="res://npc/idleNPCstate.gd" type="Script" id=8]
-[ext_resource path="res://npc/attackNPCstate.gd" type="Script" id=9]
-[ext_resource path="res://npc/fight_state.gd" type="Script" id=10]
-[ext_resource path="res://npc/recovery_NPC_state.gd" type="Script" id=11]
+[ext_resource path="res://npc/npc_fsm.gd" type="Script" id=7]
+[ext_resource path="res://npc/state_npc_idle.gd" type="Script" id=8]
+[ext_resource path="res://npc/state_npc_attack.gd" type="Script" id=9]
+[ext_resource path="res://npc/state_npc_fight.gd" type="Script" id=10]
+[ext_resource path="res://npc/state_npc_recovery.gd" type="Script" id=11]
+
+
+
+
+
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 24 )
