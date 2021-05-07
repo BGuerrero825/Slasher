@@ -1,6 +1,10 @@
 extends BaseNPCState
 
 
+func enter(npc : KinematicBody2D):
+	pass
+
+
 func run(npc: KinematicBody2D):
 	# Valid stances: 'disabled', 'charge', 'search', 'fight', 'retreat'
 	if npc.stance == 'disabled':

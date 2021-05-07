@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://npc/npc.tscn" type="PackedScene" id=1]
 [ext_resource path="res://npc/peasant/peasant.gd" type="Script" id=2]
+[ext_resource path="res://npc/peasant/state_peasant_windup.gd" type="Script" id=3]
+[ext_resource path="res://npc/peasant/state_peasant_fight.gd" type="Script" id=4]
 [ext_resource path="res://art/peasant.png" type="Texture" id=5]
 
 [sub_resource type="Animation" id=1]
@@ -32,16 +34,66 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="Animation" id=2]
+resource_name = "idle"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("center/character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "windup"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("center/character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2, 3 ]
+}
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 152.21
+
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 16, 7.02133 )
 
 [node name="peasant" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-speed = 50.0
 LUNGE_SPEED = 200.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
 anims/heavy = SubResource( 1 )
+anims/idle = SubResource( 2 )
+anims/windup = SubResource( 3 )
+
+[node name="charge_range" type="Area2D" parent="." index="1"]
+visible = false
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="charge_range" index="0"]
+shape = SubResource( 5 )
+
+[node name="fight" parent="npc_state_machine" index="1"]
+script = ExtResource( 4 )
+
+[node name="windup" parent="npc_state_machine" index="2"]
+script = ExtResource( 3 )
 
 [node name="character" parent="center" index="1"]
 texture = ExtResource( 5 )
@@ -50,4 +102,9 @@ hframes = 7
 frame = 2
 
 [node name="CollisionShape2D" parent="center/hitbox" index="0"]
-shape = SubResource( 2 )
+shape = SubResource( 4 )
+
+[node name="standoff_distance" parent="." index="9"]
+visible = false
+[connection signal="area_entered" from="charge_range" to="." method="_on_charge_range_area_entered"]
+[connection signal="area_exited" from="charge_range" to="." method="_on_charge_range_area_exited"]

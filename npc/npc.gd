@@ -3,7 +3,8 @@ extends KinematicBody2D
 class_name NPC
 
 export var health := 25.0
-export var speed := 35.0
+export var SPEED := 35.0
+var speed : float = SPEED
 
 # NEW VARS
 #################################################
@@ -20,6 +21,8 @@ var move_direction : Vector2 = Vector2.ZERO
 
 export var heavy_recovery_time : float = 1.5
 var recovery_time : float = 1.0
+
+export var lunging : bool = false  # set in animation player
 
 
 export var ATTACK_DELAY_TIME := 0.01  # delay before initiating an attack while in range
@@ -39,15 +42,10 @@ onready var RUNAWAY_DISTANCE : float = 150 #$range_ref/runaway_distance.shape.ra
 onready var animation_player := $AnimationPlayer
 onready var state_machine := $npc_state_machine
 
-enum {ATTACKING, STANDOFF, RETREATING, BACKING_AWAY, MOVING_TO_PLAYER, SLEEP, KNOCK_BACK}
-
-var current_state := SLEEP
-
 var attack_available := true
 var current_damage := DAMAGE
 
 var velocity := Vector2.ZERO
-export var lunging := false  # INTERNAL USE ONLY
 
 
 func _ready():
@@ -71,7 +69,7 @@ func rotate_towards(angle):
 	$center.rotation = angle
 
 func _on_hurtbox_npc_damage_taken(amount):
-	current_state = KNOCK_BACK
+#	current_state = KNOCK_BACK
 	health = health - amount
 	print("NPC_Health: ", health, " damage taken: ", amount)
 	if health <= 0:
@@ -84,31 +82,12 @@ func play(anim:String):
 	animation_player.play(anim)
 
 
-func _on_attack_timer_timeout():
-	if current_state == STANDOFF or current_state == BACKING_AWAY:
-		current_state = ATTACKING
-
-
 func _on_cooldown_timer_timeout():
 	attack_available = true
 
 
 func _on_hitbox_area_entered(area):
 	area.take_damage(current_damage, self)
-
-
-func _on_knockback_timer_timeout():
-	current_state = STANDOFF
-
-
-func _on_AnimationPlayer_animation_finished(anim_name):
-	print("ANIMATION_FINISHED", anim_name)
-	current_state = STANDOFF
-	if anim_name == "Heavy":
-#		$timers/move_delay_timer.start(MOVE_DELAY_TIME)
-		$timers/cooldown_timer.start(ATTACK_COOLDOWN_TIME)
-
-
 
 
 func _on_standoff_distance_area_entered(area):

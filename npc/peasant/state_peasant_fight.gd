@@ -14,5 +14,5 @@ func run(npc: KinematicBody2D):
 	
 	npc.move_direction = Vector2.UP
 	
-	if npc.in_attack_range:
+	if npc.in_charge_range:
 		return "windup"
