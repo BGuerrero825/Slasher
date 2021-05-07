@@ -15,10 +15,10 @@ export var FRICTION := 550.0
 export var heavy_attack_charge_time : float = 1.5
 export var light_attack_window : float = 0.45
 
-export var light_recovery_time : float = 0.2
+export var light_recovery_time : float = 0.1
 export var heavy_recovery_time : float = 0.2
-export var parry_recovery_time : float = 0.3
-export var dodge_recovery_time : float = 0.3
+export var parry_recovery_time : float = 0.2
+export var dodge_recovery_time : float = 0.2
 var recovery_time : float = 100.0  # SET IN STATE MACHINE
 
 export var dodge_impulse : float = 450.0
