@@ -9,10 +9,10 @@ func run(player : KinematicBody2D):
 		return "recovery"
 	
 	#if combo was queued, move to combo hit after swing
-	if combo_queued and player.animation_player.current_animation_position > 0.15:
+	if combo_queued and player.animation_player.current_animation_position > 0.25:
 		combo_queued = false
 		return "combo"
 		
 	#if attack pressed, queue the state change
-	if Input.is_action_just_pressed("attack") and player.animation_player.current_animation_position < 0.25:
+	if Input.is_action_just_pressed("attack") and player.animation_player.current_animation_position < 0.3:
 		combo_queued = true

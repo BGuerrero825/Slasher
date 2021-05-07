@@ -43,7 +43,7 @@ export var DODGE_IMPULSE := 375
 var parry_available := true
 var invincible := false
 var flipped := false
-var head_y := -100
+#var head_y := -100
 
 #var last_dmg_source = self
 
@@ -78,8 +78,7 @@ func _process(delta):
 	
 	#debug code for flipping sprite
 	if Input.is_action_just_released("1"):
-		$center/character.flip_h = !$center/character.flip_h
-		flipped = !flipped
+		flip_character()
 	
 	# Parry allowed in following states
 #	if Input.is_action_just_pressed("block") and parry_available:# and current_state in []:
@@ -110,11 +109,12 @@ func _process(delta):
 	# set rotation of center node based on angle between player and mouse
 	mouse_angle = rad2deg(self.get_global_transform().get_origin().angle_to_point(get_global_mouse_position()))
 	center.rotation_degrees = mouse_angle - 180
-	
-	#if player is flipped and if the head position has been changed
-	if flipped and head_y != $center/head.position.y:
-		$center/head.position.y *= -1
-		head_y = $center/head.position.y
+
+# reverse character sprite and head sprite when flipped
+func flip_character():
+	$center/character.scale.x *= -1
+	$center/character/head.flip_h = !$center/character/head.flip_h
+	flipped = !flipped
 
 func audio_continue(sound : AudioStreamPlayer2D):
 	if !sound.playing:
@@ -150,6 +150,7 @@ func _on_hurtbox_damage_taken(amount, source):
 		print("YOU ARE DEAD.")
 
 
+# warning-ignore:unused_argument
 func knockback(dmg_source):
 	pass
 
