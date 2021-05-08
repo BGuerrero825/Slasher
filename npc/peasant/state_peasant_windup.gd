@@ -8,7 +8,7 @@ func enter(npc : KinematicBody2D):
 
 func run(npc : KinematicBody2D):
 	var player_pos = npc.player_ref.get_position()
-	npc.rotate_towards(PI + npc.position.angle_to_point(player_pos))
+#	npc.rotate_towards(PI + npc.position.angle_to_point(player_pos))
 	
 	if npc.in_attack_range:
 		return "attack"
