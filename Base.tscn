@@ -8,10 +8,10 @@
 [ext_resource path="res://art/vertical_wall.png" type="Texture" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 25, 185 )
+extents = Vector2( 26, 184 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 185, 25 )
+extents = Vector2( 183, 25 )
 
 [node name="Base" type="Node2D"]
 
@@ -41,7 +41,7 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 4000, 4000 )
 
 [node name="vertical_wall" type="Sprite" parent="."]
-position = Vector2( -88, -113 )
+position = Vector2( -212, 144 )
 z_index = 3
 texture = ExtResource( 7 )
 
@@ -51,36 +51,14 @@ texture = ExtResource( 7 )
 position = Vector2( 0, -8 )
 shape = SubResource( 1 )
 
-[node name="vertical_wall2" type="Sprite" parent="."]
-position = Vector2( -88, 321 )
-z_index = 3
-texture = ExtResource( 7 )
-
-[node name="StaticBody2D" type="StaticBody2D" parent="vertical_wall2"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="vertical_wall2/StaticBody2D"]
-position = Vector2( 0, -8 )
-shape = SubResource( 1 )
-
 [node name="horizontal_wall" type="Sprite" parent="."]
-position = Vector2( 69, 499 )
+position = Vector2( -55, 343 )
 z_index = 3
 texture = ExtResource( 2 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="horizontal_wall"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="horizontal_wall/StaticBody2D"]
-position = Vector2( 0, -10 )
-shape = SubResource( 2 )
-
-[node name="horizontal_wall2" type="Sprite" parent="."]
-position = Vector2( 503, 499 )
-z_index = 3
-texture = ExtResource( 2 )
-
-[node name="StaticBody2D" type="StaticBody2D" parent="horizontal_wall2"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="horizontal_wall2/StaticBody2D"]
 position = Vector2( 0, -10 )
 shape = SubResource( 2 )
 
