@@ -405,15 +405,18 @@ anims/recovery = SubResource( 8 )
 anims/windup = SubResource( 9 )
 
 [node name="debug_state" type="Label" parent="."]
-margin_left = -39.37
+margin_left = -46.37
 margin_top = -47.2049
-margin_right = 49.63
+margin_right = 42.63
 margin_bottom = -33.2049
 text = "debug_state"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
 
 [node name="state_machine" type="Node2D" parent="."]
 script = ExtResource( 6 )

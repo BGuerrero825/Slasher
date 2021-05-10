@@ -17,10 +17,7 @@ extents = Vector2( 185, 25 )
 [node name="Base" type="Node2D"]
 
 [node name="player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 80, 200 )
-
-[node name="Camera2D" type="Camera2D" parent="player"]
-current = true
+position = Vector2( 72, 208 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -36,6 +33,7 @@ __meta__ = {
 }
 
 [node name="background" type="Sprite" parent="."]
+position = Vector2( 8, 0 )
 z_index = -5
 texture = ExtResource( 1 )
 region_enabled = true

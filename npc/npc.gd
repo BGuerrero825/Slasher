@@ -66,7 +66,18 @@ func _process(delta):
 
 
 func rotate_towards(angle):
-	$center.rotation = angle
+	var rotation_speed = 0.01
+	
+	# Tolerance for rotation, inside toleration is ignored
+	if abs($center.rotation - angle) > 0.05:
+		if $center.rotation > angle:
+			$center.rotate(-rotation_speed)
+		elif $center.rotation < angle:
+			$center.rotate(rotation_speed)
+	
+	
+	# BUG: if player is behind the NPC the NPC will rotate awkwardly as the player moves back and forth
+	# this may not be an issue if the rotation speed is fast enough by default
 
 func _on_hurtbox_npc_damage_taken(amount):
 #	current_state = KNOCK_BACK
