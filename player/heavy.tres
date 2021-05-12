@@ -1,0 +1,41 @@
+[gd_resource type="Animation" format=2]
+
+[resource]
+length = 1.1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("center/hitbox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("center/character:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 0.85, 1, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 30, 31, 32, 33, 34, 35, 36, 37, 38, 0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("center/character/head:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 0.85, 1, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( -4.00001, -6.99996 ), Vector2( -5.00002, -11.9999 ), Vector2( -8.00006, -23.9999 ), Vector2( -3.00008, -23.9999 ), Vector2( -1.00008, -21.9999 ), Vector2( -1.00008, -21.9999 ), Vector2( -2.00006, -18.9999 ), Vector2( -3.00004, -12.9999 ), Vector2( -2.00001, -6.99996 ), Vector2( -1.09673e-05, -2.99999 ) ]
+}

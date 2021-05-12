@@ -66,6 +66,12 @@ func _process(delta):
 		velocity = speed * velocity.normalized()
 	velocity = move_and_slide(velocity)
 
+	if health <= 0:
+		var new_corpse = corpse.instance()
+		get_tree().get_root().add_child(new_corpse)
+		new_corpse.transform = get_global_transform()
+		new_corpse.rotation_degrees = $center.rotation_degrees - 90
+		queue_free()
 
 func rotate_towards(angle):
 	$center.rotation = angle
@@ -74,12 +80,6 @@ func _on_hurtbox_npc_damage_taken(amount):
 #	current_state = KNOCK_BACK
 	health = health - amount
 	print("NPC_Health: ", health, " damage taken: ", amount)
-	if health <= 0:
-		var new_corpse = corpse.instance()
-		get_tree().get_root().add_child(new_corpse)
-		new_corpse.transform = get_global_transform()
-		new_corpse.rotation_degrees = $center.rotation_degrees - 90
-		queue_free()
 
 
 func play(anim:String):

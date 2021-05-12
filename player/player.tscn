@@ -23,6 +23,9 @@
 [ext_resource path="res://player/sound_player.gd" type="Script" id=21]
 [ext_resource path="res://sound/light_swoosh.ogg" type="AudioStream" id=22]
 [ext_resource path="res://sound/heavy_swoosh.ogg" type="AudioStream" id=23]
+[ext_resource path="res://player/windup.tres" type="Animation" id=24]
+[ext_resource path="res://player/heavy.tres" type="Animation" id=25]
+[ext_resource path="res://player/idle.tres" type="Animation" id=26]
 
 [sub_resource type="Animation" id=1]
 resource_name = "combo"
@@ -94,98 +97,6 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=3]
-length = 1.1
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("center/hitbox/CollisionShape2D:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ true, false, true ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("center/character:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 0.85, 1, 1.1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 30, 31, 32, 33, 34, 35, 36, 37, 38, 0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("center/character/head:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 0.85, 1, 1.1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Vector2( -4.00001, -6.99996 ), Vector2( -5.00002, -11.9999 ), Vector2( -8.00006, -23.9999 ), Vector2( -3.00008, -23.9999 ), Vector2( -1.00008, -21.9999 ), Vector2( -1.00008, -21.9999 ), Vector2( -2.00006, -18.9999 ), Vector2( -3.00004, -12.9999 ), Vector2( -2.00001, -6.99996 ), Vector2( -1.09673e-05, -2.99999 ) ]
-}
-
-[sub_resource type="Animation" id=4]
-loop = true
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("center/character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 0, 1 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("center/blockbox/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("center/hitbox/CollisionShape2D:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("center/character/head:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ Vector2( -1.07288e-05, -2.99999 ), Vector2( -7.21216e-06, -1.99999 ) ]
-}
-
-[sub_resource type="Animation" id=5]
 length = 0.4
 step = 0.05
 tracks/0/type = "value"
@@ -251,7 +162,7 @@ tracks/4/keys = {
 "values": [  ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=4]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -304,7 +215,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=5]
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -331,7 +242,7 @@ tracks/1/keys = {
 "values": [ Vector2( -2.99998, 2 ), Vector2( -3.99998, 1.00001 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=6]
 resource_name = "recovery"
 length = 0.2
 tracks/0/type = "value"
@@ -359,39 +270,13 @@ tracks/1/keys = {
 "values": [ Vector2( -7.62939e-06, -1.99999 ) ]
 }
 
-[sub_resource type="Animation" id=9]
-tracks/0/type = "value"
-tracks/0/path = NodePath("center/character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 12 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("center/character/head:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ Vector2( -3, -2.99998 ) ]
-}
-
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 16, 20 )
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 18.701, 24 )
 
-[sub_resource type="CircleShape2D" id=12]
+[sub_resource type="CircleShape2D" id=9]
 
 [node name="player" type="KinematicBody2D"]
 script = ExtResource( 4 )
@@ -399,13 +284,13 @@ script = ExtResource( 4 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/combo = SubResource( 1 )
 anims/dodge = SubResource( 2 )
-anims/heavy = SubResource( 3 )
-anims/idle = SubResource( 4 )
-anims/light = SubResource( 5 )
-anims/parry = SubResource( 6 )
-anims/prep = SubResource( 7 )
-anims/recovery = SubResource( 8 )
-anims/windup = SubResource( 9 )
+anims/heavy = ExtResource( 25 )
+anims/idle = ExtResource( 26 )
+anims/light = SubResource( 3 )
+anims/parry = SubResource( 4 )
+anims/prep = SubResource( 5 )
+anims/recovery = SubResource( 6 )
+anims/windup = ExtResource( 24 )
 
 [node name="debug_state" type="Label" parent="."]
 margin_left = -40.0
@@ -473,10 +358,10 @@ z_index = 1
 texture = ExtResource( 1 )
 vframes = 7
 hframes = 10
-frame = 20
+frame = 12
 
 [node name="head" type="Sprite" parent="center/character"]
-position = Vector2( -8.34465e-07, -2.99997 )
+position = Vector2( -3, -2.99998 )
 z_index = 1
 texture = ExtResource( 20 )
 offset = Vector2( 0, 0.5 )
@@ -488,8 +373,7 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/hitbox"]
 position = Vector2( 32, 0 )
 scale = Vector2( 1.82755, 2.21364 )
-shape = SubResource( 10 )
-disabled = true
+shape = SubResource( 7 )
 
 [node name="blockbox" type="Area2D" parent="center"]
 collision_layer = 0
@@ -499,12 +383,12 @@ script = ExtResource( 16 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/blockbox"]
 position = Vector2( 32, 0 )
 scale = Vector2( 1.57011, 1.84162 )
-shape = SubResource( 11 )
+shape = SubResource( 8 )
 disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 2.03794, 2.03794 )
-shape = SubResource( 12 )
+shape = SubResource( 9 )
 
 [node name="hurtbox" type="Area2D" parent="."]
 collision_layer = 0
@@ -512,7 +396,7 @@ script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 scale = Vector2( 2.3078, 2.3078 )
-shape = SubResource( 12 )
+shape = SubResource( 9 )
 
 [node name="parry_invincible_timer" type="Timer" parent="."]
 one_shot = true
