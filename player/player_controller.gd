@@ -98,7 +98,7 @@ func _process(delta):
 			velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
 			# if at max speed 
 			if velocity.length() == MAX_SPEED:
-				audio_continue($sounds/grass)
+				play_sound("grass")
 		else:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			$sounds/grass.stop()
@@ -116,10 +116,8 @@ func flip_character():
 	$center/character/head.flip_h = !$center/character/head.flip_h
 	flipped = !flipped
 
-func audio_continue(sound : AudioStreamPlayer2D):
-	if !sound.playing:
-		sound.play()
-			
+func play_sound(sound):
+	$sounds.play(sound)
 	
 func play(anim:String):
 	if animation_player.current_animation == anim:
