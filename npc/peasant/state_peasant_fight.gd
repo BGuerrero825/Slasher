@@ -14,5 +14,5 @@ func run(npc: KinematicBody2D):
 	
 	npc.move_direction = Vector2.UP
 	
-	if npc.in_charge_range:
+	if npc.in_charge_range and npc.looking_at_player:
 		return "windup"

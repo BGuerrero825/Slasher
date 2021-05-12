@@ -5,7 +5,7 @@ var cooldown_timer : SceneTreeTimer
 
 func enter(npc : KinematicBody2D):
 	.enter(npc)
-	npc.speed = 0
+	npc.speed = npc.recovery_speed
 	cooldown_timer = get_tree().create_timer(npc.recovery_time)
 
 
@@ -19,4 +19,4 @@ func run(npc : KinematicBody2D):
 
 func exit(npc : KinematicBody2D):
 	.exit(npc)
-	npc.speed = npc.SPEED
+	npc.speed = npc.base_speed

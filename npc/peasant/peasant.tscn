@@ -91,8 +91,8 @@ radius = 64.0
 
 [node name="peasant" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-lunging = true
-LUNGE_SPEED = 200.0
+lunge_speed = 120.0
+charge_speed = 150.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
 anims/heavy = SubResource( 1 )
@@ -116,7 +116,7 @@ script = ExtResource( 3 )
 texture = ExtResource( 5 )
 vframes = 1
 hframes = 7
-frame = 0
+frame = 2
 
 [node name="CollisionShape2D" parent="center/hitbox" index="0"]
 shape = SubResource( 5 )

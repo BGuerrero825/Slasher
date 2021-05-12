@@ -2,12 +2,13 @@ extends KinematicBody2D
 
 class_name NPC
 
-export var health := 25.0
-export var SPEED := 35.0
-var speed : float = SPEED
+export var health : float = 25.0
+export var base_speed : float = 35.0
+export var lunge_speed : float = 80.0
+export var recovery_speed : float = 15.0
+export var windup_speed : float = 5.0
+var speed : float = base_speed
 
-# NEW VARS
-#################################################
 var in_attack_range : bool = false
 var in_runaway_range : bool = false
 
@@ -24,20 +25,12 @@ var recovery_time : float = 1.0
 
 export var lunging : bool = false  # set in animation player
 
+export var _rotation_speed : float = 0.025
 
-export var ATTACK_DELAY_TIME := 0.01  # delay before initiating an attack while in range
-export var ATTACK_COOLDOWN_TIME := 1.5  # delay between attacks
-export var MOVE_DELAY_TIME := 0.5  # delay before moving after attacking
-export var KNOCKBACK_TIME := 0.1  # total time spent in knockback
-export var KNOCKBACK_STRENGTH := 40.0  # knockback strength
-export var LUNGE_SPEED := 50.0  # lunge speed
+var looking_at_player : bool = false  # set in rotate_towards func
+
 
 export var DAMAGE := 10.0
-
-export var ROTATE_SPEED := 10.0  # speed the character rotates towards the player
-
-onready var STANDOFF_DISTANCE : float = 150 #$range_ref/standoff_distance.shape.radius  # distance the AI wants to sit from the player
-onready var RUNAWAY_DISTANCE : float = 150 #$range_ref/runaway_distance.shape.radius  # distance the AI wants to run from the player
 
 onready var animation_player := $AnimationPlayer
 onready var state_machine := $npc_state_machine
@@ -65,16 +58,19 @@ func _process(delta):
 	velocity = move_and_slide(velocity)
 
 
-func rotate_towards(angle):
-	var rotation_speed = 0.01
+func rotate_towards(angle, in_rotation_speed = _rotation_speed):
+	var current_rotate_speed = in_rotation_speed
 	
 	# Tolerance for rotation, inside toleration is ignored
 	if abs($center.rotation - angle) > 0.05:
+		looking_at_player = false
+		
 		if $center.rotation > angle:
-			$center.rotate(-rotation_speed)
+			$center.rotate(-current_rotate_speed)
 		elif $center.rotation < angle:
-			$center.rotate(rotation_speed)
-	
+			$center.rotate(current_rotate_speed)
+	else:
+		looking_at_player = true
 	
 	# BUG: if player is behind the NPC the NPC will rotate awkwardly as the player moves back and forth
 	# this may not be an issue if the rotation speed is fast enough by default

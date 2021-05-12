@@ -3,7 +3,7 @@ extends BaseNPCState
 
 func enter(npc : KinematicBody2D):
 	.enter(npc)
-	npc.speed = 5.0
+	npc.speed = npc.windup_speed
 
 
 func run(npc : KinematicBody2D):
@@ -16,4 +16,4 @@ func run(npc : KinematicBody2D):
 
 func exit(npc : KinematicBody2D):
 	.exit(npc)
-	npc.speed = npc.SPEED
+	npc.speed = npc.base_speed

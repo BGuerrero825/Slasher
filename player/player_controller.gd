@@ -27,22 +27,10 @@ export var light_attack_dmg : float = 5.0
 export var heavy_attack_dmg : float = 15.0
 var active_dmg : float = 25.0  # SET IN STATE MACHINE
 
+export var parry_invincibility_time : float = .8
 
-## REFACTOR BELOW
-export var PARRY_COOLDOWN_TIME := .4
-
-export var PARRY_INVINCIBILITY_TIME := .8
-
-export var KNOCKBACK_TIME := 0.1  # total time spent in knockback
-export var KNOCKBACK_STRENGTH := 40.0  # knockback strength
-
-export var DODGE_TIMER = 0.2
-export var DODGE_COOLDOWN_TIME := 0.50
-export var DODGE_IMPULSE := 375
-
-var parry_available := true
-var invincible := false
-var flipped := false
+var invincible : bool = false
+var flipped : bool = false
 #var head_y := -100
 
 #var last_dmg_source = self
@@ -102,8 +90,6 @@ func _process(delta):
 		else:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			$sounds/grass.stop()
-#		if dodge_allowed and input_vector != Vector2.ZERO and Input.is_action_just_pressed("dodge"):
-#			current_state = DODGE
 	
 	velocity = move_and_slide(velocity)
 	# set rotation of center node based on angle between player and mouse
@@ -156,7 +142,7 @@ func knockback(dmg_source):
 
 
 func _on_blockbox_blocked_attack():
-	$parry_invincible_timer.start(PARRY_INVINCIBILITY_TIME)
+	$parry_invincible_timer.start(parry_invincibility_time)
 	invincible = true
 
 

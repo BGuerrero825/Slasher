@@ -4,7 +4,7 @@ extends BaseNPCState
 # play attack animations specifically from here
 func enter(npc: KinematicBody2D):
 	npc.play('heavy')
-	npc.speed = 50  # update with var
+
 
 func run(npc: KinematicBody2D):
 	var player_pos = npc.player_ref.get_position()
@@ -15,11 +15,11 @@ func run(npc: KinematicBody2D):
 		return "recovery"
 	
 	if npc.lunging:
-		npc.speed = 80
+		npc.speed = npc.lunge_speed
 	elif not npc.lunging:
-		npc.speed = 20
+		npc.speed = npc.base_speed
 
 
 func exit(npc : KinematicBody2D):
 	.exit(npc)
-	npc.speed = npc.SPEED
+	npc.speed = npc.base_speed
