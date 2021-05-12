@@ -105,4 +105,4 @@ anims/recovery = SubResource( 3 )
 anims/windup = SubResource( 4 )
 
 [node name="character" parent="center" index="1"]
-frame = 1
+frame = 31
