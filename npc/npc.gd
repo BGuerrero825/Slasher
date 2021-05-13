@@ -2,14 +2,13 @@ extends KinematicBody2D
 
 class_name NPC
 
-export var health := 25.0
-export var SPEED := 35.0
-var speed : float = SPEED
+export var health : float = 25.0
+export var base_speed : float = 35.0
+export var lunge_speed : float = 80.0
+export var recovery_speed : float = 15.0
+export var windup_speed : float = 5.0
+var speed : float = base_speed
 
-const corpse = preload("res://npc/corpse/corpse.tscn")
-
-# NEW VARS
-#################################################
 var in_attack_range : bool = false
 var in_runaway_range : bool = false
 
@@ -26,26 +25,18 @@ var recovery_time : float = 1.0
 
 export var lunging : bool = false  # set in animation player
 
+export var _rotation_speed : float = 0.025
 
-export var ATTACK_DELAY_TIME := 0.01  # delay before initiating an attack while in range
-export var ATTACK_COOLDOWN_TIME := 1.5  # delay between attacks
-export var MOVE_DELAY_TIME := 0.5  # delay before moving after attacking
-export var KNOCKBACK_TIME := 0.1  # total time spent in knockback
-export var KNOCKBACK_STRENGTH := 40.0  # knockback strength
-export var LUNGE_SPEED := 50.0  # lunge speed
+var looking_at_player : bool = false  # set in rotate_towards func
 
-export var DAMAGE := 10.0
 
-export var ROTATE_SPEED := 10.0  # speed the character rotates towards the player
-
-onready var STANDOFF_DISTANCE : float = 150 #$range_ref/standoff_distance.shape.radius  # distance the AI wants to sit from the player
-onready var RUNAWAY_DISTANCE : float = 150 #$range_ref/runaway_distance.shape.radius  # distance the AI wants to run from the player
+export var damage : float = 45.0
 
 onready var animation_player := $AnimationPlayer
 onready var state_machine := $npc_state_machine
 
 var attack_available := true
-var current_damage := DAMAGE
+var current_damage := damage
 
 var velocity := Vector2.ZERO
 
@@ -67,18 +58,20 @@ func _process(delta):
 	velocity = move_and_slide(velocity)
 
 
-func rotate_towards(angle):
-	$center.rotation = angle
+func rotate_towards(target_angle, target_rotation_speed = _rotation_speed):
+	$center.rotation = lerp_angle($center.rotation, target_angle, target_rotation_speed)
+	
+	# Tolerance for looking at player
+	if abs($center.rotation - target_angle) > 0.05:
+		looking_at_player = false
+	else:
+		looking_at_player = true
 
 func _on_hurtbox_npc_damage_taken(amount):
 #	current_state = KNOCK_BACK
 	health = health - amount
 	print("NPC_Health: ", health, " damage taken: ", amount)
 	if health <= 0:
-		var new_corpse = corpse.instance()
-		get_tree().get_root().add_child(new_corpse)
-		new_corpse.transform = get_global_transform()
-		new_corpse.rotation_degrees = $center.rotation_degrees - 90
 		queue_free()
 
 

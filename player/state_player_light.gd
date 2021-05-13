@@ -2,10 +2,6 @@ extends BasePlayerState
 
 var combo_queued = false
 
-func enter(player : KinematicBody2D):
-	.enter(player)
-	player.play_sound("light_swoosh")
-	
 func run(player : KinematicBody2D):
 	# true when animation is complete
 	if not player.animation_player.is_playing():

@@ -1,11 +1,6 @@
 extends BasePlayerState
 
 var combo_queued = false
-var sound_trigger
-
-func enter(player : KinematicBody2D):
-	.enter(player)
-	sound_trigger = 0
 
 func run(player : KinematicBody2D):
 	# true when animation is complete
@@ -14,16 +9,10 @@ func run(player : KinematicBody2D):
 		return "recovery"
 		
 	#if combo was queued, move to heavy hit at end of anim
-	if combo_queued and player.animation_player.current_animation_position > 0.5:
+	if combo_queued and player.animation_player.current_animation_position > 0.6:
 		combo_queued = false
 		return "heavy"
 	
 	#if attack pressed, queue the state change
-	if Input.is_action_just_pressed("attack") and player.animation_player.current_animation_position < 0.55:
+	if Input.is_action_just_pressed("attack") and player.animation_player.current_animation_position < 0.7:
 		combo_queued = true
-	
-	#play sound after 10 frames
-	if sound_trigger == 5:
-		player.play_sound("quick_swoosh")
-	
-	sound_trigger += 1
