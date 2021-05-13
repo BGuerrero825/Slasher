@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://art/knight.png" type="Texture" id=1]
 [ext_resource path="res://art/direction_indicator.png" type="Texture" id=2]
@@ -20,6 +20,9 @@
 [ext_resource path="res://sound/sword_clash.ogg" type="AudioStream" id=18]
 [ext_resource path="res://sound/grass_walk.ogg" type="AudioStream" id=19]
 [ext_resource path="res://art/helmet1.png" type="Texture" id=20]
+[ext_resource path="res://player/sound_player.gd" type="Script" id=21]
+[ext_resource path="res://sound/light_swoosh.ogg" type="AudioStream" id=22]
+[ext_resource path="res://sound/heavy_swoosh.ogg" type="AudioStream" id=23]
 
 [sub_resource type="Animation" id=1]
 resource_name = "combo"
@@ -59,7 +62,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0.05, 0.15, 0.25, 0.35, 0.5, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( -1.00002, -7.99997 ), Vector2( -11, -4.99993 ), Vector2( -7.00001, -3.99995 ), Vector2( -7.00001, -3.99995 ), Vector2( -5.99999, 4.95911e-05 ), Vector2( -8.34465e-07, -2.99997 ) ]
+"values": [ Vector2( -1.00002, -7.99997 ), Vector2( -15, -7.99992 ), Vector2( -12, -4.99993 ), Vector2( -8.00001, -4.99995 ), Vector2( -5.99999, 5.00679e-05 ), Vector2( -8.34465e-07, -2.99997 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -405,18 +408,15 @@ anims/recovery = SubResource( 8 )
 anims/windup = SubResource( 9 )
 
 [node name="debug_state" type="Label" parent="."]
-margin_left = -46.37
-margin_top = -47.2049
-margin_right = 42.63
-margin_bottom = -33.2049
+margin_left = -40.0
+margin_top = -48.0
+margin_right = 49.0
+margin_bottom = -34.0
 text = "debug_state"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
 
 [node name="state_machine" type="Node2D" parent="."]
 script = ExtResource( 6 )
@@ -473,9 +473,10 @@ z_index = 1
 texture = ExtResource( 1 )
 vframes = 7
 hframes = 10
+frame = 20
 
 [node name="head" type="Sprite" parent="center/character"]
-position = Vector2( -1.07288e-05, -2.99999 )
+position = Vector2( -8.34465e-07, -2.99997 )
 z_index = 1
 texture = ExtResource( 20 )
 offset = Vector2( 0, 0.5 )
@@ -521,6 +522,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="sounds" type="Node2D" parent="."]
+script = ExtResource( 21 )
 
 [node name="clash" type="AudioStreamPlayer2D" parent="sounds"]
 stream = ExtResource( 18 )
@@ -529,6 +531,16 @@ stream = ExtResource( 18 )
 stream = ExtResource( 19 )
 volume_db = -10.0
 pitch_scale = 1.2
+
+[node name="light_swoosh" type="AudioStreamPlayer2D" parent="sounds"]
+stream = ExtResource( 22 )
+
+[node name="heavy_swoosh" type="AudioStreamPlayer2D" parent="sounds"]
+stream = ExtResource( 23 )
+
+[node name="quick_swoosh" type="AudioStreamPlayer2D" parent="sounds"]
+stream = ExtResource( 22 )
+pitch_scale = 1.46
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="blocked_attack" from="center/blockbox" to="." method="_on_blockbox_blocked_attack"]
 [connection signal="damage_taken" from="hurtbox" to="." method="_on_hurtbox_damage_taken"]
