@@ -12,6 +12,7 @@ export var MAX_SPEED := 150.0
 export var ACCELERATION := 800.0
 export var FRICTION := 550.0
 
+export var camera_offset_strength : float = 0.3
 export var heavy_attack_charge_time : float = 1.5
 export var light_attack_window : float = 0.45
 
@@ -22,7 +23,6 @@ export var dodge_recovery_time : float = 0.2
 var recovery_time : float = 100.0  # SET IN STATE MACHINE
 
 export var dodge_impulse : float = 450.0
-
 export var light_attack_dmg : float = 5.0
 export var heavy_attack_dmg : float = 15.0
 var active_dmg : float = 25.0  # SET IN STATE MACHINE
@@ -109,6 +109,8 @@ func _process(delta):
 	# set rotation of center node based on angle between player and mouse
 	mouse_angle = rad2deg(self.get_global_transform().get_origin().angle_to_point(get_global_mouse_position()))
 	center.rotation_degrees = mouse_angle - 180
+	#move camera based on mouse distance from player
+	$Camera2D.transform.origin = (get_global_mouse_position() - get_global_transform().get_origin()) * camera_offset_strength
 
 # reverse character sprite and head sprite when flipped
 func flip_character():

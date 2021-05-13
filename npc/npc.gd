@@ -66,6 +66,7 @@ func _process(delta):
 		velocity = speed * velocity.normalized()
 	velocity = move_and_slide(velocity)
 
+	# if player is dead, spawn a corpse then delete self
 	if health <= 0:
 		var new_corpse = corpse.instance()
 		get_tree().get_root().add_child(new_corpse)
