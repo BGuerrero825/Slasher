@@ -2,6 +2,10 @@ extends KinematicBody2D
 
 class_name Player, "res://art/helmet1_icon.png"
 
+
+signal player_killed
+
+
 const NEW_NPC = preload("res://npc/knight/knight.tscn")
 export var player_health : float = 40.0
 
@@ -134,6 +138,7 @@ func _on_hurtbox_damage_taken(amount, source):
 
 	if player_health <= 0:
 		print("YOU ARE DEAD.")
+		emit_signal("player_killed")
 
 
 # warning-ignore:unused_argument

@@ -30,13 +30,13 @@ export var _rotation_speed : float = 0.025
 var looking_at_player : bool = false  # set in rotate_towards func
 
 
-export var DAMAGE := 10.0
+export var damage : float = 45.0
 
 onready var animation_player := $AnimationPlayer
 onready var state_machine := $npc_state_machine
 
 var attack_available := true
-var current_damage := DAMAGE
+var current_damage := damage
 
 var velocity := Vector2.ZERO
 
@@ -58,22 +58,14 @@ func _process(delta):
 	velocity = move_and_slide(velocity)
 
 
-func rotate_towards(angle, in_rotation_speed = _rotation_speed):
-	var current_rotate_speed = in_rotation_speed
+func rotate_towards(target_angle, target_rotation_speed = _rotation_speed):
+	$center.rotation = lerp_angle($center.rotation, target_angle, target_rotation_speed)
 	
-	# Tolerance for rotation, inside toleration is ignored
-	if abs($center.rotation - angle) > 0.05:
+	# Tolerance for looking at player
+	if abs($center.rotation - target_angle) > 0.05:
 		looking_at_player = false
-		
-		if $center.rotation > angle:
-			$center.rotate(-current_rotate_speed)
-		elif $center.rotation < angle:
-			$center.rotate(current_rotate_speed)
 	else:
 		looking_at_player = true
-	
-	# BUG: if player is behind the NPC the NPC will rotate awkwardly as the player moves back and forth
-	# this may not be an issue if the rotation speed is fast enough by default
 
 func _on_hurtbox_npc_damage_taken(amount):
 #	current_state = KNOCK_BACK
