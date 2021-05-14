@@ -7,6 +7,7 @@ export var SPEED := 35.0
 var speed : float = SPEED
 
 const corpse = preload("res://npc/corpse/corpse.tscn")
+const blood = preload("res://npc/blood/blood.tscn")
 
 # NEW VARS
 #################################################
@@ -77,9 +78,16 @@ func _process(delta):
 func rotate_towards(angle):
 	$center.rotation = angle
 
-func _on_hurtbox_npc_damage_taken(amount):
+func _on_hurtbox_npc_damage_taken(amount, source):
 #	current_state = KNOCK_BACK
+	var new_blood = blood.instance()
+	get_tree().get_root().add_child(new_blood)
+	new_blood.transform.origin = $center.get_global_transform().get_origin()
+	new_blood.transform.origin += polar2cartesian(30, deg2rad(source.get_node("center").rotation_degrees + ((-1 if source.flipped else 1) * 90)))
+	new_blood.rotation_degrees = $center.rotation_degrees + (int(source.flipped) * 180)
+	# source.get_node("center").rotation_degrees + (int(source.flipped) * 90)
 	health = health - amount
+	print(source.get_node("center").rotation_degrees)
 	print("NPC_Health: ", health, " damage taken: ", amount)
 
 

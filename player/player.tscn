@@ -62,7 +62,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0.05, 0.15, 0.25, 0.35, 0.5, 0.6 ),
+"times": PoolRealArray( 0, 0.15, 0.25, 0.35, 0.5, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ Vector2( -1.00002, -7.99997 ), Vector2( -15, -7.99992 ), Vector2( -12, -4.99993 ), Vector2( -8.00001, -4.99995 ), Vector2( -5.99999, 5.00679e-05 ), Vector2( -8.34465e-07, -2.99997 ) ]
@@ -358,10 +358,10 @@ z_index = 1
 texture = ExtResource( 1 )
 vframes = 7
 hframes = 10
-frame = 12
+frame = 20
 
 [node name="head" type="Sprite" parent="center/character"]
-position = Vector2( -3, -2.99998 )
+position = Vector2( -1.00002, -7.99997 )
 z_index = 1
 texture = ExtResource( 20 )
 offset = Vector2( 0, 0.5 )
@@ -374,6 +374,7 @@ collision_mask = 0
 position = Vector2( 32, 0 )
 scale = Vector2( 1.82755, 2.21364 )
 shape = SubResource( 7 )
+disabled = true
 
 [node name="blockbox" type="Area2D" parent="center"]
 collision_layer = 0

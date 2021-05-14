@@ -108,7 +108,7 @@ func _process(delta):
 	velocity = move_and_slide(velocity)
 	# set rotation of center node based on angle between player and mouse
 	mouse_angle = rad2deg(self.get_global_transform().get_origin().angle_to_point(get_global_mouse_position()))
-	center.rotation_degrees = mouse_angle - 180
+	center.rotation_degrees = mouse_angle + 180
 	#move camera based on mouse distance from player
 	$Camera2D.transform.origin = (get_global_mouse_position() - get_global_transform().get_origin()) * camera_offset_strength
 
@@ -128,14 +128,13 @@ func play(anim:String):
 
 
 func _on_hitbox_area_entered(area):
-	area.take_damage(active_dmg)
+	area.take_damage(active_dmg, self)
 	#freeze animation on hit
 	animation_player.play(animation_player.current_animation, 0.0, 0.0)
 	$hit_freeze_timer.start()
 	$sounds/clash.pitch_scale = 1 + rand_range(-0.2, 0.2)
 	$sounds/clash.play()
 	
-
 
 func _on_hurtbox_damage_taken(amount, source):
 	if not invincible:
