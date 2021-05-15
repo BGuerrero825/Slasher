@@ -4,7 +4,7 @@ var combo_queued = false
 
 func enter(player : KinematicBody2D):
 	.enter(player)
-	player.play_sound("light_swoosh")
+	player.sounds.queue("light_swoosh", 0.1)
 	
 func run(player : KinematicBody2D):
 	# true when animation is complete

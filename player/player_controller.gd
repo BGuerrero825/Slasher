@@ -12,7 +12,7 @@ export var MAX_SPEED := 150.0
 export var ACCELERATION := 800.0
 export var FRICTION := 550.0
 
-export var camera_offset_strength : float = 0.3
+export var camera_offset_strength : float = .35
 export var heavy_attack_charge_time : float = 1.5
 export var light_attack_window : float = 0.45
 
@@ -58,6 +58,7 @@ var dodge_vel : Vector2 = Vector2(0.0, 0.0)
 onready var center = $center
 onready var animation_player : AnimationPlayer = $AnimationPlayer
 onready var state_machine: PlayerFSM = $state_machine
+onready var sounds = $sounds
 
 func _ready():
 	$"/root/Global".register_player(self)
@@ -98,7 +99,7 @@ func _process(delta):
 			velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
 			# if at max speed 
 			if velocity.length() == MAX_SPEED:
-				play_sound("grass")
+				$sounds.play("grass")
 		else:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			$sounds/grass.stop()
@@ -117,9 +118,6 @@ func flip_character():
 	$center/character.scale.x *= -1
 	$center/character/head.flip_h = !$center/character/head.flip_h
 	flipped = !flipped
-
-func play_sound(sound):
-	$sounds.play(sound)
 	
 func play(anim:String):
 	if animation_player.current_animation == anim:
@@ -132,14 +130,14 @@ func _on_hitbox_area_entered(area):
 	#freeze animation on hit
 	animation_player.play(animation_player.current_animation, 0.0, 0.0)
 	$hit_freeze_timer.start()
-	$sounds/clash.pitch_scale = 1 + rand_range(-0.2, 0.2)
-	$sounds/clash.play()
+	$sounds.start("sword_slice")
 	
 
 func _on_hurtbox_damage_taken(amount, source):
 	if not invincible:
 #		print("amount: ", amount, "  source: ", source)
 		player_health -= amount
+		sounds.play("oough")
 		print("Player_Health: ", player_health)
 		knockback(source)
 	else:
@@ -156,6 +154,7 @@ func knockback(dmg_source):
 
 func _on_blockbox_blocked_attack():
 	$parry_invincible_timer.start(PARRY_INVINCIBILITY_TIME)
+	$sounds.start("sword_clash2")
 	invincible = true
 
 

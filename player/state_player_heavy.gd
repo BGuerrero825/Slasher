@@ -14,6 +14,6 @@ func run(player : KinematicBody2D):
 
 	#play sound after 10 frames
 	if sound_trigger == 10:
-		player.play_sound("heavy_swoosh")
+		player.sounds.play("heavy_swoosh")
 	
 	sound_trigger += 1

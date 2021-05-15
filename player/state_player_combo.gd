@@ -5,7 +5,7 @@ var sound_trigger
 
 func enter(player : KinematicBody2D):
 	.enter(player)
-	sound_trigger = 0
+	player.sounds.queue("quick_swoosh", 0.15)
 
 func run(player : KinematicBody2D):
 	# true when animation is complete
@@ -21,9 +21,3 @@ func run(player : KinematicBody2D):
 	#if attack pressed, queue the state change
 	if Input.is_action_just_pressed("attack") and player.animation_player.current_animation_position < 0.55:
 		combo_queued = true
-	
-	#play sound after 10 frames
-	if sound_trigger == 5:
-		player.play_sound("quick_swoosh")
-	
-	sound_trigger += 1

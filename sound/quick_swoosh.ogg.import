@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/quick_swoosh.ogg-889b1385b9befc158945e4768a80129b.oggstr"
+
+[deps]
+
+source_file="res://sound/quick_swoosh.ogg"
+dest_files=[ "res://.import/quick_swoosh.ogg-889b1385b9befc158945e4768a80129b.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
