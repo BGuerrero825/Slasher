@@ -2,10 +2,14 @@ extends KinematicBody2D
 
 class_name Player, "res://art/helmet1_icon.png"
 
+
+signal player_killed
+
+
 const NEW_NPC = preload("res://npc/knight/knight.tscn")
 export var player_health : float = 40.0
 
-
+var attacking : bool = false
 
 #movement constants
 export var MAX_SPEED := 150.0
@@ -27,22 +31,10 @@ export var light_attack_dmg : float = 5.0
 export var heavy_attack_dmg : float = 15.0
 var active_dmg : float = 25.0  # SET IN STATE MACHINE
 
+export var parry_invincibility_time : float = .8
 
-## REFACTOR BELOW
-export var PARRY_COOLDOWN_TIME := .4
-
-export var PARRY_INVINCIBILITY_TIME := .8
-
-export var KNOCKBACK_TIME := 0.1  # total time spent in knockback
-export var KNOCKBACK_STRENGTH := 40.0  # knockback strength
-
-export var DODGE_TIMER = 0.2
-export var DODGE_COOLDOWN_TIME := 0.50
-export var DODGE_IMPULSE := 375
-
-var parry_available := true
-var invincible := false
-var flipped := false
+var invincible : bool = false
+var flipped : bool = false
 #var head_y := -100
 
 #var last_dmg_source = self
@@ -70,21 +62,21 @@ func _process(delta):
 	state_machine.run()
 	# display state
 	$debug_state.text = state_machine.active_state.tag
-	
+
 	#debug code for spawning an enemy
 	if Input.is_action_just_released("5"):
 		var new_NPC = NEW_NPC.instance()
 		get_tree().get_root().add_child(new_NPC)
-			
-	
+
+
 	#debug code for flipping sprite
 	if Input.is_action_just_released("1"):
 		flip_character()
-	
+
 	# Parry allowed in following states
 #	if Input.is_action_just_pressed("block") and parry_available:# and current_state in []:
 #		current_state = PARRY
-	
+
 	# MOVEMENT CODE
 	#set input vector based on input strength from x axis (a/d) and y axis (w/s)
 	if movement_allowed:
@@ -97,15 +89,13 @@ func _process(delta):
 	#		if walking:
 	#			input_vector = input_vector/2
 			velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
-			# if at max speed 
+			# if at max speed
 			if velocity.length() == MAX_SPEED:
 				$sounds.play("grass")
 		else:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			$sounds/grass.stop()
-#		if dodge_allowed and input_vector != Vector2.ZERO and Input.is_action_just_pressed("dodge"):
-#			current_state = DODGE
-	
+
 	velocity = move_and_slide(velocity)
 	# set rotation of center node based on angle between player and mouse
 	mouse_angle = rad2deg(self.get_global_transform().get_origin().angle_to_point(get_global_mouse_position()))
@@ -118,7 +108,7 @@ func flip_character():
 	$center/character.scale.x *= -1
 	$center/character/head.flip_h = !$center/character/head.flip_h
 	flipped = !flipped
-	
+
 func play(anim:String):
 	if animation_player.current_animation == anim:
 		return
@@ -131,7 +121,7 @@ func _on_hitbox_area_entered(area):
 	animation_player.play(animation_player.current_animation, 0.0, 0.0)
 	$hit_freeze_timer.start()
 	$sounds.start("sword_slice")
-	
+
 
 func _on_hurtbox_damage_taken(amount, source):
 	if not invincible:
@@ -145,6 +135,7 @@ func _on_hurtbox_damage_taken(amount, source):
 
 	if player_health <= 0:
 		print("YOU ARE DEAD.")
+		emit_signal("player_killed")
 
 
 # warning-ignore:unused_argument
@@ -153,10 +144,10 @@ func knockback(dmg_source):
 
 
 func _on_blockbox_blocked_attack():
-	$parry_invincible_timer.start(PARRY_INVINCIBILITY_TIME)
-	$sounds.start("sword_clash2")
+	$parry_invincible_timer.start(parry_invincibility_time)
 	invincible = true
-
+	$sounds.start("sword_clash2")
+	
 
 func _on_parry_invincible_timer_timeout():
 	invincible = false

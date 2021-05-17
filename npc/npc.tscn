@@ -21,6 +21,9 @@ extents = Vector2( 16, 24 )
 
 [sub_resource type="CircleShape2D" id=3]
 
+[sub_resource type="CircleShape2D" id=6]
+radius = 64.0
+
 [sub_resource type="CircleShape2D" id=4]
 radius = 56.0
 
@@ -44,20 +47,18 @@ __meta__ = {
 [node name="npc_state_machine" type="Node2D" parent="."]
 script = ExtResource( 7 )
 
+[node name="defend" type="Node2D" parent="npc_state_machine"]
+
 [node name="idle" type="Node2D" parent="npc_state_machine"]
 script = ExtResource( 8 )
 
 [node name="fight" type="Node2D" parent="npc_state_machine"]
-script = ExtResource( 10 )
 
 [node name="windup" type="Node2D" parent="npc_state_machine"]
-script = ExtResource( 12 )
 
 [node name="attack" type="Node2D" parent="npc_state_machine"]
-script = ExtResource( 9 )
 
 [node name="recovery" type="Node2D" parent="npc_state_machine"]
-script = ExtResource( 11 )
 
 [node name="base" type="Sprite" parent="."]
 visible = false
@@ -123,6 +124,13 @@ one_shot = true
 [node name="knockback_timer" type="Timer" parent="timers"]
 one_shot = true
 
+[node name="attack_distance" type="Area2D" parent="."]
+visible = false
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attack_distance"]
+shape = SubResource( 6 )
+
 [node name="standoff_distance" type="Area2D" parent="."]
 visible = false
 collision_mask = 2147483648
@@ -145,6 +153,8 @@ script = ExtResource( 13 )
 [connection signal="timeout" from="timers/cooldown_timer" to="." method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="timers/move_delay_timer" to="." method="_on_move_delay_timer_timeout"]
 [connection signal="timeout" from="timers/knockback_timer" to="." method="_on_knockback_timer_timeout"]
+[connection signal="area_entered" from="attack_distance" to="." method="_on_attack_distance_area_entered"]
+[connection signal="area_exited" from="attack_distance" to="." method="_on_attack_distance_area_exited"]
 [connection signal="area_entered" from="standoff_distance" to="." method="_on_standoff_distance_area_entered"]
 [connection signal="area_exited" from="standoff_distance" to="." method="_on_standoff_distance_area_exited"]
 [connection signal="area_entered" from="runaway_distance" to="." method="_on_runaway_distance_area_entered"]

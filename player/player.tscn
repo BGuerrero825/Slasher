@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://art/knight.png" type="Texture" id=1]
 [ext_resource path="res://art/direction_indicator.png" type="Texture" id=2]
@@ -20,9 +20,6 @@
 [ext_resource path="res://sound/sword_clash2.ogg" type="AudioStream" id=18]
 [ext_resource path="res://sound/grass_walk.ogg" type="AudioStream" id=19]
 [ext_resource path="res://art/helmet1.png" type="Texture" id=20]
-[ext_resource path="res://sound/sound_player.gd" type="Script" id=21]
-[ext_resource path="res://sound/light_swoosh.ogg" type="AudioStream" id=22]
-[ext_resource path="res://sound/heavy_swoosh.ogg" type="AudioStream" id=23]
 [ext_resource path="res://sound/sword_slice.ogg" type="AudioStream" id=27]
 [ext_resource path="res://sound/oough.ogg" type="AudioStream" id=28]
 [ext_resource path="res://sound/quick_swoosh.ogg" type="AudioStream" id=29]
@@ -66,7 +63,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.15, 0.25, 0.35, 0.5, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( -1.00002, -7.99997 ), Vector2( -15, -7.99992 ), Vector2( -12, -4.99993 ), Vector2( -8.00001, -4.99995 ), Vector2( -5.99999, 5.00679e-05 ), Vector2( -8.34465e-07, -2.99997 ) ]
+"values": [ Vector2( -1.00002, -7.99997 ), Vector2( -11, -4.99993 ), Vector2( -7.00001, -3.99995 ), Vector2( -7.00001, -3.99995 ), Vector2( -5.99999, 4.95911e-05 ), Vector2( -8.34465e-07, -2.99997 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -97,7 +94,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2.19345e-05, 5.99998 ), Vector2( -0.999986, 2.99999 ), Vector2( -1.09673e-05, -2.99999 ) ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=3]
 length = 1.1
 step = 0.05
 tracks/0/type = "value"
@@ -137,7 +134,7 @@ tracks/2/keys = {
 "values": [ Vector2( -4.00001, -6.99996 ), Vector2( -5.00002, -11.9999 ), Vector2( -8.00006, -23.9999 ), Vector2( -3.00008, -23.9999 ), Vector2( -1.00008, -21.9999 ), Vector2( -1.00008, -21.9999 ), Vector2( -2.00006, -18.9999 ), Vector2( -3.00004, -12.9999 ), Vector2( -2.00001, -6.99996 ), Vector2( -1.09673e-05, -2.99999 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=4]
 loop = true
 step = 0.05
 tracks/0/type = "value"
@@ -177,7 +174,7 @@ tracks/2/keys = {
 "values": [ Vector2( -1.07288e-05, -2.99999 ), Vector2( -7.21216e-06, -1.99999 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=5]
 length = 0.4
 step = 0.05
 tracks/0/type = "value"
@@ -243,7 +240,7 @@ tracks/4/keys = {
 "values": [  ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=6]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -296,7 +293,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=7]
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -323,8 +320,7 @@ tracks/1/keys = {
 "values": [ Vector2( -2.99998, 2 ), Vector2( -3.99998, 1.00001 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "recovery"
+[sub_resource type="Animation" id=8]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -351,7 +347,7 @@ tracks/1/keys = {
 "values": [ Vector2( -7.62939e-06, -1.99999 ) ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=9]
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
 tracks/0/interp = 1
@@ -377,13 +373,13 @@ tracks/1/keys = {
 "values": [ Vector2( -3, -2.99998 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 16, 20 )
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 18.701, 24 )
 
-[sub_resource type="CircleShape2D" id=9]
+[sub_resource type="CircleShape2D" id=12]
 
 [node name="player" type="KinematicBody2D"]
 script = ExtResource( 4 )
@@ -391,24 +387,27 @@ script = ExtResource( 4 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/combo = SubResource( 1 )
 anims/dodge = SubResource( 2 )
-anims/heavy = SubResource( 10 )
-anims/idle = SubResource( 12 )
-anims/light = SubResource( 3 )
-anims/parry = SubResource( 4 )
-anims/prep = SubResource( 5 )
-anims/recovery = SubResource( 6 )
-anims/windup = SubResource( 13 )
+anims/heavy = SubResource( 3 )
+anims/idle = SubResource( 4 )
+anims/light = SubResource( 5 )
+anims/parry = SubResource( 6 )
+anims/prep = SubResource( 7 )
+anims/recovery = SubResource( 8 )
+anims/windup = SubResource( 9 )
 
 [node name="debug_state" type="Label" parent="."]
-margin_left = -40.0
-margin_top = -48.0
-margin_right = 49.0
-margin_bottom = -34.0
+margin_left = -46.37
+margin_top = -47.2049
+margin_right = 42.63
+margin_bottom = -33.2049
 text = "debug_state"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
 
 [node name="state_machine" type="Node2D" parent="."]
 script = ExtResource( 6 )
@@ -480,7 +479,7 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/hitbox"]
 position = Vector2( 32, 0 )
 scale = Vector2( 1.82755, 2.21364 )
-shape = SubResource( 7 )
+shape = SubResource( 10 )
 disabled = true
 
 [node name="blockbox" type="Area2D" parent="center"]
@@ -491,12 +490,12 @@ script = ExtResource( 16 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/blockbox"]
 position = Vector2( 32, 0 )
 scale = Vector2( 1.57011, 1.84162 )
-shape = SubResource( 8 )
+shape = SubResource( 11 )
 disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 2.03794, 2.03794 )
-shape = SubResource( 9 )
+shape = SubResource( 12 )
 
 [node name="hurtbox" type="Area2D" parent="."]
 collision_layer = 0
@@ -504,7 +503,7 @@ script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 scale = Vector2( 2.3078, 2.3078 )
-shape = SubResource( 9 )
+shape = SubResource( 12 )
 
 [node name="parry_invincible_timer" type="Timer" parent="."]
 one_shot = true
@@ -514,7 +513,6 @@ wait_time = 0.1
 one_shot = true
 
 [node name="sounds" type="Node2D" parent="."]
-script = ExtResource( 21 )
 
 [node name="sword_clash2" type="AudioStreamPlayer2D" parent="sounds"]
 stream = ExtResource( 18 )
@@ -525,10 +523,8 @@ volume_db = -10.0
 pitch_scale = 1.2
 
 [node name="light_swoosh" type="AudioStreamPlayer2D" parent="sounds"]
-stream = ExtResource( 22 )
 
 [node name="heavy_swoosh" type="AudioStreamPlayer2D" parent="sounds"]
-stream = ExtResource( 23 )
 
 [node name="quick_swoosh" type="AudioStreamPlayer2D" parent="sounds"]
 stream = ExtResource( 29 )

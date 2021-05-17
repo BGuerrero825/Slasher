@@ -2,9 +2,12 @@ extends KinematicBody2D
 
 class_name NPC
 
-export var health := 25.0
-export var SPEED := 35.0
-var speed : float = SPEED
+export var health : float = 25.0
+export var base_speed : float = 35.0
+export var lunge_speed : float = 80.0
+export var recovery_speed : float = 15.0
+export var windup_speed : float = 5.0
+var speed : float = base_speed
 
 const corpse = preload("res://objects/corpse/corpse.tscn")
 const blood = preload("res://objects/blood/blood.tscn")
@@ -12,6 +15,7 @@ const blood = preload("res://objects/blood/blood.tscn")
 # NEW VARS
 #################################################
 var in_attack_range : bool = false
+var in_standoff_range : bool = false
 var in_runaway_range : bool = false
 
 # Valid stances: 'disabled', 'charge', 'search', 'fight', 'retreat'
@@ -27,44 +31,47 @@ var recovery_time : float = 1.0
 
 export var lunging : bool = false  # set in animation player
 
+export var _rotation_speed : float = 0.025
 
-export var ATTACK_DELAY_TIME := 0.01  # delay before initiating an attack while in range
-export var ATTACK_COOLDOWN_TIME := 1.5  # delay between attacks
-export var MOVE_DELAY_TIME := 0.5  # delay before moving after attacking
-export var KNOCKBACK_TIME := 0.1  # total time spent in knockback
-export var KNOCKBACK_STRENGTH := 40.0  # knockback strength
-export var LUNGE_SPEED := 50.0  # lunge speed
+var looking_at_player : bool = true  # set in rotate_towards func
 
-export var DAMAGE := 10.0
 
-export var ROTATE_SPEED := 10.0  # speed the character rotates towards the player
-
-onready var STANDOFF_DISTANCE : float = 150 #$range_ref/standoff_distance.shape.radius  # distance the AI wants to sit from the player
-onready var RUNAWAY_DISTANCE : float = 150 #$range_ref/runaway_distance.shape.radius  # distance the AI wants to run from the player
+export var damage : float = 45.0
 
 onready var animation_player := $AnimationPlayer
 onready var state_machine := $npc_state_machine
 
 var attack_available := true
-var current_damage := DAMAGE
+var current_damage := damage
 
 var velocity := Vector2.ZERO
+
+var attack_hesitation_time : float = 1.0
 
 
 func _ready():
 	state_machine.init(self)
+	randomize_attack_hesitation()
 
 
 func _process(delta):
 	state_machine.run()
 	# display state
 	$debug_state.text = state_machine.active_state.tag
-	
+
+#	move_npc()
+
+
+func move_npc():
 	# movement
 	if move_direction == Vector2.UP:
 		velocity.x = cos($center.rotation)
 		velocity.y = sin($center.rotation)
 		velocity = speed * velocity.normalized()
+	elif move_direction == Vector2.DOWN:  # backing off
+		velocity.x = cos($center.rotation)
+		velocity.y = sin($center.rotation)
+		velocity = -speed * velocity.normalized()
 	velocity = move_and_slide(velocity)
 
 	# if player is dead, spawn a corpse then delete self
@@ -75,8 +82,21 @@ func _process(delta):
 		new_corpse.rotation_degrees = $center.rotation_degrees - 90
 		queue_free()
 
-func rotate_towards(angle):
-	$center.rotation = angle
+func rotate_towards(target_angle, target_rotation_speed = _rotation_speed):
+	$center.rotation = lerp_angle($center.rotation, target_angle, target_rotation_speed)
+
+
+
+#	# Tolerance for looking at player
+#	if abs($center.rotation - target_angle) > 0.1:
+#		looking_at_player = false
+#	else:
+#		looking_at_player = true
+
+
+func randomize_attack_hesitation():
+	attack_hesitation_time = rand_range(1, 3.5)
+
 
 func _on_hurtbox_npc_damage_taken(amount, source):
 #	current_state = KNOCK_BACK
@@ -106,10 +126,10 @@ func _on_hitbox_area_entered(area):
 
 
 func _on_standoff_distance_area_entered(area):
-	in_attack_range = true
+	in_standoff_range = true
 
 func _on_standoff_distance_area_exited(area):
-	in_attack_range = false
+	in_standoff_range = false
 
 
 
@@ -118,3 +138,10 @@ func _on_runaway_distance_area_entered(area):
 
 func _on_runaway_distance_area_exited(area):
 	in_runaway_range = false
+
+
+func _on_attack_distance_area_entered(area):
+	in_attack_range = true
+
+func _on_attack_distance_area_exited(area):
+	in_attack_range = false
