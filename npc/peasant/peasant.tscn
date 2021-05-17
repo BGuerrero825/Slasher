@@ -17,10 +17,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.25, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ 2, 3, 4, 5, 3, 1 ]
+"values": [ 4, 5, 1 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("center/hitbox/CollisionShape2D:disabled")
@@ -29,7 +29,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3, 0.4 ),
+"times": PoolRealArray( 0, 0.25, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true ]
@@ -49,23 +49,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=2]
 resource_name = "idle"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/path = NodePath("center/character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 0, 1 ]
-}
-
-[sub_resource type="Animation" id=3]
-resource_name = "windup"
-length = 0.6
+length = 0.8
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -74,7 +58,24 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "windup"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("center/character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 2, 3 ]
@@ -91,7 +92,6 @@ radius = 64.0
 
 [node name="peasant" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-lunging = true
 LUNGE_SPEED = 200.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
@@ -116,11 +116,10 @@ script = ExtResource( 3 )
 texture = ExtResource( 5 )
 vframes = 1
 hframes = 7
-frame = 5
+frame = 1
 
 [node name="CollisionShape2D" parent="center/hitbox" index="0"]
 shape = SubResource( 5 )
-disabled = false
 
 [node name="CollisionShape2D" parent="standoff_distance" index="0"]
 shape = SubResource( 6 )
