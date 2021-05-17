@@ -10,6 +10,7 @@ export var windup_speed : float = 5.0
 var speed : float = base_speed
 
 var in_attack_range : bool = false
+var in_standoff_range : bool = false
 var in_runaway_range : bool = false
 
 # Valid stances: 'disabled', 'charge', 'search', 'fight', 'retreat'
@@ -27,7 +28,7 @@ export var lunging : bool = false  # set in animation player
 
 export var _rotation_speed : float = 0.025
 
-var looking_at_player : bool = false  # set in rotate_towards func
+var looking_at_player : bool = true  # set in rotate_towards func
 
 
 export var damage : float = 45.0
@@ -40,9 +41,12 @@ var current_damage := damage
 
 var velocity := Vector2.ZERO
 
+var attack_hesitation_time : float = 1.0
+
 
 func _ready():
 	state_machine.init(self)
+	randomize_attack_hesitation()
 
 
 func _process(delta):
@@ -50,22 +54,37 @@ func _process(delta):
 	# display state
 	$debug_state.text = state_machine.active_state.tag
 	
+#	move_npc()
+
+
+func move_npc():
 	# movement
 	if move_direction == Vector2.UP:
 		velocity.x = cos($center.rotation)
 		velocity.y = sin($center.rotation)
 		velocity = speed * velocity.normalized()
+	elif move_direction == Vector2.DOWN:  # backing off
+		velocity.x = cos($center.rotation)
+		velocity.y = sin($center.rotation)
+		velocity = -speed * velocity.normalized()
 	velocity = move_and_slide(velocity)
 
 
 func rotate_towards(target_angle, target_rotation_speed = _rotation_speed):
 	$center.rotation = lerp_angle($center.rotation, target_angle, target_rotation_speed)
 	
-	# Tolerance for looking at player
-	if abs($center.rotation - target_angle) > 0.05:
-		looking_at_player = false
-	else:
-		looking_at_player = true
+	
+	
+#	# Tolerance for looking at player
+#	if abs($center.rotation - target_angle) > 0.1:
+#		looking_at_player = false
+#	else:
+#		looking_at_player = true
+
+
+func randomize_attack_hesitation():
+	attack_hesitation_time = rand_range(1, 3.5)
+
 
 func _on_hurtbox_npc_damage_taken(amount):
 #	current_state = KNOCK_BACK
@@ -90,10 +109,10 @@ func _on_hitbox_area_entered(area):
 
 
 func _on_standoff_distance_area_entered(area):
-	in_attack_range = true
+	in_standoff_range = true
 
 func _on_standoff_distance_area_exited(area):
-	in_attack_range = false
+	in_standoff_range = false
 
 
 
@@ -102,3 +121,10 @@ func _on_runaway_distance_area_entered(area):
 
 func _on_runaway_distance_area_exited(area):
 	in_runaway_range = false
+
+
+func _on_attack_distance_area_entered(area):
+	in_attack_range = true
+
+func _on_attack_distance_area_exited(area):
+	in_attack_range = false

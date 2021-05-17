@@ -99,4 +99,13 @@ shape = SubResource( 2 )
 
 [node name="peasant" parent="." instance=ExtResource( 6 )]
 position = Vector2( 304, 184 )
+
+[node name="peasant2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 424, 216 )
+
+[node name="peasant3" parent="." instance=ExtResource( 6 )]
+position = Vector2( 320, 96 )
+
+[node name="peasant4" parent="." instance=ExtResource( 6 )]
+position = Vector2( 440, 128 )
 [connection signal="player_killed" from="player" to="." method="_on_player_player_killed"]

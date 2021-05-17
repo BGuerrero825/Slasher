@@ -9,7 +9,7 @@ signal player_killed
 const NEW_NPC = preload("res://npc/knight/knight.tscn")
 export var player_health : float = 40.0
 
-
+var attacking : bool = false
 
 #movement constants
 export var MAX_SPEED := 150.0
