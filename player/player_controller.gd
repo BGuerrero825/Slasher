@@ -68,7 +68,6 @@ func _process(delta):
 		var new_NPC = NEW_NPC.instance()
 		get_tree().get_root().add_child(new_NPC)
 
-
 	#debug code for flipping sprite
 	if Input.is_action_just_released("1"):
 		flip_character()

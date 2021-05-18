@@ -58,6 +58,14 @@ func _process(delta):
 	state_machine.run()
 	# display state
 	$debug_state.text = state_machine.active_state.tag
+	
+	# if player is dead, spawn a corpse then delete self
+	if health <= 0:
+		var new_corpse = corpse.instance()
+		get_tree().get_root().add_child(new_corpse)
+		new_corpse.transform = get_global_transform()
+		new_corpse.rotation_degrees = $center.rotation_degrees - 90
+		queue_free()
 
 #	move_npc()
 
@@ -73,14 +81,7 @@ func move_npc():
 		velocity.y = sin($center.rotation)
 		velocity = -speed * velocity.normalized()
 	velocity = move_and_slide(velocity)
-
-	# if player is dead, spawn a corpse then delete self
-	if health <= 0:
-		var new_corpse = corpse.instance()
-		get_tree().get_root().add_child(new_corpse)
-		new_corpse.transform = get_global_transform()
-		new_corpse.rotation_degrees = $center.rotation_degrees - 90
-		queue_free()
+	
 
 func rotate_towards(target_angle, target_rotation_speed = _rotation_speed):
 	$center.rotation = lerp_angle($center.rotation, target_angle, target_rotation_speed)
