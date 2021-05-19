@@ -16,13 +16,13 @@ extents = Vector2( 16, 24 )
 
 [sub_resource type="CircleShape2D" id=3]
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=4]
 radius = 64.0
 
-[sub_resource type="CircleShape2D" id=4]
+[sub_resource type="CircleShape2D" id=5]
 radius = 56.0
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=6]
 radius = 47.2507
 
 [node name="npc" type="KinematicBody2D"]
@@ -121,21 +121,21 @@ visible = false
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_distance"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="standoff_distance" type="Area2D" parent="."]
 visible = false
 collision_mask = 2147483648
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="standoff_distance"]
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="runaway_distance" type="Area2D" parent="."]
 visible = false
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="runaway_distance"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="npc_damage_taken" from="hurtbox" to="." method="_on_hurtbox_npc_damage_taken"]
 [connection signal="timeout" from="timers/attack_timer" to="." method="_on_attack_timer_timeout"]
