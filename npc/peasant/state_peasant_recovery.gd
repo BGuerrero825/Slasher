@@ -4,7 +4,7 @@ var cooldown_timer : SceneTreeTimer
 var rand_float : float
 
 func enter(npc : KinematicBody2D):
-	.enter(npc)
+	npc.play("idle")
 	npc.speed = npc.recovery_speed
 #	npc.speed = 100
 	cooldown_timer = get_tree().create_timer(npc.recovery_time)
@@ -12,7 +12,6 @@ func enter(npc : KinematicBody2D):
 	
 	randomize()
 	rand_float = randf()
-	print(rand_float)
 
 
 func run(npc : KinematicBody2D):
