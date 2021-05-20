@@ -13,7 +13,6 @@ func run(player : KinematicBody2D):
 		player.recovery_time = player.heavy_recovery_time
 		return "recovery"
 
-
 func exit(player : KinematicBody2D):
 	.exit(player)
 	player.attacking = false

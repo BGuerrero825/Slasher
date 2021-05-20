@@ -2,6 +2,7 @@ extends BaseNPCState
 
 
 var hesitation_timer : SceneTreeTimer
+var current_rotation : float
 
 
 func enter(npc : KinematicBody2D):
@@ -15,12 +16,13 @@ func run(npc: KinematicBody2D):
 	if npc.stance != 'fight':
 		return "idle"
 	
+	# movement
 	var player_pos = npc.player_ref.get_position()
-	npc.rotate_towards(PI + npc.position.angle_to_point(player_pos))
+	npc.rotate_towards(player_pos)
+	npc.strafe_move(Vector2.UP, npc.speed)
 	
-	npc.move_direction = Vector2.UP
 	
-	if npc.player_ref.attacking and npc.in_attack_range:
+	if npc.player_ref.attacking and npc.in_attack_range(player_pos):
 		return "defend"
 	
 #	print(npc.in_charge_range, npc.looking_at_player)

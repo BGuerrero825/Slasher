@@ -17,6 +17,9 @@ const blood = preload("res://objects/blood/blood.tscn")
 var in_attack_range : bool = false
 var in_standoff_range : bool = false
 var in_runaway_range : bool = false
+#var in_attack_range : bool = false
+#var in_standoff_range : bool = false
+#var in_runaway_range : bool = false
 
 # Valid stances: 'disabled', 'charge', 'search', 'fight', 'retreat'
 export var stance : String = 'fight'
@@ -34,6 +37,8 @@ export var lunging : bool = false  # set in animation player
 export var _rotation_speed : float = 0.025
 
 var looking_at_player : bool = true  # set in rotate_towards func
+
+
 
 
 export var damage : float = 45.0
@@ -58,6 +63,12 @@ func _process(delta):
 	state_machine.run()
 	# display state
 	$debug_state.text = state_machine.active_state.tag
+
+
+# REFACTOR TO ROTATE TOWARDS A POSITION VECTOR OVER AN ANGLE
+func rotate_towards(target_pos, target_rotation_speed = _rotation_speed) -> float:
+	var target_angle = PI + position.angle_to_point(target_pos)
+	$center.rotation = lerp_angle($center.rotation, target_angle, target_rotation_speed)
 	
 	# if player is dead, spawn a corpse then delete self
 	if health <= 0:
@@ -93,6 +104,16 @@ func rotate_towards(target_angle, target_rotation_speed = _rotation_speed):
 #		looking_at_player = false
 #	else:
 #		looking_at_player = true
+	return $center.rotation + TAU/4
+
+
+func strafe_move(strafe_dir, input_speed=speed) -> Vector2:
+	return move_and_slide(strafe_dir.rotated($center.rotation + TAU/4) * input_speed)
+
+
+func randomize_attack_hesitation():
+	attack_hesitation_time = rand_range(1, 3.5)
+
 
 
 func randomize_attack_hesitation():
@@ -110,6 +131,8 @@ func _on_hurtbox_npc_damage_taken(amount, source):
 	new_blood.scale.x = (-1 if source.flipped else 1)
 	health = health - amount
 	print("NPC_Health: ", health, " damage taken: ", amount)
+	if health <= 0:
+		queue_free()
 
 
 func play(anim:String):
@@ -126,23 +149,19 @@ func _on_hitbox_area_entered(area):
 	area.take_damage(current_damage, self)
 
 
-func _on_standoff_distance_area_entered(area):
-	in_standoff_range = true
-
-func _on_standoff_distance_area_exited(area):
-	in_standoff_range = false
-
+func in_attack_range(player_pos) -> bool:
+	var distance_to_player = position.distance_to(player_pos)
+	var range_radius = $range_ref/attack_distance.shape.radius
+	return distance_to_player < range_radius
 
 
-func _on_runaway_distance_area_entered(area):
-	in_runaway_range = true
+func in_standoff_range(player_pos) -> bool:
+	var distance_to_player = position.distance_to(player_pos)
+	var range_radius = $range_ref/standoff_distance.shape.radius
+	return distance_to_player < range_radius
 
-func _on_runaway_distance_area_exited(area):
-	in_runaway_range = false
 
-
-func _on_attack_distance_area_entered(area):
-	in_attack_range = true
-
-func _on_attack_distance_area_exited(area):
-	in_attack_range = false
+func in_runaway_range(player_pos) -> bool:
+	var distance_to_player = position.distance_to(player_pos)
+	var range_radius = $range_ref/runaway_distance.shape.radius
+	return distance_to_player < range_radius
