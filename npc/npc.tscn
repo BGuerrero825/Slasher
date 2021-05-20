@@ -116,25 +116,17 @@ one_shot = true
 [node name="knockback_timer" type="Timer" parent="timers"]
 one_shot = true
 
-[node name="attack_distance" type="Area2D" parent="."]
-visible = false
+[node name="range_ref" type="Area2D" parent="."]
+collision_layer = 0
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="attack_distance"]
+[node name="attack_distance" type="CollisionShape2D" parent="range_ref"]
 shape = SubResource( 4 )
 
-[node name="standoff_distance" type="Area2D" parent="."]
-visible = false
-collision_mask = 2147483648
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="standoff_distance"]
+[node name="standoff_distance" type="CollisionShape2D" parent="range_ref"]
 shape = SubResource( 5 )
 
-[node name="runaway_distance" type="Area2D" parent="."]
-visible = false
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="runaway_distance"]
+[node name="runaway_distance" type="CollisionShape2D" parent="range_ref"]
 shape = SubResource( 6 )
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="npc_damage_taken" from="hurtbox" to="." method="_on_hurtbox_npc_damage_taken"]
@@ -142,9 +134,3 @@ shape = SubResource( 6 )
 [connection signal="timeout" from="timers/cooldown_timer" to="." method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="timers/move_delay_timer" to="." method="_on_move_delay_timer_timeout"]
 [connection signal="timeout" from="timers/knockback_timer" to="." method="_on_knockback_timer_timeout"]
-[connection signal="area_entered" from="attack_distance" to="." method="_on_attack_distance_area_entered"]
-[connection signal="area_exited" from="attack_distance" to="." method="_on_attack_distance_area_exited"]
-[connection signal="area_entered" from="standoff_distance" to="." method="_on_standoff_distance_area_entered"]
-[connection signal="area_exited" from="standoff_distance" to="." method="_on_standoff_distance_area_exited"]
-[connection signal="area_entered" from="runaway_distance" to="." method="_on_runaway_distance_area_entered"]
-[connection signal="area_exited" from="runaway_distance" to="." method="_on_runaway_distance_area_exited"]

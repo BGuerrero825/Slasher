@@ -15,13 +15,14 @@ func enter(npc : KinematicBody2D):
 
 
 func run(npc : KinematicBody2D):
+	# movement
 	# starts at current npc speed and increases over time
 	npc.speed = lerp(npc.speed, npc.charge_speed, npc.charge_acceleration)
-	
 	var player_pos = npc.player_ref.get_position()
-	npc.rotate_towards(PI + npc.position.angle_to_point(player_pos), npc.charge_rotate_speed)
+	npc.rotate_towards(player_pos)
+	npc.strafe_move(Vector2.UP, npc.speed)
 	
-	if npc.in_attack_range: # and npc.looking_at_player:
+	if npc.in_attack_range(player_pos): # and npc.looking_at_player:
 		return "attack"
 	
 	if charge_timer.time_left <= 0:

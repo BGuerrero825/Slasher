@@ -10,9 +10,8 @@ func run(npc: KinematicBody2D):
 		return "idle"
 	
 	var player_pos = npc.player_ref.get_position()
-	npc.rotate_towards(PI + npc.position.angle_to_point(player_pos))
+	npc.rotate_towards(player_pos)
+	npc.strafe_move(Vector2.UP, npc.speed)
 	
-	npc.move_direction = Vector2.UP
-	
-	if npc.in_attack_range:
+	if npc.in_attack_range(player_pos):
 		return "windup"

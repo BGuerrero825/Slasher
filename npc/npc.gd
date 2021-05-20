@@ -9,9 +9,9 @@ export var recovery_speed : float = 15.0
 export var windup_speed : float = 5.0
 var speed : float = base_speed
 
-var in_attack_range : bool = false
-var in_standoff_range : bool = false
-var in_runaway_range : bool = false
+#var in_attack_range : bool = false
+#var in_standoff_range : bool = false
+#var in_runaway_range : bool = false
 
 # Valid stances: 'disabled', 'charge', 'search', 'fight', 'retreat'
 export var stance : String = 'fight'
@@ -56,7 +56,8 @@ func _process(delta):
 
 
 # REFACTOR TO ROTATE TOWARDS A POSITION VECTOR OVER AN ANGLE
-func rotate_towards(target_angle, target_rotation_speed = _rotation_speed) -> float:
+func rotate_towards(target_pos, target_rotation_speed = _rotation_speed) -> float:
+	var target_angle = PI + position.angle_to_point(target_pos)
 	$center.rotation = lerp_angle($center.rotation, target_angle, target_rotation_speed)
 	
 	return $center.rotation + TAU/4
@@ -92,23 +93,19 @@ func _on_hitbox_area_entered(area):
 	area.take_damage(current_damage, self)
 
 
-func _on_standoff_distance_area_entered(area):
-	in_standoff_range = true
-
-func _on_standoff_distance_area_exited(area):
-	in_standoff_range = false
-
+func in_attack_range(player_pos) -> bool:
+	var distance_to_player = position.distance_to(player_pos)
+	var range_radius = $range_ref/attack_distance.shape.radius
+	return distance_to_player < range_radius
 
 
-func _on_runaway_distance_area_entered(area):
-	in_runaway_range = true
+func in_standoff_range(player_pos) -> bool:
+	var distance_to_player = position.distance_to(player_pos)
+	var range_radius = $range_ref/standoff_distance.shape.radius
+	return distance_to_player < range_radius
 
-func _on_runaway_distance_area_exited(area):
-	in_runaway_range = false
 
-
-func _on_attack_distance_area_entered(area):
-	in_attack_range = true
-
-func _on_attack_distance_area_exited(area):
-	in_attack_range = false
+func in_runaway_range(player_pos) -> bool:
+	var distance_to_player = position.distance_to(player_pos)
+	var range_radius = $range_ref/runaway_distance.shape.radius
+	return distance_to_player < range_radius

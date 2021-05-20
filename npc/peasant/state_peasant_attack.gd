@@ -7,8 +7,6 @@ func enter(npc: KinematicBody2D):
 
 
 func run(npc: KinematicBody2D):
-	var player_pos = npc.player_ref.get_position()
-	npc.rotate_towards(PI + npc.position.angle_to_point(player_pos))
 	
 	if not npc.animation_player.is_playing():
 		npc.recovery_time = npc.heavy_recovery_time
@@ -18,6 +16,11 @@ func run(npc: KinematicBody2D):
 		npc.speed = npc.lunge_speed
 	elif not npc.lunging:
 		npc.speed = npc.base_speed
+	
+	# movement
+	var player_pos = npc.player_ref.get_position()
+	npc.rotate_towards(player_pos)
+	npc.strafe_move(Vector2.UP, npc.speed)
 
 
 func exit(npc : KinematicBody2D):

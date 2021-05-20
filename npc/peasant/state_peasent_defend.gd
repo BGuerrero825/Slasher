@@ -8,8 +8,8 @@ func enter(npc : KinematicBody2D):
 func play(npc : KinematicBody2D):
 	pass
 	
-#	npc.velocity.x = cos(npc.$center.rotation)
-#	npc.velocity.y = sin(npc.$center.rotation)
-	npc.velocity.x = 1
-	npc.velocity = -npc.speed * npc.velocity.normalized()
-	npc.velocity = npc.move_and_slide(npc.velocity)
+##	npc.velocity.x = cos(npc.$center.rotation)
+##	npc.velocity.y = sin(npc.$center.rotation)
+#	npc.velocity.x = 1
+#	npc.velocity = -npc.speed * npc.velocity.normalized()
+#	npc.velocity = npc.move_and_slide(npc.velocity)
