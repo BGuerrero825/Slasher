@@ -4,7 +4,7 @@ var cooldown_timer : SceneTreeTimer
 
 
 func enter(player : KinematicBody2D):
-	.enter(player)
+	player.play("idle")
 	cooldown_timer = get_tree().create_timer(player.recovery_time)
 
 

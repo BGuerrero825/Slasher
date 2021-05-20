@@ -63,6 +63,14 @@ func _process(delta):
 	state_machine.run()
 	# display state
 	$debug_state.text = state_machine.active_state.tag
+	
+	# if player is dead, spawn a corpse then delete self
+	if health <= 0:
+		var new_corpse = corpse.instance()
+		get_tree().get_root().add_child(new_corpse)
+		new_corpse.transform = get_global_transform()
+		new_corpse.rotation_degrees = $center.rotation_degrees - 90
+		queue_free()
 
 
 # REFACTOR TO ROTATE TOWARDS A POSITION VECTOR OVER AN ANGLE
@@ -92,13 +100,6 @@ func _on_hurtbox_npc_damage_taken(amount, source):
 	new_blood.scale.x = (-1 if source.flipped else 1)
 	health = health - amount
 	print("NPC_Health: ", health, " damage taken: ", amount)
-	# if player is dead, spawn a corpse then delete self
-	if health <= 0:
-		var new_corpse = corpse.instance()
-		get_tree().get_root().add_child(new_corpse)
-		new_corpse.transform = get_global_transform()
-		new_corpse.rotation_degrees = $center.rotation_degrees - 90
-		queue_free()
 
 
 func play(anim:String):

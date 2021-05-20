@@ -122,7 +122,7 @@ script = ExtResource( 7 )
 texture = ExtResource( 5 )
 vframes = 1
 hframes = 7
-frame = 1
+frame = 4
 
 [node name="CollisionShape2D" parent="center/hitbox" index="0"]
 shape = SubResource( 4 )
