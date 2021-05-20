@@ -467,10 +467,10 @@ z_index = 1
 texture = ExtResource( 1 )
 vframes = 7
 hframes = 10
-frame = 11
+frame = 20
 
 [node name="head" type="Sprite" parent="center/character"]
-position = Vector2( -3.99998, 1.00001 )
+position = Vector2( -1.00002, -7.99997 )
 z_index = 1
 texture = ExtResource( 20 )
 offset = Vector2( 0, 0.5 )
