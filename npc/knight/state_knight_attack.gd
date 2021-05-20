@@ -20,14 +20,11 @@ func run(npc: KinematicBody2D):
 	if not npc.animation_player.is_playing():
 		npc.recovery_time = npc.heavy_recovery_time
 		return "recovery"
-<<<<<<<< HEAD:npc/knight/state_knight_attack.gd
-========
 	
 	if npc.lunging:
 		npc.speed = npc.lunge_speed
 	elif not npc.lunging:
 		npc.speed = npc.base_speed
->>>>>>>> ai-formations:npc/state_npc_attack.gd
 
 
 func exit(npc : KinematicBody2D):

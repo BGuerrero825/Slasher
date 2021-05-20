@@ -70,50 +70,11 @@ func rotate_towards(target_pos, target_rotation_speed = _rotation_speed) -> floa
 	var target_angle = PI + position.angle_to_point(target_pos)
 	$center.rotation = lerp_angle($center.rotation, target_angle, target_rotation_speed)
 	
-	# if player is dead, spawn a corpse then delete self
-	if health <= 0:
-		var new_corpse = corpse.instance()
-		get_tree().get_root().add_child(new_corpse)
-		new_corpse.transform = get_global_transform()
-		new_corpse.rotation_degrees = $center.rotation_degrees - 90
-		queue_free()
-
-#	move_npc()
-
-
-func move_npc():
-	# movement
-	if move_direction == Vector2.UP:
-		velocity.x = cos($center.rotation)
-		velocity.y = sin($center.rotation)
-		velocity = speed * velocity.normalized()
-	elif move_direction == Vector2.DOWN:  # backing off
-		velocity.x = cos($center.rotation)
-		velocity.y = sin($center.rotation)
-		velocity = -speed * velocity.normalized()
-	velocity = move_and_slide(velocity)
-	
-
-func rotate_towards(target_angle, target_rotation_speed = _rotation_speed):
-	$center.rotation = lerp_angle($center.rotation, target_angle, target_rotation_speed)
-
-
-
-#	# Tolerance for looking at player
-#	if abs($center.rotation - target_angle) > 0.1:
-#		looking_at_player = false
-#	else:
-#		looking_at_player = true
 	return $center.rotation + TAU/4
 
 
 func strafe_move(strafe_dir, input_speed=speed) -> Vector2:
 	return move_and_slide(strafe_dir.rotated($center.rotation + TAU/4) * input_speed)
-
-
-func randomize_attack_hesitation():
-	attack_hesitation_time = rand_range(1, 3.5)
-
 
 
 func randomize_attack_hesitation():
@@ -131,7 +92,12 @@ func _on_hurtbox_npc_damage_taken(amount, source):
 	new_blood.scale.x = (-1 if source.flipped else 1)
 	health = health - amount
 	print("NPC_Health: ", health, " damage taken: ", amount)
+	# if player is dead, spawn a corpse then delete self
 	if health <= 0:
+		var new_corpse = corpse.instance()
+		get_tree().get_root().add_child(new_corpse)
+		new_corpse.transform = get_global_transform()
+		new_corpse.rotation_degrees = $center.rotation_degrees - 90
 		queue_free()
 
 
