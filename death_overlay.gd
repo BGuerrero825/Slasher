@@ -16,5 +16,7 @@ func hide():
 
 
 func _process(delta):
-	if Input.is_action_just_released("ui_accept"):
-		get_tree().change_scene("res://main_menu.tscn")
+	if pause_mode == Node.PAUSE_MODE_PROCESS:
+		if Input.is_action_just_released("ui_accept"):
+			get_parent().queue_free()
+			get_tree().change_scene("res://main_menu.tscn")

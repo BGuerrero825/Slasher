@@ -22,6 +22,7 @@ script = ExtResource( 5 )
 position = Vector2( 72, 208 )
 
 [node name="death_overlay" type="CanvasLayer" parent="."]
+pause_mode = 1
 script = ExtResource( 8 )
 
 [node name="death_notice" type="Label" parent="death_overlay"]

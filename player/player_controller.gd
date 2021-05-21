@@ -61,7 +61,8 @@ func _process(delta):
 	#	$center/head.position.y *= -1
 	state_machine.run()
 	# display state
-	$debug_state.text = state_machine.active_state.tag
+#	$debug_state.text = state_machine.active_state.tag
+	$debug_state.text = str(invincible)
 
 	#debug code for spawning an enemy
 	if Input.is_action_just_released("5"):

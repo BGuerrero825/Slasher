@@ -9,6 +9,8 @@ export var recovery_speed : float = 15.0
 export var windup_speed : float = 5.0
 var speed : float = base_speed
 
+export var death_delay : float = 0.25
+
 const corpse = preload("res://objects/corpse/corpse.tscn")
 const blood = preload("res://objects/blood/blood.tscn")
 
@@ -63,14 +65,6 @@ func _process(delta):
 	state_machine.run()
 	# display state
 	$debug_state.text = state_machine.active_state.tag
-	
-	# if player is dead, spawn a corpse then delete self
-	if health <= 0:
-		var new_corpse = corpse.instance()
-		get_tree().get_root().add_child(new_corpse)
-		new_corpse.transform = get_global_transform()
-		new_corpse.rotation_degrees = $center.rotation_degrees - 90
-		queue_free()
 
 
 # REFACTOR TO ROTATE TOWARDS A POSITION VECTOR OVER AN ANGLE
@@ -100,6 +94,14 @@ func _on_hurtbox_npc_damage_taken(amount, source):
 	new_blood.scale.x = (-1 if source.flipped else 1)
 	health = health - amount
 	print("NPC_Health: ", health, " damage taken: ", amount)
+	# if player is dead, spawn a corpse then delete self
+	if health <= 0:
+		yield(get_tree().create_timer(death_delay), "timeout")
+		var new_corpse = corpse.instance()
+		get_tree().get_root().add_child(new_corpse)
+		new_corpse.transform = get_global_transform()
+		new_corpse.rotation_degrees = $center.rotation_degrees - 90
+		queue_free()
 
 
 func play(anim:String):
