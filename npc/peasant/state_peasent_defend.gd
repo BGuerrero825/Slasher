@@ -1,15 +1,16 @@
 extends BaseNPCState
 
+var dodge_timer : SceneTreeTimer
+var dodge_speed : float
 
 func enter(npc : KinematicBody2D):
 	npc.play("idle")
-	npc.move_direction = Vector2.ZERO
+	dodge_timer = get_tree().create_timer(0.1)
+	dodge_speed = npc.speed * 5
 
-func play(npc : KinematicBody2D):
-	pass
+func run(npc : KinematicBody2D):
+	dodge_speed = lerp(dodge_speed, dodge_speed*4, 0.01)
+	npc.strafe_move(Vector2.DOWN, dodge_speed)
 	
-##	npc.velocity.x = cos(npc.$center.rotation)
-##	npc.velocity.y = sin(npc.$center.rotation)
-#	npc.velocity.x = 1
-#	npc.velocity = -npc.speed * npc.velocity.normalized()
-#	npc.velocity = npc.move_and_slide(npc.velocity)
+	if dodge_timer.time_left <= 0:
+		return "idle"

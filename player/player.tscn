@@ -244,7 +244,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=6]
-length = 0.4
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
 tracks/0/interp = 1
@@ -252,7 +252,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4 ),
+"times": PoolRealArray( 0, 0.2, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 5, 6, 0 ]
@@ -264,7 +264,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
@@ -276,7 +276,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4 ),
+"times": PoolRealArray( 0, 0.2, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ Vector2( 2, 1.99999 ), Vector2( 2, 0.999989 ), Vector2( -1.07288e-05, -2.99999 ) ]
@@ -380,7 +380,7 @@ tracks/1/keys = {
 extents = Vector2( 16, 20 )
 
 [sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 18.701, 24 )
+extents = Vector2( 25.4759, 24 )
 
 [sub_resource type="CircleShape2D" id=12]
 
@@ -467,10 +467,9 @@ z_index = 1
 texture = ExtResource( 1 )
 vframes = 7
 hframes = 10
-frame = 20
 
 [node name="head" type="Sprite" parent="center/character"]
-position = Vector2( -1.00002, -7.99997 )
+position = Vector2( -1.07288e-05, -2.99999 )
 z_index = 1
 texture = ExtResource( 20 )
 offset = Vector2( 0, 0.5 )
@@ -486,12 +485,13 @@ shape = SubResource( 10 )
 disabled = true
 
 [node name="blockbox" type="Area2D" parent="center"]
+position = Vector2( -16, 0 )
 collision_layer = 0
 collision_mask = 2147483649
 script = ExtResource( 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/blockbox"]
-position = Vector2( 32, 0 )
+position = Vector2( 40, 0 )
 scale = Vector2( 1.57011, 1.84162 )
 shape = SubResource( 11 )
 disabled = true
