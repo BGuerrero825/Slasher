@@ -16,7 +16,7 @@ export var MAX_SPEED := 150.0
 export var ACCELERATION := 800.0
 export var FRICTION := 550.0
 
-export var camera_offset_strength : float = .35
+export var camera_offset_strength : float = .2
 export var heavy_attack_charge_time : float = 1.5
 export var light_attack_window : float = 0.45
 
