@@ -5,7 +5,7 @@
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://art/helmet1_icon.png" type="Texture" id=4]
 [ext_resource path="res://Base.gd" type="Script" id=5]
-[ext_resource path="res://npc/peasant/peasant.tscn" type="PackedScene" id=6]
+[ext_resource path="res://npc/knight/knight.tscn" type="PackedScene" id=6]
 [ext_resource path="res://art/vertical_wall.png" type="Texture" id=7]
 [ext_resource path="res://death_overlay.gd" type="Script" id=8]
 
@@ -103,15 +103,6 @@ texture = ExtResource( 2 )
 position = Vector2( 0, -10 )
 shape = SubResource( 2 )
 
-[node name="peasant" parent="." instance=ExtResource( 6 )]
-position = Vector2( 304, 184 )
-
-[node name="peasant2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 424, 216 )
-
-[node name="peasant3" parent="." instance=ExtResource( 6 )]
-position = Vector2( 320, 96 )
-
-[node name="peasant4" parent="." instance=ExtResource( 6 )]
-position = Vector2( 440, 128 )
+[node name="knight" parent="." instance=ExtResource( 6 )]
+position = Vector2( 304.633, 128.881 )
 [connection signal="player_killed" from="player" to="." method="_on_player_player_killed"]

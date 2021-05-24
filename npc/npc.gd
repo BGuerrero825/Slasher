@@ -19,6 +19,8 @@ const blood = preload("res://objects/blood/blood.tscn")
 var in_attack_range : bool = false
 var in_standoff_range : bool = false
 var in_runaway_range : bool = false
+
+var is_blocking : bool = false
 #var in_attack_range : bool = false
 #var in_standoff_range : bool = false
 #var in_runaway_range : bool = false
@@ -65,6 +67,15 @@ func _process(delta):
 	state_machine.run()
 	# display state
 	$debug_state.text = state_machine.active_state.tag
+	
+		# if player is dead, spawn a corpse then delete self
+	if health <= 0:
+		yield(get_tree().create_timer(death_delay), "timeout")
+		var new_corpse = corpse.instance()
+		get_tree().get_root().add_child(new_corpse)
+		new_corpse.transform = get_global_transform()
+		new_corpse.rotation_degrees = $center.rotation_degrees - 90
+		queue_free()
 
 
 func rotate_towards(target_pos, target_rotation_speed = _rotation_speed) -> float:
@@ -85,22 +96,22 @@ func randomize_attack_hesitation():
 func _on_hurtbox_npc_damage_taken(amount, source):
 #	current_state = KNOCK_BACK
 	# spawn blood on hit
-	var new_blood = blood.instance()
-	get_tree().get_root().add_child(new_blood)
-	new_blood.transform.origin = $center.get_global_transform().get_origin()
-	new_blood.transform.origin += polar2cartesian(30, deg2rad(source.get_node("center").rotation_degrees + ((-1 if source.flipped else 1) * 90)))
-	new_blood.rotation_degrees = $center.rotation_degrees + (int(source.flipped) * 180)
-	new_blood.scale.x = (-1 if source.flipped else 1)
-	health = health - amount
-	print("NPC_Health: ", health, " damage taken: ", amount)
-	# if player is dead, spawn a corpse then delete self
-	if health <= 0:
-		yield(get_tree().create_timer(death_delay), "timeout")
-		var new_corpse = corpse.instance()
-		get_tree().get_root().add_child(new_corpse)
-		new_corpse.transform = get_global_transform()
-		new_corpse.rotation_degrees = $center.rotation_degrees - 90
-		queue_free()
+
+	
+	
+	if is_blocking:
+		pass
+		print("NPC BLOCKED")
+		# play block sound
+	else:
+		var new_blood = blood.instance()
+		get_tree().get_root().add_child(new_blood)
+		new_blood.transform.origin = $center.get_global_transform().get_origin()
+		new_blood.transform.origin += polar2cartesian(30, deg2rad(source.get_node("center").rotation_degrees + ((-1 if source.flipped else 1) * 90)))
+		new_blood.rotation_degrees = $center.rotation_degrees + (int(source.flipped) * 180)
+		new_blood.scale.x = (-1 if source.flipped else 1)
+		health = health - amount
+		print("NPC_Health: ", health, " damage taken: ", amount)
 
 
 func play(anim:String):

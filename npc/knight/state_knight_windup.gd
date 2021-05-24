@@ -12,6 +12,9 @@ func run(npc : KinematicBody2D):
 	
 	if not npc.animation_player.is_playing():
 		return "attack"
+	
+	if npc.player_ref.attacking and npc.in_attack_range(player_pos):
+		return "defend"
 
 
 func exit(npc : KinematicBody2D):
