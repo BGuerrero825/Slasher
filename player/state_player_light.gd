@@ -7,6 +7,8 @@ func enter(player : KinematicBody2D):
 	.enter(player)
 	player.sounds.queue("light_swoosh", 0.1)
 	player.attacking = true
+	player.active_dmg = player.light_attack_dmg
+
 
 func run(player : KinematicBody2D):
 	# true when animation is complete

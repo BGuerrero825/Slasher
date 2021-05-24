@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 class_name NPC
 
-export var health : float = 25.0
+export var health : float = 1
 export var base_speed : float = 35.0
 export var lunge_speed : float = 80.0
 export var recovery_speed : float = 15.0
@@ -43,7 +43,7 @@ var looking_at_player : bool = true  # set in rotate_towards func
 
 
 
-export var damage : float = 45.0
+export var damage : float = 1
 
 onready var animation_player := $AnimationPlayer
 onready var state_machine := $npc_state_machine
@@ -67,7 +67,6 @@ func _process(delta):
 	$debug_state.text = state_machine.active_state.tag
 
 
-# REFACTOR TO ROTATE TOWARDS A POSITION VECTOR OVER AN ANGLE
 func rotate_towards(target_pos, target_rotation_speed = _rotation_speed) -> float:
 	var target_angle = PI + position.angle_to_point(target_pos)
 	$center.rotation = lerp_angle($center.rotation, target_angle, target_rotation_speed)
