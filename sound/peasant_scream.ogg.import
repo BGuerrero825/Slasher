@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/peasant_scream.ogg-b8be516e022f32e946f541e7f10d5f2f.oggstr"
+
+[deps]
+
+source_file="res://sound/peasant_scream.ogg"
+dest_files=[ "res://.import/peasant_scream.ogg-b8be516e022f32e946f541e7f10d5f2f.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
