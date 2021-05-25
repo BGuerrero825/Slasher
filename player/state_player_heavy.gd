@@ -5,6 +5,7 @@ func enter(player : KinematicBody2D):
 	.enter(player)
 	player.attacking = true
 	player.sounds.queue("heavy_swoosh", 0.25)
+	player.active_dmg = player.heavy_attack_dmg
 
 
 func run(player : KinematicBody2D):
@@ -16,3 +17,4 @@ func run(player : KinematicBody2D):
 func exit(player : KinematicBody2D):
 	.exit(player)
 	player.attacking = false
+	player.rotation_speed = player.base_rotation_speed

@@ -13,5 +13,8 @@ func run(npc: KinematicBody2D):
 	npc.rotate_towards(player_pos)
 	npc.strafe_move(Vector2.UP, npc.speed)
 	
+	if npc.player_ref.attacking and npc.in_attack_range(player_pos):
+		return "defend"
+	
 	if npc.in_attack_range(player_pos):
 		return "windup"

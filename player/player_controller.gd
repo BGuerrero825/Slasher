@@ -7,7 +7,7 @@ signal player_killed
 
 
 const NEW_NPC = preload("res://npc/knight/knight.tscn")
-export var player_health : float = 40.0
+export var player_health : float = 2.0
 
 var attacking : bool = false
 
@@ -16,6 +16,8 @@ export var MAX_SPEED := 150.0
 export var ACCELERATION := 800.0
 export var FRICTION := 550.0
 
+var base_rotation_speed : float = 0.3
+var rotation_speed : float = base_rotation_speed
 export var camera_offset_strength : float = .2
 export var heavy_attack_charge_time : float = 1.5
 export var light_attack_window : float = 0.45
@@ -27,9 +29,9 @@ export var dodge_recovery_time : float = 0.2
 var recovery_time : float = 100.0  # SET IN STATE MACHINE
 
 export var dodge_impulse : float = 450.0
-export var light_attack_dmg : float = 5.0
-export var heavy_attack_dmg : float = 15.0
-var active_dmg : float = 25.0  # SET IN STATE MACHINE
+export var light_attack_dmg : float = 1
+export var heavy_attack_dmg : float = 2
+var active_dmg : float = 0  # SET IN STATE MACHINE
 
 export var parry_invincibility_time : float = .8
 
@@ -61,8 +63,8 @@ func _process(delta):
 	#	$center/head.position.y *= -1
 	state_machine.run()
 	# display state
-#	$debug_state.text = state_machine.active_state.tag
-	$debug_state.text = str(invincible)
+	$debug_state.text = state_machine.active_state.tag
+#	$debug_state.text = str(invincible)
 
 	#debug code for spawning an enemy
 	if Input.is_action_just_released("5"):
@@ -97,11 +99,18 @@ func _process(delta):
 			$sounds/grass.stop()
 
 	velocity = move_and_slide(velocity)
-	# set rotation of center node based on angle between player and mouse
-	mouse_angle = rad2deg(self.get_global_transform().get_origin().angle_to_point(get_global_mouse_position()))
-	center.rotation_degrees = mouse_angle + 180
+
+	rotate_towards(get_global_mouse_position())
 	#move camera based on mouse distance from player
 	$Camera2D.transform.origin = (get_global_mouse_position() - get_global_transform().get_origin()) * camera_offset_strength
+
+
+func rotate_towards(target_pos, target_rotation_speed = rotation_speed) -> float:
+	var target_angle = PI + position.angle_to_point(target_pos)
+	$center.rotation = lerp_angle($center.rotation, target_angle, target_rotation_speed)
+
+	return $center.rotation + TAU/4
+
 
 # reverse character sprite and head sprite when flipped
 func flip_character():
@@ -151,8 +160,7 @@ func _on_blockbox_blocked_attack():
 	$sounds.start("sword_clash2")
 	yield(get_tree().create_timer(parry_invincibility_time), "timeout")
 	invincible = false
-	
+
 
 #func _on_parry_invincible_timer_timeout():
 #	invincible = false
-

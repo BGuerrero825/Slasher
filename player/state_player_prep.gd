@@ -6,6 +6,7 @@ var light_timer : SceneTreeTimer
 func enter(player : KinematicBody2D):
 	.enter(player)
 	light_timer = get_tree().create_timer(player.light_attack_window)
+	player.rotation_speed = player.base_rotation_speed * 0.2
 
 
 ################################################
