@@ -72,7 +72,7 @@ func _process(delta):
 	if health <= 0:
 		yield(get_tree().create_timer(death_delay), "timeout")
 		var new_corpse = corpse.instance()
-		get_tree().get_root().add_child(new_corpse)
+		get_tree().get_current_scene().add_child(new_corpse)
 		new_corpse.transform = get_global_transform()
 		new_corpse.rotation_degrees = $center.rotation_degrees - 90
 		queue_free()
@@ -105,7 +105,7 @@ func _on_hurtbox_npc_damage_taken(amount, source):
 		# play block sound
 	else:
 		var new_blood = blood.instance()
-		get_tree().get_root().add_child(new_blood)
+		get_tree().get_current_scene().add_child(new_blood)
 		new_blood.transform.origin = $center.get_global_transform().get_origin()
 		new_blood.transform.origin += polar2cartesian(30, deg2rad(source.get_node("center").rotation_degrees + ((-1 if source.flipped else 1) * 90)))
 		new_blood.rotation_degrees = $center.rotation_degrees + (int(source.flipped) * 180)

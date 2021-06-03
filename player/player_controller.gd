@@ -69,7 +69,8 @@ func _process(delta):
 	#debug code for spawning an enemy
 	if Input.is_action_just_released("5"):
 		var new_NPC = NEW_NPC.instance()
-		get_tree().get_root().add_child(new_NPC)
+#		get_tree().get_root().add_child(new_NPC)
+		get_tree().get_current_scene().add_child(new_NPC)
 
 	#debug code for flipping sprite
 	if Input.is_action_just_released("1"):
