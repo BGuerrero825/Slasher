@@ -27,3 +27,4 @@ func run(player : KinematicBody2D):
 func exit(player : KinematicBody2D):
 	.exit(player)
 	player.attacking = false
+	player.rotation_speed = player.base_rotation_speed
