@@ -9,7 +9,7 @@
 [ext_resource path="res://npc/knight/state_knight_defend.gd" type="Script" id=7]
 [ext_resource path="res://art/helmet1.png" type="Texture" id=8]
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=1]
 resource_name = "defend"
 length = 0.5
 tracks/0/type = "value"
@@ -37,8 +37,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2, 1.99999 ), Vector2( 2, 0.999989 ), Vector2( -1.07288e-05, -2.99999 ) ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "heavy"
+[sub_resource type="Animation" id=2]
 length = 1.1
 step = 0.05
 tracks/0/type = "value"
@@ -90,8 +89,7 @@ tracks/3/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "idle"
+[sub_resource type="Animation" id=3]
 loop = true
 step = 0.05
 tracks/0/type = "value"
@@ -180,9 +178,9 @@ lunge_speed = 120.0
 lunging = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
-anims/defend = SubResource( 3 )
-anims/heavy = SubResource( 1 )
-anims/idle = SubResource( 2 )
+anims/defend = SubResource( 1 )
+anims/heavy = SubResource( 2 )
+anims/idle = SubResource( 3 )
 anims/recovery = SubResource( 4 )
 anims/windup = SubResource( 5 )
 

@@ -52,10 +52,10 @@ onready var state_machine := $npc_state_machine
 
 var attack_available := true
 var current_damage := damage
+var attack_hesitation_time : float = 1.0
+var dead = false
 
 var velocity := Vector2.ZERO
-
-var attack_hesitation_time : float = 1.0
 
 
 func _ready():
@@ -69,7 +69,8 @@ func _process(delta):
 	$debug_state.text = state_machine.active_state.tag
 	
 		# if player is dead, spawn a corpse then delete self
-	if health <= 0:
+	if health <= 0 and !dead:
+		dead = true
 		yield(get_tree().create_timer(death_delay), "timeout")
 		var new_corpse = corpse.instance()
 		get_tree().get_current_scene().add_child(new_corpse)
@@ -95,14 +96,11 @@ func randomize_attack_hesitation():
 
 func _on_hurtbox_npc_damage_taken(amount, source):
 #	current_state = KNOCK_BACK
-	# spawn blood on hit
-
-	
-	
 	if is_blocking:
 		pass
 		print("NPC BLOCKED")
 		# play block sound
+	# spawn blood on hit
 	else:
 		var new_blood = blood.instance()
 		get_tree().get_current_scene().add_child(new_blood)
@@ -122,7 +120,6 @@ func play(anim:String):
 
 func _on_cooldown_timer_timeout():
 	attack_available = true
-
 
 func _on_hitbox_area_entered(area):
 	area.take_damage(current_damage, self)
