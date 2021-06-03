@@ -9,9 +9,9 @@
 [ext_resource path="res://npc/knight/state_knight_defend.gd" type="Script" id=7]
 [ext_resource path="res://art/helmet1.png" type="Texture" id=8]
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 resource_name = "defend"
-length = 0.6
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
 tracks/0/interp = 1
@@ -19,10 +19,22 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ 5, 6 ]
+"values": [ 5, 6, 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("center/character/head:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 2, 1.99999 ), Vector2( 2, 0.999989 ), Vector2( -1.07288e-05, -2.99999 ) ]
 }
 
 [sub_resource type="Animation" id=1]
@@ -119,7 +131,7 @@ tracks/2/keys = {
 "values": [ Vector2( -1.07288e-05, -2.99999 ), Vector2( -7.21216e-06, -1.99999 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -134,8 +146,7 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "windup"
+[sub_resource type="Animation" id=5]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
@@ -169,11 +180,11 @@ lunge_speed = 120.0
 lunging = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
-anims/defend = SubResource( 5 )
+anims/defend = SubResource( 3 )
 anims/heavy = SubResource( 1 )
 anims/idle = SubResource( 2 )
-anims/recovery = SubResource( 3 )
-anims/windup = SubResource( 4 )
+anims/recovery = SubResource( 4 )
+anims/windup = SubResource( 5 )
 
 [node name="defend" parent="npc_state_machine" index="0"]
 script = ExtResource( 7 )
@@ -194,5 +205,5 @@ script = ExtResource( 6 )
 frame = 5
 
 [node name="head" parent="center/character" index="0"]
-position = Vector2( -4.00001, -6.99996 )
+position = Vector2( 2, 1.99999 )
 texture = ExtResource( 8 )
