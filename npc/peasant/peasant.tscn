@@ -20,10 +20,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.25, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 4, 5, 1 ]
+"values": [ 4, 5, 6, 1 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("center/hitbox/CollisionShape2D:disabled")
@@ -32,7 +32,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.4, 0.5 ),
+"times": PoolRealArray( 0, 0.35, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true ]
@@ -96,7 +96,6 @@ radius = 224.143
 script = ExtResource( 2 )
 lunge_speed = 250.0
 recovery_speed = 75.0
-lunging = true
 charge_speed = 150.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
@@ -122,8 +121,8 @@ script = ExtResource( 7 )
 [node name="character" parent="center" index="1"]
 texture = ExtResource( 5 )
 vframes = 1
-hframes = 7
-frame = 0
+hframes = 9
+frame = 1
 
 [node name="CollisionShape2D" parent="center/hitbox" index="0"]
 shape = SubResource( 4 )

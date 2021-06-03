@@ -98,9 +98,9 @@ func _process(delta):
 		else:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			$sounds/grass.stop()
-	
+
 	velocity = move_and_slide(velocity)
-	
+
 	rotate_towards(get_global_mouse_position())
 	#move camera based on mouse distance from player
 	$Camera2D.transform.origin = (get_global_mouse_position() - get_global_transform().get_origin()) * camera_offset_strength
@@ -109,7 +109,7 @@ func _process(delta):
 func rotate_towards(target_pos, target_rotation_speed = rotation_speed) -> float:
 	var target_angle = PI + position.angle_to_point(target_pos)
 	$center.rotation = lerp_angle($center.rotation, target_angle, target_rotation_speed)
-	
+
 	return $center.rotation + TAU/4
 
 
@@ -161,8 +161,7 @@ func _on_blockbox_blocked_attack():
 	$sounds.start("sword_clash2")
 	yield(get_tree().create_timer(parry_invincibility_time), "timeout")
 	invincible = false
-	
+
 
 #func _on_parry_invincible_timer_timeout():
 #	invincible = false
-
