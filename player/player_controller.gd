@@ -6,7 +6,8 @@ class_name Player, "res://art/helmet1_icon.png"
 signal player_killed
 
 
-const NEW_NPC = preload("res://npc/knight/knight.tscn")
+const NEW_KNIGHT = preload("res://npc/knight/knight.tscn")
+const NEW_PEASANT = preload("res://npc/peasant/peasant.tscn")
 export var player_health : float = 2.0
 
 var attacking : bool = false
@@ -68,9 +69,12 @@ func _process(delta):
 
 	#debug code for spawning an enemy
 	if Input.is_action_just_released("5"):
-		var new_NPC = NEW_NPC.instance()
-#		get_tree().get_root().add_child(new_NPC)
-		get_tree().get_current_scene().add_child(new_NPC)
+		var new_Knight = NEW_KNIGHT.instance()
+		get_tree().get_current_scene().add_child(new_Knight)
+		
+	if Input.is_action_just_released("4"):
+		var new_Peasant = NEW_PEASANT.instance()
+		get_tree().get_current_scene().add_child(new_Peasant)
 
 	#debug code for flipping sprite
 	if Input.is_action_just_released("1"):
