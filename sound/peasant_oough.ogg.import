@@ -11,5 +11,5 @@ dest_files=[ "res://.import/peasant_oough.ogg-999f43a251ccf4c9d6ce7decf71dcadd.o
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

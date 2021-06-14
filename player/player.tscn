@@ -17,16 +17,16 @@
 [ext_resource path="res://player/state_player_prep.gd" type="Script" id=15]
 [ext_resource path="res://player/player_blockbox.gd" type="Script" id=16]
 [ext_resource path="res://player/state_player_combo.gd" type="Script" id=17]
-[ext_resource path="res://sound/sword_clash2.ogg" type="AudioStream" id=18]
+[ext_resource path="res://sound/block.ogg" type="AudioStream" id=18]
 [ext_resource path="res://sound/grass_walk.ogg" type="AudioStream" id=19]
 [ext_resource path="res://art/helmet1.png" type="Texture" id=20]
 [ext_resource path="res://sound/sound_player.gd" type="Script" id=21]
 [ext_resource path="res://sound/heavy_swoosh.ogg" type="AudioStream" id=22]
 [ext_resource path="res://sound/light_swoosh.ogg" type="AudioStream" id=23]
-[ext_resource path="res://sound/sword_slice.ogg" type="AudioStream" id=27]
-[ext_resource path="res://sound/oough.ogg" type="AudioStream" id=28]
+[ext_resource path="res://sound/player_oough.ogg" type="AudioStream" id=24]
+[ext_resource path="res://sound/weapon_slice.ogg" type="AudioStream" id=27]
 [ext_resource path="res://sound/quick_swoosh.ogg" type="AudioStream" id=29]
-[ext_resource path="res://sound/sword_clash1.ogg" type="AudioStream" id=30]
+[ext_resource path="res://sound/parry.ogg" type="AudioStream" id=30]
 
 [sub_resource type="Animation" id=1]
 resource_name = "combo"
@@ -526,7 +526,7 @@ one_shot = true
 [node name="sounds" type="Node2D" parent="."]
 script = ExtResource( 21 )
 
-[node name="sword_clash2" type="AudioStreamPlayer2D" parent="sounds"]
+[node name="block" type="AudioStreamPlayer2D" parent="sounds"]
 stream = ExtResource( 18 )
 
 [node name="grass" type="AudioStreamPlayer2D" parent="sounds"]
@@ -544,13 +544,14 @@ stream = ExtResource( 22 )
 stream = ExtResource( 29 )
 pitch_scale = 1.46
 
-[node name="sword_slice" type="AudioStreamPlayer2D" parent="sounds"]
+[node name="weapon_slice" type="AudioStreamPlayer2D" parent="sounds"]
 stream = ExtResource( 27 )
 
 [node name="oough" type="AudioStreamPlayer2D" parent="sounds"]
-stream = ExtResource( 28 )
+stream = ExtResource( 24 )
+volume_db = 2.0
 
-[node name="sword_clash1" type="AudioStreamPlayer2D" parent="sounds"]
+[node name="parry" type="AudioStreamPlayer2D" parent="sounds"]
 stream = ExtResource( 30 )
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="blocked_attack" from="center/blockbox" to="." method="_on_blockbox_blocked_attack"]

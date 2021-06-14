@@ -9,7 +9,7 @@ export var recovery_speed : float = 15.0
 export var windup_speed : float = 5.0
 var speed : float = base_speed
 
-export var death_delay : float = 0.25
+export var death_delay : float = 0.4
 
 const corpse = preload("res://objects/corpse/corpse.tscn")
 const blood = preload("res://objects/blood/blood.tscn")
@@ -30,6 +30,7 @@ export var stance : String = 'fight'
 
 # For this to work, the player has to be added to the scene first (higher in the tree)
 onready var player_ref : KinematicBody2D = $"/root/Global".player
+onready var sounds = $sounds
 
 var move_direction : Vector2 = Vector2.ZERO
 
@@ -93,9 +94,12 @@ func _on_hurtbox_npc_damage_taken(amount, source):
 	if is_blocking:
 		pass
 		print("NPC BLOCKED")
+		sounds.play("block")
 		# play block sound
 	# spawn blood on hit
 	else:
+		sounds.play("oough")
+		sounds.play("weapon_slice")
 		var new_blood = blood.instance()
 		get_tree().get_current_scene().add_child(new_blood)
 		new_blood.transform.origin = $center.get_global_transform().get_origin()

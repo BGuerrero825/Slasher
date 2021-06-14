@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/weapon_slice.ogg-1157207382c7b2ccb4edff38ba821007.oggstr"
+
+[deps]
+
+source_file="res://sound/weapon_slice.ogg"
+dest_files=[ "res://.import/weapon_slice.ogg-1157207382c7b2ccb4edff38ba821007.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

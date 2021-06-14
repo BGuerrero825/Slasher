@@ -133,8 +133,6 @@ func _on_hitbox_area_entered(area):
 	area.take_damage(active_dmg, self)
 	#freeze animation on hit
 	animation_player.play(animation_player.current_animation, 0.0, 0.0)
-#	$hit_freeze_timer.start()
-	$sounds.start("sword_slice")
 	yield(get_tree().create_timer(0.1), "timeout")
 	animation_player.play()
 
@@ -144,6 +142,7 @@ func _on_hurtbox_damage_taken(amount, source):
 #		print("amount: ", amount, "  source: ", source)
 		player_health -= amount
 		sounds.play("oough")
+		sounds.play("weapon_slice")
 		print("Player_Health: ", player_health)
 		knockback(source)
 	else:
@@ -162,7 +161,7 @@ func knockback(dmg_source):
 func _on_blockbox_blocked_attack():
 #	$parry_invincible_timer.start(parry_invincibility_time)
 	invincible = true
-	$sounds.start("sword_clash2")
+	$sounds.start("block")
 	yield(get_tree().create_timer(parry_invincibility_time), "timeout")
 	invincible = false
 

@@ -1,6 +1,6 @@
 extends Node2D
 
-var random_pitch_noises := ["light_swoosh", "heavy_swoosh", "quick_swoosh", "sword_clash", "sword_slice", "sword_clash_low"]
+var random_pitch_noises := ["light_swoosh", "heavy_swoosh", "quick_swoosh", "clash", "weapon_slice", "clash_low"]
 var pitch_variance := 0.2
 var queued_sound = []
 var queued_sound_times = []

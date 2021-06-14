@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/clash.ogg-e6a6005acb8d65a6a14f1fbf3c38fe5e.oggstr"
+
+[deps]
+
+source_file="res://sound/clash.ogg"
+dest_files=[ "res://.import/clash.ogg-e6a6005acb8d65a6a14f1fbf3c38fe5e.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

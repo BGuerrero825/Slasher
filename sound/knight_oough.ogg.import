@@ -11,5 +11,5 @@ dest_files=[ "res://.import/knight_oough.ogg-19656124f0b11617f670b7817137c7c3.og
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
