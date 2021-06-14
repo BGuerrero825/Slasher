@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/peasant_oough.ogg-999f43a251ccf4c9d6ce7decf71dcadd.oggstr"
+
+[deps]
+
+source_file="res://sound/peasant_oough.ogg"
+dest_files=[ "res://.import/peasant_oough.ogg-999f43a251ccf4c9d6ce7decf71dcadd.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/peasant_death.ogg-823057d5d628c8368d5acbc350c9f686.oggstr"
+
+[deps]
+
+source_file="res://sound/peasant_death.ogg"
+dest_files=[ "res://.import/peasant_death.ogg-823057d5d628c8368d5acbc350c9f686.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
