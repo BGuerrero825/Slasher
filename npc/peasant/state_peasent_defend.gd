@@ -9,7 +9,7 @@ func enter(npc : KinematicBody2D):
 	dodge_speed = npc.speed * 5
 
 func run(npc : KinematicBody2D):
-	dodge_speed = lerp(dodge_speed, dodge_speed*4, 0.01)
+	dodge_speed = lerp(dodge_speed, npc.speed*15, 0.01)
 	npc.strafe_move(Vector2.DOWN, dodge_speed)
 	
 	if dodge_timer.time_left <= 0:
