@@ -87,7 +87,7 @@ func rotate_towards(target_pos, target_rotation_speed = _rotation_speed) -> floa
 
 
 func strafe_move(strafe_dir, input_speed=speed) -> Vector2:
-	return move_and_slide(strafe_dir.rotated($center.rotation + TAU/4) * input_speed)
+	return move_and_slide(strafe_dir.normalized().rotated($center.rotation + TAU/4) * input_speed)
 
 
 func randomize_attack_hesitation():
