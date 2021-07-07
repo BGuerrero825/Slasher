@@ -7,7 +7,7 @@
 [ext_resource path="res://npc/knight/state_knight_attack.gd" type="Script" id=5]
 [ext_resource path="res://npc/knight/state_knight_recovery.gd" type="Script" id=6]
 [ext_resource path="res://npc/knight/state_knight_defend.gd" type="Script" id=7]
-[ext_resource path="res://art/helmet1.png" type="Texture" id=8]
+[ext_resource path="res://art/helmet2.png" type="Texture" id=8]
 [ext_resource path="res://sound/knight_oough.ogg" type="AudioStream" id=9]
 
 [sub_resource type="Animation" id=1]
