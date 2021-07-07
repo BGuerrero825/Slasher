@@ -12,9 +12,11 @@ func enter(npc : KinematicBody2D):
 
 
 func run(npc : KinematicBody2D):
-#	var player_pos = npc.player_ref.get_position()
+	var player_pos = npc.player_ref.get_position()
 #	npc.rotate_towards(PI + npc.position.angle_to_point(player_pos))
 	
+	npc.rotate_towards(player_pos)
+	npc.strafe_move(Vector2.DOWN, npc.speed)
 	
 	if cooldown_timer.time_left <= 0:
 		return "idle"
