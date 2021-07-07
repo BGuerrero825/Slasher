@@ -85,6 +85,7 @@ hframes = 10
 frame = 10
 
 [node name="head" type="Sprite" parent="center/character"]
+offset = Vector2( 0, 0.5 )
 
 [node name="hitbox" type="Area2D" parent="center"]
 collision_mask = 0
