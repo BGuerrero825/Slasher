@@ -39,6 +39,7 @@ export var recovery_time : float = 0.2
 export var _rotation_speed : float = 0.025
 var looking_at_player : bool = true  # set in rotate_towards func
 var lunging : bool = false  # set in animation player
+var hit_blocking_player : bool = false  # set if hitting a blocking player
 
 export var damage : float = 1
 
@@ -119,7 +120,12 @@ func play(anim:String):
 func _on_cooldown_timer_timeout():
 	attack_available = true
 
+
 func _on_hitbox_area_entered(area):
+	# may need to check if area is the player first, if npc can hit things other than player
+	if player_ref.invincible == true:
+		hit_blocking_player = true
+	
 	area.take_damage(current_damage, self)
 
 

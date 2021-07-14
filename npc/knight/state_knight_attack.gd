@@ -17,14 +17,13 @@ func run(npc: KinematicBody2D):
 	npc.rotate_towards(player_pos)
 	npc.strafe_move(Vector2.UP, npc.speed)
 	
+	if npc.hit_blocking_player == true:
+		npc.hit_blocking_player = false
+		return "stagger"
+	
 	if not npc.animation_player.is_playing():
 		npc.recovery_time = npc.heavy_recovery_time
 		return "recovery"
-	
-	if npc.lunging:
-		npc.speed = npc.lunge_speed
-	elif not npc.lunging:
-		npc.speed = npc.base_speed
 
 
 func exit(npc : KinematicBody2D):
