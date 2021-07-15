@@ -317,7 +317,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.15 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 10, 11 ]
@@ -329,7 +329,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.15 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ Vector2( -2.99998, 2 ), Vector2( -3.99998, 1.00001 ) ]
@@ -479,10 +479,9 @@ z_index = 1
 texture = ExtResource( 1 )
 vframes = 7
 hframes = 10
-frame = 12
 
 [node name="head" type="Sprite" parent="center/character"]
-position = Vector2( -3, -2.99998 )
+position = Vector2( -1.07288e-05, -2.99999 )
 z_index = 1
 texture = ExtResource( 20 )
 offset = Vector2( 0, 0.5 )

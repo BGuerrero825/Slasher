@@ -6,7 +6,7 @@ var states : Dictionary = {}
 var active_state : BasePlayerState
 var player : KinematicBody2D
 
-
+# grab all states from children nodes
 func generate_state_dictionary():
 	for state in get_children():
 		if state.tag:
@@ -21,6 +21,7 @@ func init(player: KinematicBody2D):
 
 
 func run():
+	# if subclass returns a state name, transition state
 	var next_state_tag = active_state.run(player)
 	if next_state_tag:
 		change_state(next_state_tag)

@@ -8,6 +8,7 @@ signal player_killed
 
 const NEW_KNIGHT = preload("res://npc/knight/knight.tscn")
 const NEW_PEASANT = preload("res://npc/peasant/peasant.tscn")
+const NEW_ARCHER = preload("res://npc/archer/archer.tscn")
 export var player_health : float = 2.0
 
 var attacking : bool = false
@@ -21,7 +22,7 @@ var base_rotation_speed : float = 0.3
 var rotation_speed : float = base_rotation_speed
 export var camera_offset_strength : float = .2
 export var heavy_attack_charge_time : float = 1.5
-export var light_attack_window : float = 0.45
+export var light_attack_window : float = 0.35
 
 export var light_recovery_time : float = 0.1
 export var heavy_recovery_time : float = 0.2
@@ -75,6 +76,10 @@ func _process(delta):
 	if Input.is_action_just_released("4"):
 		var new_Peasant = NEW_PEASANT.instance()
 		get_tree().get_current_scene().add_child(new_Peasant)
+		
+	if Input.is_action_just_released("3"):
+		var new_Archer = NEW_ARCHER.instance()
+		get_tree().get_current_scene().add_child(new_Archer)
 
 	#debug code for flipping sprite
 	if Input.is_action_just_released("1"):
