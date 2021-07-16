@@ -218,14 +218,14 @@ script = ExtResource( 5 )
 [node name="recovery" parent="npc_state_machine" index="5"]
 script = ExtResource( 6 )
 
-[node name="stagger" type="Node2D" parent="npc_state_machine" index="6"]
+[node name="stagger" parent="npc_state_machine" index="6"]
 script = ExtResource( 10 )
 
 [node name="character" parent="center" index="1"]
-frame = 11
+frame = 5
 
 [node name="head" parent="center/character" index="0"]
-position = Vector2( -4.00001, -6.99996 )
+position = Vector2( 2, 1.99999 )
 texture = ExtResource( 8 )
 
 [node name="oough" type="AudioStreamPlayer2D" parent="sounds" index="2"]
