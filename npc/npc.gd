@@ -36,7 +36,7 @@ var move_direction : Vector2 = Vector2.ZERO
 
 export var heavy_recovery_time : float = 0.3
 export var recovery_time : float = 0.2
-export var _rotation_speed : float = 0.025
+export var _rotation_speed : float = 0.05
 var looking_at_player : bool = true  # set in rotate_towards func
 export var lunging : bool = false  # set in animation player
 

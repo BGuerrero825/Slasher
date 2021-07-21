@@ -206,6 +206,9 @@ frame = 0
 position = Vector2( -4.76837e-07, -2.99999 )
 texture = ExtResource( 8 )
 
+[node name="range_ref" parent="." index="9"]
+visible = false
+
 [node name="oough" type="AudioStreamPlayer2D" parent="sounds" index="2"]
 stream = ExtResource( 9 )
 volume_db = 2.0

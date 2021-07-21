@@ -35,7 +35,7 @@ export var light_attack_dmg : float = 1
 export var heavy_attack_dmg : float = 2
 var active_dmg : float = 0  # SET IN STATE MACHINE
 
-export var parry_invincibility_time : float = .8
+export var parry_invincibility_time : float = .6
 
 var invincible : bool = false
 var flipped : bool = false
