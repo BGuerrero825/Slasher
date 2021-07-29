@@ -5,13 +5,13 @@ var current_rotation : float
 
 
 func enter(npc : KinematicBody2D):
-	npc.play("idle")
 	hesitation_timer = get_tree().create_timer(npc.attack_hesitation_time)
 	npc.randomize_attack_hesitation()
 
 
 # the player is in range and the player is actively fighting the player (advancing, etc)
 func run(npc: KinematicBody2D):
+	npc.play("idle")
 	if npc.stance != 'fight':
 		return "idle"
 	

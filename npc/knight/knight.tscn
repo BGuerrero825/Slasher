@@ -203,7 +203,7 @@ script = ExtResource( 6 )
 frame = 0
 
 [node name="head" parent="center/character" index="0"]
-position = Vector2( -4.76837e-07, -2.99999 )
+position = Vector2( -1.07288e-05, -2.99999 )
 texture = ExtResource( 8 )
 
 [node name="range_ref" parent="." index="9"]

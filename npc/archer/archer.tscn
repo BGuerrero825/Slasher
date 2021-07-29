@@ -1,21 +1,19 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://npc/npc.tscn" type="PackedScene" id=1]
 [ext_resource path="res://npc/archer/archer.gd" type="Script" id=2]
 [ext_resource path="res://npc/archer/state_archer_defend.gd" type="Script" id=3]
 [ext_resource path="res://npc/archer/state_archer_attack.gd" type="Script" id=4]
-[ext_resource path="res://art/peasant.png" type="Texture" id=5]
+[ext_resource path="res://art/archer.png" type="Texture" id=5]
 [ext_resource path="res://npc/archer/state_archer_fight.gd" type="Script" id=6]
 [ext_resource path="res://npc/archer/state_archer_recovery.gd" type="Script" id=7]
 [ext_resource path="res://npc/archer/state_archer_windup.gd" type="Script" id=8]
 [ext_resource path="res://sound/peasant_oough.ogg" type="AudioStream" id=9]
 [ext_resource path="res://art/hood.png" type="Texture" id=10]
-[ext_resource path="res://art/arrow.png" type="Texture" id=11]
 
-[sub_resource type="Animation" id=1]
-resource_name = "heavy"
-length = 0.55
-step = 0.05
+[sub_resource type="Animation" id=6]
+resource_name = "attack"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
 tracks/0/interp = 1
@@ -23,74 +21,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.3, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 4, 5, 6, 1 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("center/hitbox/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.35, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ true, false, true ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:lunging")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.15, 0.45 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("center/character/head:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 0.1, 0.3, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Vector2( -2.00001, -2.99999 ), Vector2( -2.00001, -1.99999 ), Vector2( -3.62396e-05, -10 ), Vector2( -2, 7.15256e-06 ) ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("center/character/head:frame")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 1, 0 ]
-}
-
-[sub_resource type="Animation" id=2]
-resource_name = "idle"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/path = NodePath("center/character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 0, 1 ]
+"values": [ 3 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("center/character/head:position")
@@ -99,30 +33,45 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ Vector2( -3.56039e-06, -1 ), Vector2( -2, 7.15256e-06 ) ]
+"values": [ Vector2( 11, 7.99996 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("center/character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("center/character/head:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 7.15256e-06, 2 ), Vector2( 3.61999e-06, 1 ), Vector2( 7.15256e-06, 2 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("center/character/head:frame")
+tracks/2/path = NodePath("center/hitbox/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 0 ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("center/hitbox/CollisionShape2D:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
@@ -131,8 +80,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "windup"
-length = 0.6
-loop = true
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("center/character:frame")
 tracks/0/interp = 1
@@ -140,10 +88,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 2, 3 ]
+"values": [ 2 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("center/character/head:position")
@@ -152,22 +100,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ Vector2( -1.00003, -7 ), Vector2( -4.00003, -7.99999 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("center/character/head:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 1 ]
+"values": [ Vector2( 10, 4.99996 ) ]
 }
 
 [sub_resource type="RectangleShape2D" id=4]
@@ -178,9 +114,10 @@ radius = 112.0
 
 [node name="archer" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+lunging = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
-anims/heavy = SubResource( 1 )
+anims/attack = SubResource( 6 )
 anims/idle = SubResource( 2 )
 anims/windup = SubResource( 3 )
 
@@ -202,17 +139,12 @@ script = ExtResource( 7 )
 [node name="character" parent="center" index="1"]
 texture = ExtResource( 5 )
 vframes = 1
-hframes = 8
-frame = 1
+hframes = 5
+frame = 0
 
 [node name="head" parent="center/character" index="0"]
-position = Vector2( -2, 7.15256e-06 )
+position = Vector2( 7.15256e-06, 2 )
 texture = ExtResource( 10 )
-
-[node name="arrow" type="Sprite" parent="center/character" index="1"]
-position = Vector2( 7.9999, -28 )
-rotation = 3.14159
-texture = ExtResource( 11 )
 
 [node name="CollisionShape2D" parent="center/hitbox" index="0"]
 shape = SubResource( 4 )

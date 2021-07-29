@@ -6,7 +6,6 @@ var direction_vector := Vector2.UP
 
 
 func enter(npc : KinematicBody2D):
-	npc.play("idle")
 	hesitation_timer = get_tree().create_timer(npc.attack_hesitation_time)
 	npc.randomize_attack_hesitation()
 	#set a movement direction (forward, backward, or still) based on distance from player
@@ -21,6 +20,8 @@ func enter(npc : KinematicBody2D):
 
 # the player is in range and the player is actively fighting the player (advancing, etc)
 func run(npc: KinematicBody2D):
+	if !direction_vector == Vector2.ZERO:
+		npc.play("idle")
 	if npc.stance != 'fight':
 		return "idle"
 	
@@ -34,4 +35,4 @@ func run(npc: KinematicBody2D):
 
 	if hesitation_timer.time_left <= 0:
 		if npc.looking_at_player:
-			return "attack"
+			return "windup"
