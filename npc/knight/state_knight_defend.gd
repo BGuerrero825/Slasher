@@ -7,7 +7,6 @@ func enter(npc : KinematicBody2D):
 
 
 func run(npc : KinematicBody2D):
-	pass
 	if not npc.animation_player.is_playing():
 		return "idle"
 
