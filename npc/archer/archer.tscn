@@ -9,7 +9,7 @@
 [ext_resource path="res://npc/archer/state_archer_recovery.gd" type="Script" id=7]
 [ext_resource path="res://npc/archer/state_archer_windup.gd" type="Script" id=8]
 [ext_resource path="res://sound/peasant_oough.ogg" type="AudioStream" id=9]
-[ext_resource path="res://art/coif.png" type="Texture" id=10]
+[ext_resource path="res://art/hood.png" type="Texture" id=10]
 [ext_resource path="res://art/arrow.png" type="Texture" id=11]
 
 [sub_resource type="Animation" id=1]
@@ -208,7 +208,6 @@ frame = 1
 [node name="head" parent="center/character" index="0"]
 position = Vector2( -2, 7.15256e-06 )
 texture = ExtResource( 10 )
-hframes = 2
 
 [node name="arrow" type="Sprite" parent="center/character" index="1"]
 position = Vector2( 7.9999, -28 )
