@@ -105,4 +105,16 @@ shape = SubResource( 2 )
 
 [node name="knight" parent="." instance=ExtResource( 6 )]
 position = Vector2( 240, 104 )
+stance = "charge"
+
+[node name="Label" type="Label" parent="knight"]
+margin_left = -71.8155
+margin_top = 76.8552
+margin_right = -31.8155
+margin_bottom = 90.8552
+text = "Make new waypoint orchestrator
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="player_killed" from="player" to="." method="_on_player_player_killed"]
