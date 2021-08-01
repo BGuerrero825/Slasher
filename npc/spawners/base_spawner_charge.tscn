@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://npc/knight/knight.tscn" type="PackedScene" id=1]
+[ext_resource path="res://npc/peasant/peasant.tscn" type="PackedScene" id=2]
+[ext_resource path="res://npc/spawners/base_spawner_charge.gd" type="Script" id=3]
+
+[node name="base_spawner_charge" type="Node2D"]
+position = Vector2( 374.944, 144.163 )
+script = ExtResource( 3 )
+
+[node name="waypoint_list" type="Node2D" parent="."]
+position = Vector2( -216.326, -125.984 )
+
+[node name="Position2D" type="Position2D" parent="waypoint_list"]
+position = Vector2( -0.0146484, -92.2812 )
+
+[node name="Position2D2" type="Position2D" parent="waypoint_list"]
+position = Vector2( -69.0666, 0.581718 )
+
+[node name="Position2D3" type="Position2D" parent="waypoint_list"]
+position = Vector2( 0.779053, 88.6825 )
+
+[node name="npc_list" type="Node2D" parent="."]
+position = Vector2( -370.082, -130.353 )
+
+[node name="peasant" parent="npc_list" instance=ExtResource( 2 )]
+position = Vector2( 373.449, -91.3063 )
+
+[node name="knight" parent="npc_list" instance=ExtResource( 1 )]
+position = Vector2( 281.342, 8.22757 )
+
+[node name="peasant2" parent="npc_list" instance=ExtResource( 2 )]
+position = Vector2( 378.35, 100.343 )
