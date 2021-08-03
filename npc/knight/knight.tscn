@@ -49,10 +49,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.45 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.001, 0.25, 0.45 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ true, false, true ]
+"values": [ true, true, false, true ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("center/character:frame")
@@ -157,7 +157,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.15 ),
+"times": PoolRealArray( 0.05, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 38, 11 ]
@@ -169,10 +169,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( -0.00288591, 0, 0.15 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0.05, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ Vector2( 2, 1.99999 ), Vector2( -2, 1 ), Vector2( -2.99999, 6.00001 ) ]
+"values": [ Vector2( 2, 1.99999 ), Vector2( -2.99999, 6.00001 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("center/hitbox/CollisionShape2D:disabled")
@@ -181,7 +181,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
+"times": PoolRealArray( 0.05 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
@@ -246,14 +246,11 @@ script = ExtResource( 6 )
 script = ExtResource( 10 )
 
 [node name="character" parent="center" index="1"]
-frame = 11
+frame = 30
 
 [node name="head" parent="center/character" index="0"]
-position = Vector2( -2.99999, 6.00001 )
+position = Vector2( -4.00001, -6.99996 )
 texture = ExtResource( 8 )
-
-[node name="range_ref" parent="." index="9"]
-visible = false
 
 [node name="oough" type="AudioStreamPlayer2D" parent="sounds" index="2"]
 stream = ExtResource( 9 )

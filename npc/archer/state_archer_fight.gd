@@ -3,6 +3,7 @@ extends BaseNPCState
 var hesitation_timer : SceneTreeTimer
 var current_rotation : float
 var direction_vector := Vector2.UP
+var retreat_speed := 2
 
 
 func enter(npc : KinematicBody2D):

@@ -12,12 +12,14 @@
 [ext_resource path="res://sound/block.ogg" type="AudioStream" id=10]
 [ext_resource path="res://sound/sound_player.gd" type="Script" id=11]
 
+[sub_resource type="CircleShape2D" id=2]
+radius = 22.0
+
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 24 )
 
-[sub_resource type="CircleShape2D" id=2]
-
 [sub_resource type="CircleShape2D" id=3]
+radius = 18.0
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 96.0
@@ -29,6 +31,7 @@ radius = 56.0
 radius = 47.2507
 
 [node name="npc" type="KinematicBody2D"]
+collision_mask = 7
 script = ExtResource( 4 )
 
 [node name="debug_state" type="Label" parent="."]
@@ -41,6 +44,9 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
 
 [node name="npc_state_machine" type="Node2D" parent="."]
 script = ExtResource( 7 )
@@ -98,12 +104,7 @@ scale = Vector2( 1.6397, 1.61566 )
 shape = SubResource( 1 )
 disabled = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2( 2.26809, 2.26809 )
-shape = SubResource( 2 )
-
 [node name="hurtbox" type="Area2D" parent="."]
-scale = Vector2( 2.4835, 2.4835 )
 collision_layer = 0
 collision_mask = 2147483650
 script = ExtResource( 3 )
@@ -126,6 +127,7 @@ one_shot = true
 one_shot = true
 
 [node name="range_ref" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 0
 

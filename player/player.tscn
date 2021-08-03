@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://art/knight.png" type="Texture" id=1]
 [ext_resource path="res://art/direction_indicator.png" type="Texture" id=2]
@@ -388,15 +388,21 @@ tracks/1/keys = {
 "values": [ Vector2( -3, -2.99998 ) ]
 }
 
+[sub_resource type="CircleShape2D" id=13]
+radius = 22.0
+
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 16, 20 )
+extents = Vector2( 28, 44 )
 
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 25.4759, 24 )
 
 [sub_resource type="CircleShape2D" id=12]
+radius = 15.0
 
 [node name="player" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -423,6 +429,9 @@ __meta__ = {
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 13 )
 
 [node name="state_machine" type="Node2D" parent="."]
 script = ExtResource( 6 )
@@ -492,7 +501,6 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/hitbox"]
 position = Vector2( 32, 0 )
-scale = Vector2( 1.82755, 2.21364 )
 shape = SubResource( 10 )
 disabled = true
 
@@ -508,16 +516,11 @@ scale = Vector2( 1.57011, 1.84162 )
 shape = SubResource( 11 )
 disabled = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2( 2.03794, 2.03794 )
-shape = SubResource( 12 )
-
 [node name="hurtbox" type="Area2D" parent="."]
 collision_layer = 0
 script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
-scale = Vector2( 2.3078, 2.3078 )
 shape = SubResource( 12 )
 
 [node name="parry_invincible_timer" type="Timer" parent="."]
