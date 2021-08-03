@@ -152,6 +152,9 @@ texture = ExtResource( 10 )
 [node name="CollisionShape2D" parent="center/hitbox" index="0"]
 shape = SubResource( 4 )
 
+[node name="range_ref" parent="." index="9"]
+visible = false
+
 [node name="standoff_distance" parent="range_ref" index="1"]
 shape = SubResource( 5 )
 

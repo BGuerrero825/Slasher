@@ -4,7 +4,7 @@ var mult = 1
 var dir = Vector2.ZERO
 
 func enter(player : KinematicBody2D):
-	.enter(player)
+	player.play("parry")
 	player.velocity = player.input_vector.normalized() * player.dodge_impulse
 
 func run(player : KinematicBody2D):

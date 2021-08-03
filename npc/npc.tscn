@@ -12,10 +12,10 @@
 [ext_resource path="res://sound/block.ogg" type="AudioStream" id=10]
 [ext_resource path="res://sound/sound_player.gd" type="Script" id=11]
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=7]
 radius = 22.0
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 16, 24 )
 
 [sub_resource type="CircleShape2D" id=3]
@@ -46,7 +46,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
+shape = SubResource( 7 )
 
 [node name="npc_state_machine" type="Node2D" parent="."]
 script = ExtResource( 7 )
@@ -101,7 +101,7 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="center/hitbox"]
 position = Vector2( 32, 0 )
 scale = Vector2( 1.6397, 1.61566 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 disabled = true
 
 [node name="hurtbox" type="Area2D" parent="."]
@@ -127,9 +127,8 @@ one_shot = true
 one_shot = true
 
 [node name="range_ref" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
-collision_mask = 0
+collision_mask = 2147483648
 
 [node name="attack_distance" type="CollisionShape2D" parent="range_ref"]
 shape = SubResource( 4 )

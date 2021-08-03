@@ -61,12 +61,6 @@ region_rect = Rect2( 0.042, 0, 5000, 5000 )
 position = Vector2( -4, 0 )
 collision_mask = 1
 
-[node name="CollisionShape2D" parent="knight" index="2"]
-scale = Vector2( 2.26809, 2.26809 )
-
-[node name="center" parent="knight" index="6"]
-rotation = 3.14159
-
 [node name="stone_pillar" parent="." instance=ExtResource( 9 )]
 position = Vector2( 0, 232 )
 
@@ -109,5 +103,3 @@ position = Vector2( -64, -44 )
 [node name="archer2" parent="." instance=ExtResource( 12 )]
 position = Vector2( 48, -44 )
 [connection signal="player_killed" from="player" to="." method="_on_player_player_killed"]
-
-[editable path="knight"]
