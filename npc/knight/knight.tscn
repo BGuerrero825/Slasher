@@ -246,10 +246,10 @@ script = ExtResource( 6 )
 script = ExtResource( 10 )
 
 [node name="character" parent="center" index="1"]
-frame = 30
+frame = 0
 
 [node name="head" parent="center/character" index="0"]
-position = Vector2( -4.00001, -6.99996 )
+position = Vector2( -1.07288e-05, -2.99999 )
 texture = ExtResource( 8 )
 
 [node name="oough" type="AudioStreamPlayer2D" parent="sounds" index="2"]
