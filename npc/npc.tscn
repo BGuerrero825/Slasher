@@ -12,7 +12,7 @@
 [ext_resource path="res://sound/block.ogg" type="AudioStream" id=10]
 [ext_resource path="res://sound/sound_player.gd" type="Script" id=11]
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=1]
 radius = 22.0
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -46,7 +46,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 7 )
+shape = SubResource( 1 )
 
 [node name="npc_state_machine" type="Node2D" parent="."]
 script = ExtResource( 7 )

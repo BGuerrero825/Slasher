@@ -39,6 +39,7 @@ export var parry_invincibility_time : float = .6
 
 var invincible : bool = false
 var flipped : bool = false
+var ground_texture = "stone"
 #var head_y := -100
 
 #var last_dmg_source = self
@@ -103,10 +104,10 @@ func _process(delta):
 			velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
 			# if at max speed
 			if velocity.length() == MAX_SPEED:
-				$sounds.play("grass")
+				$sounds.play(ground_texture)
 		else:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-			$sounds/grass.stop()
+			$sounds.get_node(ground_texture).stop()
 
 	velocity = move_and_slide(velocity)
 
