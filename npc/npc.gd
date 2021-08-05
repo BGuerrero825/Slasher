@@ -49,7 +49,8 @@ onready var state_machine := $npc_state_machine
 var attack_available := true
 var current_damage := damage
 var attack_hesitation_time : float = 1.0
-var dead = false
+var dead := false
+var waypoint := Vector2.ZERO
 
 var velocity := Vector2.ZERO
 
