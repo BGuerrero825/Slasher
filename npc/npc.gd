@@ -58,8 +58,6 @@ var velocity := Vector2.ZERO
 func _ready():
 	state_machine.init(self)
 	randomize_attack_hesitation()
-	
-	set_as_toplevel(true)  # ignore being set as child of spawner
 
 
 func _process(delta):

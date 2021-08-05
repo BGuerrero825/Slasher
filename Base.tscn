@@ -5,7 +5,7 @@
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://art/helmet1_icon.png" type="Texture" id=4]
 [ext_resource path="res://Base.gd" type="Script" id=5]
-[ext_resource path="res://npc/spawners/base_spawner_charge.tscn" type="PackedScene" id=6]
+[ext_resource path="res://npc/spawners/spawner.tscn" type="PackedScene" id=6]
 [ext_resource path="res://art/vertical_wall.png" type="Texture" id=7]
 [ext_resource path="res://death_overlay.gd" type="Script" id=8]
 
@@ -20,6 +20,9 @@ script = ExtResource( 5 )
 
 [node name="player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 189, 212 )
+
+[node name="base_spawner_charge" parent="." instance=ExtResource( 6 )]
+position = Vector2( 335.116, 371.585 )
 
 [node name="death_overlay" type="CanvasLayer" parent="."]
 pause_mode = 1
@@ -102,7 +105,4 @@ texture = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="horizontal_wall2/StaticBody2D"]
 position = Vector2( 0, -10 )
 shape = SubResource( 2 )
-
-[node name="base_spawner_charge" parent="." instance=ExtResource( 6 )]
-position = Vector2( 335.116, 371.585 )
 [connection signal="player_killed" from="player" to="." method="_on_player_player_killed"]

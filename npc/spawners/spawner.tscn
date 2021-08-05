@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://npc/spawners/spawner.gd" type="Script" id=3]
+
+[node name="spawner" type="Node2D"]
+position = Vector2( 215.174, 126.504 )
+script = ExtResource( 3 )
+
+[node name="waypoint_list" type="Node2D" parent="."]
+position = Vector2( -216.326, -125.984 )
+
+[node name="A" type="Position2D" parent="waypoint_list"]
+position = Vector2( 1.15233, -80.5202 )
+
+[node name="B" type="Position2D" parent="waypoint_list"]
+position = Vector2( -54.8477, -0.52018 )
+
+[node name="C" type="Position2D" parent="waypoint_list"]
+position = Vector2( 1.15233, 79.4798 )
+
+[node name="spawn_point" type="Position2D" parent="."]
+position = Vector2( -23.1737, -126.504 )
