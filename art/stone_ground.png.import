@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/horizontal_wall.png-b22119fce648e5a2e6f75db84ed47bb8.stex"
+path="res://.import/stone_ground.png-758ea195887c2fb469893f8f26046748.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/horizontal_wall.png"
-dest_files=[ "res://.import/horizontal_wall.png-b22119fce648e5a2e6f75db84ed47bb8.stex" ]
+source_file="res://art/stone_ground.png"
+dest_files=[ "res://.import/stone_ground.png-758ea195887c2fb469893f8f26046748.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
+flags/repeat=1
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false

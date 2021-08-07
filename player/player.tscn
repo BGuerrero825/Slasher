@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://art/knight.png" type="Texture" id=1]
 [ext_resource path="res://art/direction_indicator.png" type="Texture" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://sound/heavy_swoosh.ogg" type="AudioStream" id=22]
 [ext_resource path="res://sound/light_swoosh.ogg" type="AudioStream" id=23]
 [ext_resource path="res://sound/player_oough.ogg" type="AudioStream" id=24]
+[ext_resource path="res://sound/stone_walk.ogg" type="AudioStream" id=25]
 [ext_resource path="res://sound/weapon_slice.ogg" type="AudioStream" id=27]
 [ext_resource path="res://sound/quick_swoosh.ogg" type="AudioStream" id=29]
 [ext_resource path="res://sound/parry.ogg" type="AudioStream" id=30]
@@ -556,6 +557,9 @@ volume_db = 2.0
 
 [node name="parry" type="AudioStreamPlayer2D" parent="sounds"]
 stream = ExtResource( 30 )
+
+[node name="stone" type="AudioStreamPlayer2D" parent="sounds"]
+stream = ExtResource( 25 )
 [connection signal="area_entered" from="center/hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="blocked_attack" from="center/blockbox" to="." method="_on_blockbox_blocked_attack"]
 [connection signal="damage_taken" from="hurtbox" to="." method="_on_hurtbox_damage_taken"]
