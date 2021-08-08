@@ -2,7 +2,8 @@ extends KinematicBody2D
 
 class_name NPC
 
-signal reached_last_waypoint
+signal npc_killed(npc)
+signal reached_last_waypoint(npc)
 
 export var health : float = 1
 export var base_speed : float = 35.0
@@ -75,6 +76,7 @@ func _process(delta):
 		get_tree().get_current_scene().add_child(new_corpse)
 		new_corpse.transform = get_global_transform()
 		new_corpse.rotation_degrees = $center.rotation_degrees - 90
+		emit_signal("npc_killed", self)
 		queue_free()
 
 
@@ -121,7 +123,7 @@ func play(anim:String):
 
 
 func reached_last_waypoint():
-	emit_signal("reached_last_waypoint")
+	emit_signal("reached_last_waypoint", self)
 
 
 func _on_cooldown_timer_timeout():
