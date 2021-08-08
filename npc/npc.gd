@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 class_name NPC
 
+signal reached_last_waypoint
+
 export var health : float = 1
 export var base_speed : float = 35.0
 export var lunge_speed : float = 80.0
@@ -50,7 +52,7 @@ var attack_available := true
 var current_damage := damage
 var attack_hesitation_time : float = 1.0
 var dead := false
-var waypoint := Vector2.ZERO
+var waypoint_list := [Vector2.ZERO]
 
 var velocity := Vector2.ZERO
 
@@ -116,6 +118,10 @@ func play(anim:String):
 	if animation_player.current_animation == anim:
 		return
 	animation_player.play(anim)
+
+
+func reached_last_waypoint():
+	emit_signal("reached_last_waypoint")
 
 
 func _on_cooldown_timer_timeout():
