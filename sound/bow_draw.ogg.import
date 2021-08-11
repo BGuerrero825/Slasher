@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bow_draw.ogg-5888d42147edd25781e97ec2bae1dd0c.oggstr"
+
+[deps]
+
+source_file="res://sound/bow_draw.ogg"
+dest_files=[ "res://.import/bow_draw.ogg-5888d42147edd25781e97ec2bae1dd0c.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

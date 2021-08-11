@@ -4,6 +4,7 @@ extends BaseNPCState
 # play attack animations specifically from here
 func enter(npc: KinematicBody2D):
 	npc.play('heavy')
+	npc.sounds.queue("heavy_swoosh", 0.25)
 
 
 func run(npc: KinematicBody2D):

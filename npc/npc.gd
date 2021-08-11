@@ -28,30 +28,29 @@ var is_blocking : bool = false
 # Valid stances: 'disabled', 'charge', 'search', 'fight', 'retreat'
 export var stance : String = 'fight'
 
-# For this to work, the player has to be added to the scene first (higher in the tree)
-onready var player_ref : KinematicBody2D = $"/root/Global".player
-onready var sounds = $sounds
-
 var move_direction : Vector2 = Vector2.ZERO
 
 export var heavy_recovery_time : float = 0.3
 export var recovery_time : float = 0.2
 export var _rotation_speed : float = 0.05
+export var ground_texture = "stone"
 var looking_at_player : bool = true  # set in rotate_towards func
 var lunging : bool = false  # set in animation player
 var hit_blocking_player : bool = false  # set if hitting a blocking player
 
 export var damage : float = 1
 
+# For this to work, the player has to be added to the scene first (higher in the tree)
+onready var player_ref : KinematicBody2D = $"/root/Global".player
 onready var animation_player := $AnimationPlayer
 onready var state_machine := $npc_state_machine
+onready var sounds = $sounds
 
 var attack_available := true
 var current_damage := damage
 var attack_hesitation_time : float = 1.0
 var dead := false
 var waypoint := Vector2.ZERO
-
 var velocity := Vector2.ZERO
 
 

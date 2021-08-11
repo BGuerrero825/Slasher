@@ -4,6 +4,7 @@ const NEW_ARROW = preload("res://objects/arrow/arrow.tscn")
 var firing_error_max := 8
 
 func enter(npc : KinematicBody2D):
+	npc.sounds.play("bow_release")
 	npc.play("attack")
 	var new_Arrow = NEW_ARROW.instance()
 	var firing_error = randi() % (firing_error_max*2) - firing_error_max

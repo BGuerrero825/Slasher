@@ -33,10 +33,11 @@ export var heavy_attack_dmg : float = 2
 var active_dmg : float = 0  # SET IN STATE MACHINE
 
 export var parry_invincibility_time : float = .6
+export var ground_texture = "stone"
 
 var invincible : bool = false
 var flipped : bool = false
-var ground_texture = "stone"
+
 #var head_y := -100
 
 #var last_dmg_source = self

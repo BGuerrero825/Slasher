@@ -30,12 +30,15 @@ func queue(sound, time):
 	queued_sound.append(sound)
 	queued_sound_times.append(timer + time)
 
+func stop(sound):
+	get_node(sound).stop()
+
 func _process(delta):
 	# if queue is empty, disable timer
 	if queued_sound.size() == 0:
 		timer = -1
 	# if timer is active
-	if timer >= 0:
+	elif timer >= 0:
 		timer += delta
 		#iterate through array to check if sounds are ready to play
 		var i = 0

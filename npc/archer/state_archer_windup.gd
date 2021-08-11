@@ -2,6 +2,7 @@ extends BaseNPCState
 
 
 func enter(npc : KinematicBody2D):
+	npc.sounds.play("bow_draw")
 	npc.play("windup")
 
 

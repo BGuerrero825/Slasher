@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://npc/knight/knight.gd" type="Script" id=1]
 [ext_resource path="res://npc/npc.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://art/helmet2.png" type="Texture" id=8]
 [ext_resource path="res://sound/knight_oough.ogg" type="AudioStream" id=9]
 [ext_resource path="res://npc/knight/state_knight_stagger.gd" type="Script" id=10]
+[ext_resource path="res://sound/heavy_swoosh.ogg" type="AudioStream" id=11]
 
 [sub_resource type="Animation" id=1]
 resource_name = "defend"
@@ -258,3 +259,6 @@ visible = false
 [node name="oough" type="AudioStreamPlayer2D" parent="sounds" index="2"]
 stream = ExtResource( 9 )
 volume_db = 2.0
+
+[node name="heavy_swoosh" type="AudioStreamPlayer2D" parent="sounds" index="3"]
+stream = ExtResource( 11 )
